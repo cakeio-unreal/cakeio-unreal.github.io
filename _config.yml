@@ -46,7 +46,7 @@ enable_copy_code_button: true
 back_to_top: true
 back_to_top_text: "Back to top"
 
-color_scheme: light
+color_scheme: dark
 nav_fold: true
 
 # Enable or disable heading anchors
