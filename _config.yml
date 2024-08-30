@@ -1,8 +1,57 @@
-title: Just the Docs Template
-description: A starter template for a Jeykll site using the Just the Docs theme!
+title: CakeIO Docs
+description: Documentation for CakeIO, an Unreal Engine library that specializes in IO operations and utilities.
 theme: just-the-docs
 
-url: https://just-the-docs.github.io
+defaults:
+  -
+    scope:
+      path: "docs" # an empty string here means all files in the project
+      type: "pages"
+    values:
+      layout: "default"
+exclude:
+ # from https://github.com/jekyll/jekyll/blob/master/lib/site_template/_config.yml:
+   - .sass-cache/
+   - .jekyll-cache/
+   - gemfiles/
+   - Gemfile
+   - Gemfile.lock
+   - node_modules/
+   - vendor/bundle/
+   - vendor/cache/
+   - vendor/gems/
+   - vendor/ruby/
+ # specific to the theme website:
+   - bin/
+   - lib/
+   - "*.gemspec"
+   - "*.gem"
+   - LICENSE.txt
+   - package.json
+   - package-lock.json
+   - Rakefile
+   - README.md
+   - CODE_OF_CONDUCT.md
+   - docker-compose.yml
+   - Dockerfile
+ # theme test code
+   - fixtures/
+url: https://cakeio-unreal.github.io
 
 aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template
+
+enable_copy_code_button: true
+
+back_to_top: true
+back_to_top_text: "Back to top"
+
+color_scheme: light
+nav_fold: true
+
+# Enable or disable heading anchors
+heading_anchors: true
+nav_enabled: true
+
+# Show navigation error report
+nav_error_report: true # default is false/nil.
