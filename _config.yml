@@ -55,3 +55,15 @@ nav_enabled: true
 
 # Show navigation error report
 nav_error_report: true # default is false/nil.
+
+
+callouts:
+  note:
+    title: Note
+    color: green
+  warning:
+    title: Warning
+    color: red
+  hint:
+    title: Hint
+    color: yellow
