@@ -67,3 +67,6 @@ callouts:
   hint:
     title: Hint
     color: yellow
+  src:
+    title: Associated Source Code 
+    color: blue

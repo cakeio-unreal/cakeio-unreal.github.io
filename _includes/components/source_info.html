@@ -1,0 +1,6 @@
+{% assign headers = in_source | split: "|" %}
+
+{: .src }
+{% for header in headers %} 
+>📄 CakeIO/{{ header }}.h
+>{% endfor %}
