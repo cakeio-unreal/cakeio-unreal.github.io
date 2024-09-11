@@ -1,0 +1,1 @@
+[{{ link_desc }}]({{site.baseurl}}/{{rel_link}})

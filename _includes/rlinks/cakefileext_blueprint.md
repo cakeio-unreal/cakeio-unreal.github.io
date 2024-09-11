@@ -1,0 +1,1 @@
+{% assign rel_link="docs/file-extensions/blueprint" %}{% include site_rel_link.md %}

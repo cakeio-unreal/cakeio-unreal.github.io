@@ -56,7 +56,6 @@ nav_enabled: true
 # Show navigation error report
 nav_error_report: true # default is false/nil.
 
-
 callouts:
   note:
     title: Note
@@ -70,3 +69,6 @@ callouts:
   src:
     title: Associated Source Code 
     color: blue
+
+plugins:
+  - jekyll-glossary_tooltip

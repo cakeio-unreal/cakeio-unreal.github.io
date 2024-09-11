@@ -3,9 +3,7 @@ title: Paths
 nav_order: 4
 ---
 ## Paths Overview
-{: .no_toc .text-delta }
-1. TOC
-{:toc}
+{% include components/default_toc.md %}
 
 ## Paths
 CakeIO uses a dedicated type for storing filesystem paths. It ensures that every path is in a standardized form, regardless of the input path. Paths also offer a variety of utility functions for path querying and manipulation. 

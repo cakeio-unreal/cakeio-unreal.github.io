@@ -4,9 +4,7 @@ nav_order: 10
 ---
 
 ## CakeMixLibrary Overview
-{: .no_toc .text-delta }
-1. TOC
-{:toc}
+{% include components/default_toc.md %}
 
 ## CakeMixLibrary Overview
 @add overview

@@ -1,0 +1,10 @@
+- term: iteration_items          
+  definition: An items iteration will visit both files and directories.
+
+- term: dir_items_local
+  definition: Any item whose direct parent is the source directory.
+
+- term: ext_multi
+  definition: A file extension with more than one component; e.g., ".cdr.txt"
+- term: ext_single
+  definition: A file extension with only one component; e.g., ".txt"

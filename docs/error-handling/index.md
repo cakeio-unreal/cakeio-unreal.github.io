@@ -4,9 +4,7 @@ nav_order: 8
 ---
 
 ## Error Handling Overview
-{: .no_toc .text-delta }
-1. TOC
-{:toc}
+{% include components/default_toc.md %}
 
 ## Error Handling
 CakeIO uses a dedicated type for representing directories on the filesystem. It contains interfaces to support a wide variety of common IO operations from directory creation/deletion to iteration through a directory's children. Futhermore, the CakeIO directory objects also provide various utility functions for retrieving information about the directory.
