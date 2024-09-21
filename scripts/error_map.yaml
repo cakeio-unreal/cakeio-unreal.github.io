@@ -1,0 +1,8 @@
+---
+object: "FCakeFile"
+functions: 
+  - 
+    - func_name: "CreateTextFile"
+    - policies: ["OverwriteItems", "MissingParents"]
+    - codes: 
+       - 

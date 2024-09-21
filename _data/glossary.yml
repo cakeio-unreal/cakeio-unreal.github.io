@@ -8,3 +8,5 @@
   definition: A file extension with more than one component; e.g., ".cdr.txt"
 - term: ext_single
   definition: A file extension with only one component; e.g., ".txt"
+- term: filtered_iteration
+  definition: A files only iteration that uses a directory object's file extension filter to selectively visit files.

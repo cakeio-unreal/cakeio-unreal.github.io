@@ -102,6 +102,34 @@ ItemsDb.Reset();
 bIsEmpty = ItemsDb.PathIsEmpty(); // => true
 ```
 
+### File Comparison Operators
+All comparison operators are tested against the **FCakePath**'s file path. Equality is defined via `operator==` and `operator!=`. It is overloaded to accepted **FCakeFile**, **FCakePath**, or **FString**. 
+
+Just like **FCakePath**, an **FCakeFile** is equal to another file/path/string if it refers to the same location on the filesystem.
+
+```cpp
+FString PathStringItemsDb{ TEXT("x/game/data/items.db") };
+FCakePath PathItemsDb{ PathStringItemsDb };
+FCakeFile FileItemsDb{ PathStringItemsDb };
+FCakeFile FileSpellsDb{ TEXT("x/game/data/spells.db") };
+
+bool bIsEqual{ false };
+
+bIsEqual = FileItemsDb == FileSpellsDb;
+bIsEqual = FileItemsDb == PathItemsDb;
+bIsEqual = FileItemsDb == PathStringItemsDb;
+
+bool bIsNotEqual{ false };
+
+bIsNotEqual = FileItemsDb != FileSpellsDb;
+bIsNotEqual = FileItemsDb != PathItemsDb;
+bIsNotEqual = FileItemsDb != PathStringItemsDb;
+```
+
+{: .note }
+Operators `<`, `<=`, `>`, `>=` are defined for **FCakeFile** so that they can be sorted in collections. Internally they just use **FString**'s definition for the operators on the **FCakeFile**'s file path. Thus, an **FCakeFile** will sort exactly like an **FString**.
+
+
 ## IO Operations
 {% include components/disclaimer_error_handling.md %}
 
@@ -204,7 +232,6 @@ if (TOptional<TArray<uint8>> ByteData = ExampleFileBinary.ReadFileAsBytes())
     UE_LOG(LogTemp, Warning, TEXT("Read [%d] bytes of data."), ByteData.GetValue().Num())
 }
 ```
-
 #### Writing Files
 We use the writing interfaces when a file exists and we want to overwrite its contents with new contents.
 
@@ -241,6 +268,9 @@ if (!ExampleFileBinary.AppendBytesToFile(AppendDataBytes))
 }
 ```
 
+{: .warning }
+The write/append functions will fail if the file does not exist, so be sure to check before calling them.
+
 ### Copying Files
 We can copy a file to another location via `CopyFile`. This takes an `FCakePath` argument that represents the source directory into which the file should be copied.
 
@@ -272,7 +302,7 @@ if (!SourceFile.CopyFile(OtherDir, OverwritePolicy, MissingParentsPolicy))
     UE_LOG(LogTemp, Warning, TEXT("Failed copying file to dest dir."))
 }
 ```
-Sometimes we might want to copy a file with a new name, and for that we can use `CopyFileAliased`. In addition to a destination path, we also need to provide a new name that the copied file should have:
+Sometimes we might want to copy a file but give the copied file a different name, and for that we can use `CopyFileAliased`. In addition to a destination path, we also need to provide a new name that the copied file should have:
 ```cpp
 FCakeFile SourceFile{ TEXT("abilities/magic/spells.db") };
 FCakePath DestDir{ TEXT("/s/other/dir") };
@@ -353,6 +383,10 @@ if (!SourceFile.RenameFile(NewName))
     UE_LOG(LogTemp, Warning, TEXT("Failed renaming spells.db!"))
 }
 ```
+
+{: .note }
+Whenever a move / rename succeeds, the **FCakeFile** will automatically update all of its path information to reflect its new location.
+
 {% assign policy_id="OverwriteItems" %}
 By default, `RenameFile` will overwrite any pre-existing file. We can control this via the {% include link_policy.md %} policy:
 ```cpp
@@ -439,7 +473,7 @@ FDateTime NewMod{ FDateTime::Now() };
 NewMod -= FTimespan::FromDays(1.0);
 if (TestFile.SetModifiedTimestamp(NewMod))
 {
-    UE_LOG(LogTemp, Warning, TEXT("SetModifiedTimestamp successful. New mod time: [%s]"), *NewMod.ToString())
+    UE_LOG(LogTemp, Warning, TEXT("New mod time: [%s]"), *NewMod.ToString())
 }
 else
 {

@@ -85,6 +85,33 @@ We can check if an **UCakeFile**'s file path is empty via `PathIsEmpty`, and we 
 {% assign bp_file_id="reset" %}
 {% include components/blueprint_image.md %}
 
+
+### File Comparison Operators
+In equality comparisons, we compare the file path stored by a **UCakeFile** against another path. The paths are equal if they refer to the same location on the filesystem.
+
+We can use `IsEqualToOther` or `IsNotEqualToOther` to compare two **UCakeFile**s against each other:
+{% assign bp_file_id="is-equal-to-other" %}
+{% include components/blueprint_image.md %}
+
+{% assign bp_file_id="is-not-equal-to-other" %}
+{% include components/blueprint_image.md %}
+
+We can use `IsEqualToPath` or `IsNotEqualToPath` to compare a **UCakeFile** against a **UCakePath**:
+{% assign bp_file_id="is-equal-to-path" %}
+{% include components/blueprint_image.md %}
+
+{% assign bp_file_id="is-not-equal-to-path" %}
+{% include components/blueprint_image.md %}
+
+We can use `IsEqualTo` or `IsNotEqualTo` to compare a **UCakeFile** against a path string:
+{% assign bp_file_id="is-equal-to" %}
+{% include components/blueprint_image.md %}
+
+{% assign bp_file_id="is-not-equal-to" %}
+{% include components/blueprint_image.md %}
+
+@FIX: Link to FileSort util function in CakeMix
+
 ## IO Operations
 
 {% assign link_desc="Error Handling" %}
@@ -141,10 +168,6 @@ We use the writing interfaces when a file exists and we want to overwrite its co
 {% assign bp_file_id="write-bytes-to-file" %}
 {% include components/blueprint_image.md %}
 
-
-{: .warning }
-The write functions will fail if the file does not exist, so be sure to check before calling them.
-
 If we want to append data to the file instead of overwriting its old contents, we use `AppendTextToFile` or `AppendBytesToFile` :
 
 {% assign bp_file_id="append-text-to-file" %}
@@ -153,6 +176,8 @@ If we want to append data to the file instead of overwriting its old contents, w
 {% assign bp_file_id="append-bytes-to-file" %}
 {% include components/blueprint_image.md %}
 
+{: .warning }
+The write/append functions will fail if the file does not exist, so be sure to check before calling them.
 
 ### Copying Files
 We can copy a file to another directory via `CopyFile`. The **UCakePath** submitted represents the directory to which the file is copied.
@@ -229,6 +254,9 @@ We can use the following policy to further customize the behavior of `RenameFile
 {% assign policy_id="OverwriteItems" %}
 * {% include link_policy.md %}
 
+{: .note }
+Whenever a move / rename succeeds, the **UCakeFile** will automatically update all of its path information to reflect its new location.
+
 ### Deleting Files
 To delete a file, use `DeleteFile`:
 {% assign bp_file_id="delete-file" %}
@@ -252,6 +280,9 @@ All functions in this section can fail to retrieve valid information. Always che
 {% include components/blueprint_image.md %}
 
 There are two ways to check if `GetStatData` was successful, the `IsValid` boolean on the CakeFileStatData struct itself, or the `GotValidStatData` boolean returned by `GetStatData`.
+
+{: .note }
+`UCakeFileStatData` is merely a struct that wraps Unreal's own `FFileStatData`, which is not exposed to Blueprints.
 
 We can also retrieve some of the stats individually if we don't want the entire collection.
 
