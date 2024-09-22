@@ -306,326 +306,155 @@ Below is an example using IterateItems, but this will work for any callback and 
 {: .note }
 Because both Guarded and Search iteration callbacks need to return values, you cannot use a Blueprint event and instead must use a Blueprint function.
 
-### Sequential Iteration
+### Sequential Iterations Usage
+{% include common_bp_itr_errors.md %}
 
-Let's first examine the callback signatures for all three element types:
-```cpp
-	// Standard Iteration (Items)
-	auto ItemsStandardIteration = [](FCakePath ItemPath, bool bIsDir) -> void
-	{
-		// Any iteration callback for Items will be sent an FCakePath representing 
-		// the current element visited, and a boolean to indicate whether that path 
-		// is a directory.
-		FString Leaf = ItemPath.CloneLeafAsString();
-		if (bIsDir)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Visited directory: [%s]"), *Leaf);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Visited file: [%s]"), *Leaf);
-		}
-	};
+Let's first examine the callback signatures for all three directory element types, starting with items.
+{% assign bp_file_id="callback-seq-item" %}
+{% include components/blueprint_image.md %}
 
-	// Standard Iteration (Files)
-	auto FilesStandardIteration = [](FCakeFile File) -> void
-	{
-		// Any iteration callback for files will be sent an FCakeFile 
-		// representing the current file being visited.
-		UE_LOG(LogTemp, Warning, TEXT("Visited file: [%s]"), *File.GetFileName());
-	};
+When we iterate through items, the callback will be sent a **UCakePath** that contains the current item's path, and a boolean that indicates if the item is a directory.
 
-	// Standard Iteration (Subdirs)
-	auto SubdirStandardIteration = [](UCakeDir Subdir) -> void
-	{
-		// Any iteration callback for subdirectories will be sent 
-		// an UCakeDir representing the current subdirectory being visited.
-		UE_LOG(LogTemp, Warning, TEXT("Visited subdirectory: [%s]"), *Subdir.GetDirName());
-	};
+Now let's look at the callback for file iteration: 
+{% assign bp_file_id="callback-seq-file" %}
+{% include components/blueprint_image.md %}
 
-```
+This one is simple, since we know we are only visiting files, the callback is passed a single argument: a **UCakeFile** containing the file that is currently being visited.
 
-We should emphasize two things: the input parameters changed based on the directory element type we are visiting, and callbacks return `void`. This is because standard iteration offers no way for a caller to terminate the iteration early; the iteration will visit all target elements at the specified depth.
+And finally, let's look at the subdir iteration callback:
+{% assign bp_file_id="callback-seq-subdir" %}
+{% include components/blueprint_image.md %}
 
-With our callbacks defined, we must decide upon a depth that the iteration should traverse. We control iteration depth via the policy {% include link_policy.md %}:
-```cpp
-auto DesiredDepth = ECakePolicyOpDepth::Shallow;
-```
-
-Now our callbacks are ready and we have decided upon a depth. We are ready to execute an iteration on our directory. The standard iteration function names take the form `Iterate<Type>`, where `<Type>` is the element type we are visiting. For arguments, we only need pass the depth followed by the appropriate callback:
+Like the callback for files, this one is equally simple: we are handed a **UCakeDir** that contains the subdirectory currently being visited. 
 
 
-```cpp
-if (!IntDir.IterateItems(DesiredDepth, ItemsStandardIteration))
-{
-    UE_LOG(LogTemp, Warning, TEXT("IterateItems failed to launch!"));
-}
+Now that we've seen all callback function forms, let's see how to run our own iteration. We'll start with items. Sequential iteration functions have an easy naming pattern: `Iterate<Element>`, where `<Element>` is the directory element we wish to visit.
 
-if (!IntDir.IterateFiles(DesiredDepth, FilesStandardIteration))
-{
-    UE_LOG(LogTemp, Warning, TEXT("IterateFiles failed to launch!"));
-}
+{% assign policy_id="OpDepth" %}
+Thus, to run a Sequential iteration for items, we would use `IterateItems`. We need to submit two arguments to this function: an iteration depth and the callback function we want to use. The iteration depth is controlled via the {% include link_policy.md %} policy.
 
-if (!IntDir.IterateSubdirs(DesiredDepth, SubdirStandardIteration))
-{
-    UE_LOG(LogTemp, Warning, TEXT("IterateSubdirs failed to launch!"));
-}
-```
-A standard iteration will return an `UCakeDirIterationResult` indicating the outcome of the iteration. We can use it as a boolean via `operator bool` as shown in the preceding examples, or we can store the result and handle the outcomes explicitly:
+{% assign bp_file_id="itr-launch-seq-items" %}
+{% include components/blueprint_image.md %}
 
-```cpp
-ItrStandardResult = IntDir.IterateSubdirs(DesiredDepth, SubdirStandardIteration);
+To iterate over files or subdirectories instead, we need to use either `IterateFiles` or `IterateSubdirs` respectively:
+{% assign bp_file_id="itr-launch-seq-files" %}
+{% include components/blueprint_image.md %}
 
-switch (ItrStandardResult.Outcome)
-{
-    case ECakeDirIterationOutcome::DIO_Completed:
-        UE_LOG(LogTemp, Warning, TEXT("IterateSubdirs completed without incident!"));
-        break;
+{% assign bp_file_id="itr-launch-seq-subdirs" %}
+{% include components/blueprint_image.md %}
 
-    case ECakeDirIterationOutcome::DIO_Aborted:
-        UE_LOG(LogTemp, Warning, TEXT("IterateSubdirs failed to launch!"));
-        break;
-}
-```
-Since callers cannot abort a standard iteration, an outcome of aborted indicates that the iteration itself failed to launch. This could happen due to a variety of reasons, such as the **UCakeDir**'s directory not existing on the file system. Otherwise, if the iteration launches, then it will return a **Completed** outcome.
+### Guarded Iteration Usage
+{% include common_bp_itr_errors.md %}
+Guarded iterations work much like Sequential iterations: they are meant to visit all target elements of a given directory. However, they have one key difference: Guarded iterations allow the caller to terminate the iteration early if an error is encountered. 
 
+Let's look at the callback signatures required for **Guarded** iterations, starting with items. The parameter list is unchanged per directory element type, but our callbacks now have to return a signal of type `ECakeDirIterationSignal` that indicates if an iteration should continue.
 
-Even though we declared our callbacks and depth before the iterate operation function call, we could just as easily have submitted our arguments inline:
+{% assign bp_file_id="callback-guarded-item" %}
+{% include components/blueprint_image.md %}
 
-```cpp
-ItrStandardResult = IntDir.IterateSubdirs(
-ECakePolicyOpDepth::Deep,
-[](UCakeDir Subdir) -> void 
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Visited subdir: [%s]"), *Subdir.GetDirName());
-    }
-);
-```
+When we return the **Continue** signal, the iteration will advance to the next element. When we return the **Abort** signal, the iteration will immediately terminate.
 
-### Guarded Iteration
-Let's first examine the callback signatures required for abortable standard iterations:
+Let's look at some examples for the remaining two element types:
 
-```cpp
-	// Abortable Standard Iteration (Items)
-	auto ItemsAbortableIteration = [](FCakePath ItemPath, bool bIsDir) -> ECakeDirIterationSignal
-	{
-		if (!bIsDir)
-		{
-			// We return abort when we want the iteration to abort early.
-			return ECakeDirIterationSignal::DIS_Abort;
-		}
-		// We return continue whenever we want the iteration to continue 
-		// and the next element to be visited.
-		return ECakeDirIterationSignal::DIS_Continue;
-	};
+{% assign bp_file_id="callback-guarded-file" %}
+{% include components/blueprint_image.md %}
 
-	// Abortable Standard Iteration (Files)
-	auto FilesAbortableIteration = [](FCakeFile File) -> ECakeDirIterationSignal
-	{
-		// The caller is in complete control as to what is considered 
-		// an "error" worth terminating over.
-		if (File.GetFileExt() != FString(".jpg"))
-		{
-			// We return abort when we want the iteration to abort early.
-			return ECakeDirIterationSignal::DIS_Abort;
-		}
-		// We return continue whenever we want the iteration to continue 
-		// and the next element to be visited.
-		return ECakeDirIterationSignal::DIS_Continue;
-	};
+{% assign bp_file_id="callback-guarded-subdir" %}
+{% include components/blueprint_image.md %}
 
-	// Abortable Standard Iteration (Subdirs)
-	auto SubdirAbortableIteration = [](UCakeDir Subdir) -> ECakeDirIterationSignal
-	{
-		// The caller is in complete control as to what is considered 
-		// an "error" worth terminating over.
-		if (Subdir.CloneDirName() != TEXT("SpecialDir"))
-		{
-			// We return abort when we want the iteration to abort early.
-			return ECakeDirIterationSignal::DIS_Abort;
-		}
-		// We return continue whenever we want the iteration to continue 
-		// and the next element to be visited.
-		return ECakeDirIterationSignal::DIS_Continue;
-	};
-```
+As all of the examples show us, we are free to define anything as an error worth terminating the iteration over. These example "errors" are quite unrealistic for the sake of brevity, but they also make it clear that caller is in complete control over the iteration.
 
-The only major difference between these callbacks and standard iteration callbacks is the return type. Because the caller can abort an iteration early, we must return a signal that indicates whether the iteration should proceed to the next item. The signal type is `ECakeDirIterationSignal` and it holds only two meaningful values: **Continue** and **Abort**. When we need to terminate an iteration due to an error, we should return `ECakeDirIterationSignal::DIS_Abort`. Otherwise, we should return `ECakeDirIterationSignal::DIS_Continue`.
+Launching a Guarded iteration is simple, we just need to use the function family `IterateGuarded<Element>`, where `<Element>` refers to the directory element type being visited.
 
-To launch an abortable standard iteration, we use the function family `Iterate<Type>UnlessError`, where `<Type>` refers to the directory element type being visited.
+{% assign bp_file_id="itr-launch-guarded-items" %}
+{% include components/blueprint_image.md %}
+
+{% assign bp_file_id="itr-launch-guarded-files" %}
+{% include components/blueprint_image.md %}
+
+{% assign bp_file_id="itr-launch-guarded-subdirs" %}
+{% include components/blueprint_image.md %}
+
+### Search Iteration Usage
+{% include common_bp_itr_errors.md %}
+The final iteration style, Search Iteration, is also the most complex. A **Search Iteration** allows the user to set a custom goal and terminate the iteration when the goal has been satisfied or when a halting error has been encountered. The iteration will continue visiting elements until the callback indicates that it should stop. If all items are visited and the callback has not indicated success, the search is considered a failure. 
+
+ Let's start by looking at the items callback signature. Again, we find that the parameter list is the exact same (we get our UCakePath and the boolean indicating if the path is a directory). Our return type is unique, however, as we need our callback to return a signal to inform the iteration about the search's progress.
+
+{% assign bp_file_id="callback-search-item" %}
+{% include components/blueprint_image.md %}
+In this callback, our goal is to collect a particular number of paths and store them in an array. This target number is saved in the member variable `TargetPathCount`. When we have stored enough paths, we return the **Complete** signal because our goal has been met. While we still need to collect paths, we return the **Continue** signal to advance to the next path.
+
+All search callbacks _must_ at minimum use the **Complete** signal in order to be a valid search (otherwise, the search is doomed). There are real-world scenarios where we might not need a **Continue** signal, such as if we are checking if there are any files in a directory: there we could simply search files and call complete on the first item found (a search will default to failed if no elements are visited). However, most callbacks you encounter will probably use both **Complete** and **Continue** signals. 
+
+We also can send one more signal: **Abort**. This works exactly like the **Abort** from Guarded iterations -- it should be used when an error is encountered that renders the search meaningless. When sent an **Abort** signal, the iteration will immediately halt, and the search result will be **Aborted**. Let's see an example with a file callback that uses all three signals at once:
+
+{% assign bp_file_id="callback-search-file" %}
+{% include components/blueprint_image.md %}
+
+In this search, we are looking for a file name that exactly matches `game.cfg`. If the file names do not match, we return **Continue** to move to the next file. Once we find a match, we need to ensure that the file has data in it. If the file has no data, this is an error and we will fail the result. We return **Abort** to cancel the termination. Otherwise, the search has succeeded and we can use the file as necessary. We return **Complete** to indicate that the goal has been met.
+
+Being able to abort a search iteration early has two benefits -- the first is that we don't need to do any unnecessary work. The second benefit is that callers can easily distinguish between a search that failed (all elements were visited but the goal was not met) and a search that was aborted (an error occurred which prevented the search from meeting its goal). In many scenarios, this distinction might not matter, but when it does matter, you'll be glad you can tell the difference!
+
+Finally, let's look at a special "doomed" search as we examine our final callback signature: 
+{% assign bp_file_id="callback-search-subdir" %}
+{% include components/blueprint_image.md %}
+
+First, we'll quickly note that the parameter list is the same as all other iteration styles. Secondly, let's notice the absence of a **Complete** condition. This is a doomed search -- it will fail every time it launches -- because it will iterate through all items and never receive a **Completed** signal. Always remember to carefully check your callbacks, and make sure that search callbacks always have at least one branch where **Completed** is possible!
 
 
-```cpp
-if (!IntDir.IterateItemsUnlessError(DesiredDepth, ItemsAbortableIteration))
-{
-    UE_LOG(LogTemp, Error, TEXT("IterateItemsUnlessError encountered an error!"));
-}
+We launch a search iteration via the function family `IterateSearch<Element>`, where `<Element>` is the directory element type being visited:
 
-if (!IntDir.IterateFilesUnlessError(DesiredDepth, FilesAbortableIteration))
-{
-    UE_LOG(LogTemp, Error, TEXT("IterateFilesUnlessError encountered an error!"));
-}
-```
+{% assign bp_file_id="itr-launch-search-items" %}
+{% include components/blueprint_image.md %}
 
-Just like standard iteration, abortable standard iterations return an `UCakeDirIterationResult` that indicate the outcome of the iteration. In this case, however, the **Aborted** has more potential meaning: either the iteration failed to launch or the caller requested early termination. 
-```cpp
-UCakeDirIterationResult ItrAbortableResult = IntDir.IterateSubdirsUnlessError(DesiredDepth, SubdirAbortableIteration);
-switch (ItrAbortableResult.Outcome)
-{
-    case ECakeDirIterationOutcome::DIO_Completed:
-        UE_LOG(LogTemp, Warning, TEXT("SubdirsUnlessError iteration completed without incident."))
-            break;
-    case ECakeDirIterationOutcome::DIO_Aborted:
-        UE_LOG(LogTemp, Warning, TEXT("SubdirsUnlessError iteration was aborted early!"))
-            break;
-}
-```
+{% assign bp_file_id="itr-launch-search-files" %}
+{% include components/blueprint_image.md %}
 
-### Search Iteration
-The final iteration style, Search Iteration, is also the most complex. A **Search Iteration** allows the user to set a custom goal and terminate the iteration when the goal has been satisfied or when a halting error has been encountered. Let's start by looking at the callback signatures:
+{% assign bp_file_id="itr-launch-search-subdirs" %}
+{% include components/blueprint_image.md %}
 
-```cpp
-// Search callbacks return ECakeDirSearchSignal to control iteration flow.
-
-// Search Iteration (Items)
-auto ItemSearch = [SearchLimit, &ItemCount](FCakePath ItemPath, bool bIsDir) -> ECakeDirSearchSignal
-{
-    // There are three signal values we can return.
-    if (SearchLimit <= 0)
-    {
-        // If we encounter a situation we consider an error worth aborting the iteration over, we can return the Abort signal.
-        UE_LOG(LogTemp, Warning, TEXT("Search limit is set to a value <= 0. Aborting."));
-        return ECakeDirSearchSignal::DSS_Abort;
-    }
-
-    ++ItemCount;
-    // When we have accomplished our goal for this iteration, we return the Complete signal.
-    if (ItemCount > SearchLimit) { return ECakeDirSearchSignal::DSS_Complete; }
-
-    // When our requirements have not been met and we want to keep visiting elements, we return the Continue signal.
-    return ECakeDirSearchSignal::DSS_Continue;
-};
-
-// As with Items, the only changes we need to make to File and Subdir variants involve the return types.
-
-// Search Iteration (Files)
-auto FileSearch = [](FCakeFile File) -> ECakeDirSearchSignal
-{
-    // We can abort if we want to indicate a halting error has occurred.
-    return ECakeDirSearchSignal::DSS_Abort;
-};
-
-// Search Iteration (Subdirs)
-auto SubdirSearch = [](UCakeDir Subdir) -> ECakeDirSearchSignal
-{
-    // A search iteration that never returns DSS_Complete will result in 
-    // a Failed outcome.
-    return ECakeDirSearchSignal::DSS_Continue;
-};
-```
-
-As the code above shows, search iteration callbacks return an `ECakeDirSearchSignal`, which is used to control the iteration flow. During the iteration, when we visit an item and still have not yet completed our goal, we return a **Continue** signal. If we accomplish our goal after the current item is visited, we should instead return **Complete**. If we encounter a halting error during the search, we can also return the **Abort** signal to terminate early.
-
-
-We launch a search iteration via the function family `IterateSearch<Type>`, where `<Type>` is the directory element type being visited:
-```cpp
-UCakeDirSearchResult ItrSearchResult = IntDir.IterateSearchItems(DesiredDepth, ItemSearch);
-switch (ItrSearchResult.Outcome)
-{
-    case ECakeDirSearchOutcome::DSO_Succeeded:
-        UE_LOG(LogTemp, Warning, TEXT("ItemSearch found all target elements."))
-        break;
-    case ECakeDirSearchOutcome::DSO_Failed:
-        UE_LOG(LogTemp, Warning, TEXT("ItemSearch failed to find all target elements."))
-        break;
-    case ECakeDirSearchOutcome::DSO_Aborted:
-        UE_LOG(LogTemp, Warning, TEXT("ItemSearch was aborted early due to an error."))
-        break;
-}
-```
-A search iteration will return an `UCakeDirSearchResult` which holds an outcome. There are three outcomes a search can generate:
-1. **Succeeded**: The goal was accomplished during the search iteration.
-2. **Failed**: All target elements were visited and the goal was not satisfied.
-3. **Aborted**: A halting error was encountered and the iteration was aborted.
-
-We can also use the result as a boolean via its `operator bool`, just like the other result types. In this case, `operator bool` will return true only if the result is **Succeeded**, and it will be false otherwise.
-
-
-```cpp
-if (!IntDir.IterateSearchSubdirs(DesiredDepth, SubdirSearch))
-{
-    UE_LOG(LogTemp, Warning, TEXT("Our subdirectory search failed, as expected."));
-}
-
-if (!IntDir.IterateSearchFiles(DesiredDepth, FileSearch))
-{
-    UE_LOG(LogTemp, Warning, TEXT("Our file search was aborted, as expected."));
-}
-```
-
-### Filtered Iteration
-Filtered Iteration is a special "meta" iteration style that can be applied to any iteration style, but only to iterations that target files. Filtered Iteration uses **UCakeDir**'s file extension filter to selectively visit files during an iteration.
+### Filtered Iteration Usage
+{% include common_bp_itr_errors.md %}
+Filtered Iteration is a special iteration variant that only applies to file iterations. Filtered Iteration uses **UCakeDir**'s file extension filter to selectively visit files during an iteration. 
 
 Every style of iteration that targets files has a filtered version; the filtered iteration function will share the name of the non-filtered version, but will have the added suffix `WithFilter`. For example, the filtered version of `IterateFiles` is named `IterateFilesWithFilter`.
 
+{: .warning }
+A filtered iteration will fail to launch if there are no entries in the source **FCakeDir**'s file extension filter.
+
 All filtered iteration functions take the exact same callback signature as the non-filtered version; however, the filtered iteration function has extra parameters associated with the filter logic.
 
-Let's look at a brief example using standard iteration:
+Let's first look at an example of filtered iteration using a Sequential iteration:
+{% assign bp_file_id="itr-launch-seq-filtered" %}
+{% include components/blueprint_image.md %}
 
-```cpp
-auto StandardFilter = [](FCakeFile InFile) -> void 
-{
-    UE_LOG(LogTemp, Warning, TEXT("    StandardFilter Found File: [%s]"), *InFile.GetFileName());
-};
-
-ECakePolicyOpDepth CurrentDepth = ECakePolicyOpDepth::Shallow;
-
-UCakeDirIterationResult ItrStandardRes = IntDir.IterateFilesWithFilter(CurrentDepth, StandardFilter);
-```
-
-{: .warning }
-A filtered iteration will fail to launch if there are no entries in the source **UCakeDir**'s file extension filter.
-
-Other than the function name, this doesn't look any different from a call to the non-filtered version. However, filtered iterations use the following two policies to control how files are selected:
+This function looks a bit different -- we still need to select an iteration depth and provide a callback, but we also have two new policies we can set. These policies control how files are selected:
 {% assign policy_id="ExtFilterMode" %}
 * {% include link_policy.md %}
 {% assign policy_id="ExtMatchMode" %}
 * {% include link_policy.md %}
 
+The default setup supports a common need in directory traversal: only visiting files that have specific file extensions. With the default settings, any files that have file extensions that are listed in **UCakeDir**'s file extension filter will be visited. So, in our example, only files that have the extension `.bin` or `.dat` will be visited.
 
-```cpp
-UCakeDirIterationResult IterateFilesWithFilter(
-    ECakePolicyOpDepth Depth, 
-    FIterateOpFile Callback, 
-    ECakePolicyExtFilterMode FilterMode = ECakePolicyExtFilterMode::SelectMatchingOnly, 
-    ECakePolicyExtMatchMode   MatchMode = ECakePolicyExtMatchMode::MultiOrSingle
-) const;
-```
+However, this filter logic can be inverted if you want -- we can instead exclude any files whose extensions are in the filter. We can accomplish this by changing the `FilterMode` argument:
 
-By default, filter iteration functions will use the filter mode of **SelectMatchingOnly** and the match mode of **MultiOrSingle**. This means that we will only visit files whose extensions are found in the extension filter, and that our matching logic will be more permissive. 
+{% assign bp_file_id="itr-filtered-exclude" %}
+{% include components/blueprint_image.md %}
 
-{: .note }
-For a detailed description of the matching logic for `ECakePolicyExtMatchMode`, please visit the policy documentation linked previously.
+With the `FilterMode` argument set to `ExcludeMatching`, now our iteration will visit any files whose extensions are NOT `.bin` or `.dat`. 
 
-We can invert the filter and ignore files whose extensions are found in the extension filter:
+Finally we can use the `MatchMode` argument to determine how strict we need to be about matching file extensions. If you want to learn all the gritty details about extension matching, please see the policy documentation that was linked a bit earlier. However, the rough explanation for `MatchMode` is that `MultiOrSingle` represents a more permissive matching logic. When a file has multiple extension components, like `.cdr.bin`, the full extension will be checked against the filter as well as the single extension (`.bin` in this case). Since our filter is using `.bin` for one of its extensions, a file with the extension `.cdr.bin` would still match, since the last extension was `.bin`. 
 
-```cpp
-ItrStandardRes = IntDir.IterateFilesWithFilter(
-    CurrentDepth, 
-    StandardFilter, 
-    ECakePolicyExtFilterMode::ExcludeMatching
-);
-```
+If we decided to change `MatchMode` to `ExactMatch`, that means that only files with exactly the extension `.bin` or `.dat` would be selected:
 
-We can also adjust the extension matching logic to be more strict by using the **ExactMatch** match mode policy value:
-```cpp
-ItrStandardRes = IntDir.IterateFilesWithFilter(
-    CurrentDepth, 
-    StandardFilter, 
-    ECakePolicyExtFilterMode::ExcludeMatching, 
-    ECakePolicyExtMatchMode::ExactMatch
-);
-```
+{% assign bp_file_id="itr-filtered-exact" %}
+{% include components/blueprint_image.md %}
 
-{: .note }
-The other filtered functions, `IterateFilesUnlessErrorWithFilter` and `IterateSearchFilesWithFilter` share the policy parameters and default settings.
+And that's all there is to filtered iteration! For the sake of completeness, here are examples of launching filtered versions of Guarded and Search iteration styles. 
+
+{% assign bp_file_id="itr-launch-guarded-filtered" %}
+{% include components/blueprint_image.md %}
+
+{% assign bp_file_id="itr-launch-search-filtered" %}
+{% include components/blueprint_image.md %}
