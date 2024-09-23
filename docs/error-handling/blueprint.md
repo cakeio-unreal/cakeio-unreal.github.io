@@ -4,43 +4,36 @@ parent: Error Handling
 nav_order: 2
 ---
 
+{% assign bp_path="error-handling" %}
+
 {% assign header_parent="Result" %}
 ## Error Handling
 {% include components/default_toc.md %}
 
 ## Introduction
-**CakeIO** introduces a variety of custom types that indicate the outcome of IO operations. Though each type will have some unique properties, there are some common design patterns and programming idioms that can be applied to all of the error types. 
+**CakeIO** introduces a variety of custom types that indicate the outcome of IO operations or directory iteration. Though each type has some unique properties, they all follow a common design pattern. The error handling in CakeIO was designed to be an opt-in experience for the callers -- they are in control of how complicated they wish their error handling to be. Results from an operation can be entirely ignored, viewed as a success/fail binary outcome via a boolean, or viewed through an outcome/error code that gives detailed context surrounding failing operations.
 
-The error handling in CakeIO was designed to be an opt-in experience for the callers -- all result types have `operator bool` defined so that IO operation functions outcomes can be expressed as successes or failures. However, should the caller wish to know more details surrounding the outcome, these error types will help give greater context. For instance, if a file move operation fails, that failure can occur in many different ways. The error code returned will grant the caller greater context -- perhaps the file itself did not exist, the copy operation failed, or the delete operation failed. 
+To that end, we will see a familiar pattern no matter what operation we are trying to achieve -- the function will return back both a boolean that indicates generic success or failure, and it will also send us back an enum type whose value will map to specific outcome/error contexts. 
 
-## Result Types
-{% assign link_desc="CakeMixLibrary" %}
-All IO operations return result types, and these are convenience types that wrap either an underlying error code (for file and directory IO operations) or an outcome code (for directory iterations). The actual codes are simple enums, and the result types are very simple types that add some extra utility and convenience functions. {% include rlinks/cakemix_native.md %} also offers functions that will take result types and generate human-readable strings for them. 
-
-In the following sections, we'll examine these result types and the wrapped error / outcome codes in detail.
-
-### Opt-In Error Handling
-The error handling in CakeIO was designed to be an opt-in experience for the callers -- all result types have `operator bool` defined so that IO operation functions outcomes can be expressed as successes or failures. Thus, a caller is never forced to create elaborate error handling when using CakeIO interfaces.
-
-However, should the caller wish to know more details surrounding the outcome, these error types will help give greater context. For instance, if a file move operation fails, that failure can occur in many different ways. The error code returned will grant the caller greater context -- perhaps the file itself did not exist, the copy operation failed, or the delete operation failed. 
+We'll start by examining how we can handle and understand IO operations involving files and directories, and then we will look at error handling with directory iteration.
 
 ## File and Directory Error Handling
-{% assign in_source="CakeFileError|CakeFileOpResult|CakeDirError|CakeDirOpResult" %}
+{% assign in_source="CakeFileError|CakeDirError" %}
 {% include components/source_info_ex.html %}
-File and directory error handling is very similar, and so we'll look at them together. Any file IO operation will return an `FCakeFileOpResult`, which in turn wraps an `FCakeFileError` error code.
-```cpp
-FCakeFileOpResult FileOpResult{ FCakeFileOpResult::OK() };
-ECakeFileError ErrorCode = FileOpResult.ErrorCode;
-```
+File and directory error handling is very similar, and so we'll look at them together. Any file IO operation will return a boolean that indicates generically whether the operation succeeded, and an `ECakeFileError` enum value that gives specific context about how the operation succeeded or failed:
+{% assign bp_file_id="file-result-example" %}
+{% include components/blueprint_image.md %}
 
-Likewise, any directory IO operation will return an `FCakeDirOpResult`, which wraps an `FCakeDirError` error code.
-```cpp
-FCakeDirOpResult DirOpResult{ FCakeDirOpResult::OK() };
-ECakeDirError ErrorCode = DirOpResult.ErrorCode;
-```
+Likewise, any directory IO operation will return a boolean indicating general success or failure and an `ECakeDirError` enum value that gives greater context:
+{% assign bp_file_id="dir-result-example" %}
+{% include components/blueprint_image.md %}
+
+
+So we can see the only difference between an IO operation for a file or directory is the error code type that is returned.
+
 
 ### OK and NOP
-Both file and directory error codes have two values that do not indicate an actual error: `OK` and `NOP`. It is important to understand the difference between these two errors.
+While file and directory operations each have their own dedicated error code type, they share two values that have the exact same meaning: `OK` and `NOP`. It is important to understand the difference between these two errors.
 
 > **OK**: The IO operation was executed and encountered no errors.
 
@@ -48,128 +41,48 @@ Both file and directory error codes have two values that do not indicate an actu
 
 An example of a situation that might generate a **NOP** is when we attempt to delete a file or directory that doesn't exist. The benefit of distinguishing between **OK** and **NOP** is that we can know whether or not an IO operation actually occurred and work was done. 
 
-In many scenarios, callers likely won't care to distinguish between **OK** and **NOP**, since either error value means that the file system is in the desired state after the operation resolved. That is why `operator bool` and the result type's convenience function `IsOk` will return true if the value is **OK** _or_ **NOP**.
+In many scenarios, callers likely won't care to distinguish between **OK** and **NOP**, since either error value means that the file system is in the desired state after the operation resolved. That is why the boolean returned by an IO operation will be true if the value is **OK** _or_ **NOP**. 
+{% assign bp_file_id="ok-bool" %}
+{% include components/blueprint_image.md %}
 
-```cpp
-if (FileOpResult) // OK or NOP
-{ 
-    // ... 
-}
-if (FileOpResult.IsOk())  // OK or NOP
-{ 
-    // ... 
-}
-```
+In situations where we only want to do something if an IO operation actually occurred, we will need to switch on the error code and only proceed if it is `OK`:
+{% assign bp_file_id="ok-strict" %}
+{% include components/blueprint_image.md %}
 
-However, when we want to only do something when an IO operation actually occurs, we can use `IsOkStrict`, which only returns true if the error code is **OK**:
+For a pragmatic example of when we might care about distinguishing between OK and NOP, we can look to the `MoveFile` implementation. A `UCakeFile` needs to update its path information when it is moved, but it should only update that path information when a move actually succeeds. It is possible (though likely rare) that the destination directory was the same as the file's current directory, which would result in a NOP. In this situation, we need to be sure that the IO operation occurred, and so this is a scenario where we only need to perform logic on an `OK` return value. 
 
-```cpp
-if (FileOpResult.IsOkStrict()) // OK
-{
-    //...
-}
-```
-
-For a pragmatic example of `IsOkStrict`'s value, we can look to the `MoveFile` implementation. `FCakeFile` needs to update its path information when it is moved, but it should only update that path information when a move actually occurs. We can easily setup a branch for updating the path via `IsOkStrict`:
-
-```cpp
-const FCakeFileOpResult MoveResult{ 
-    CakeFileServices::MoveFileTo(*DestDir, FileName_, *FilePath_, OverwritePolicy, MissingParentPolicy) 
-};
-
-if (MoveResult.IsOkStrict())
-{
-    SetPath(FilePath_.CloneWithNewParent(DestDir));
-}
-return MoveResult;
-```
 ### Error Handling Idioms
+{: .note }
+The following examples uses a directory operation; however, the exact same approach will work for file operations. The only difference is that there will be different values possible for the returned `ErrorCode`.
+
+By far the simplest way to handle errors is to ignore them altogether. However, as you might imagine, this isn't recommended! But it's still an option, and might make sense when you are just trying to get something to work very quickly:
+{% assign bp_file_id="idiom-io-ignore" %}
+{% include components/blueprint_image.md %}
+
+There are many situations where we might not care exactly how an IO operation, but just want to know whether or not it succeeded in doing its job. For this, we can easily branch on the boolean returned by our IO operation. Remember, this will be true if the operation returns `OK` or `NOP`, so it doesn't guarantee that the operation occurred, it just guarantees the filesystem is in the state you expect after the call.
+{% assign bp_file_id="idiom-io-bool" %}
+{% include components/blueprint_image.md %}
 
 {: .note }
-The following examples use `FCakeFileOpResult` as the result type; however, the exact same code will work for an `FCakeDirOpResult`. The only difference is that there will be different values possible for the `ErrorCode` member field.
+This generic error handling approach is much more ergonomic for things like editor tools and scripts where the nuances of IO errors are less important.
 
-The simplest error handling method is to simply use a result type as an implicit boolean via `operator bool`:
+Finally, we can use the error code itself to handle any potential outcomes that we deem necessary:
+{% assign bp_file_id="idiom-io-error-code" %}
+{% include components/blueprint_image.md %}
 
+And that's all there is to handling IO operations. As you can see, error handling can be as comprehensive as you desire. CakeIO strives to give developers the freedom to balance their error handling complexity around their own particular needs. 
 
-```cpp
-FCakeFile ExampleFile{ FPaths::ProjectIntermediateDir() / TEXT("error_example.txt") };
-
-if (!ExampleFile.CreateTextFile(TEXT("Some example text.")))
-{
-    UE_LOG(LogTemp, Error, TEXT("Failed creating example text file."));
-}
-```
-This style is highly ergonomic when we don't need to worry about specific details of failure and just want to know whether or not an IO operation has succeeded.
-
-When we do want to examine the error more closely, we can save it to a variable:
-
-```cpp
-FCakeFileOpResult CreateResult = ExampleFile.CreateTextFile(TEXT("Some example text."));
-
-if (CreateResult.IsOk())
-{
-    UE_LOG(LogTemp, Warning, TEXT("Successfully created example text file."));
-}
-else
-{
-    UE_LOG(LogTemp, Error, TEXT("Failed creating example text file."))
-}
-```
-
-We can also use scoped variable declaration to make things more compact:
-```cpp
-if (FCakeFileOpResult CreateResult = ExampleFile.CreateTextFile(TEXT("Some example text.")))
-{
-    
-    UE_LOG(LogTemp, Warning, TEXT("Successfully created our example text file."));
-}
-else
-{
-    switch (CreateResult.ErrorCode)
-    {
-        case ECakeFileError::CFE_DestDirDoesNotExist:
-            UE_LOG(LogTemp, Error, TEXT("The destination directory for our example file doesn't exist!"))
-            break;
-    }
-}
-```
+{% include common_ad_error_map.md %}
 
 ### Human-Readable Strings
 {% assign link_desc="CakeMixLibrary" %}
-{% include rlinks/cakemix_native.md %} offers utility functions that can generate human-readable versions of both error codes and result types. 
+Sometimes we might want to display error codes as a human-readable string. 
+{% include rlinks/cakemix_blueprint.md %} offers utility functions that allow us to do this easily. Depending on the error code type, we simply need to use either `GetCakeDirErrorAsString` or `GetCakeFileErrorAsString`:
+{% assign bp_file_id="ec-string-dir" %}
+{% include components/blueprint_image.md %}
 
-Let's first take a look at how to get a human-readable string for an `FCakeDirOpResult`:
-```cpp
-FCakeDirOpResult DirOpResult{ FCakeDirOpResult::CouldNotReplace() };
-```
-
-We can use `DirErrorToString` to get the human-readable version of an `ECakeDirError` error code:
-```cpp
-FString ErrorCodeString = CakeMixLibrary::Results::DirErrorToString(DirOpResult.ErrorCode);
-UE_LOG(LogTemp, Warning, TEXT("Error Code String (Dir): [%s]"), *ErrorCodeString);
-```
-
-We can alternatively use `DirOpResultToString` to get the human-readable version of the result type itself:
-
-```cpp
-FString ResultString = CakeMixLibrary::Results::DirOpResultToString(DirOpResult);
-UE_LOG(LogTemp, Warning, TEXT("Result String (Dir): [%s]"), *ResultString);
-```
-
-{: .note }
-The difference between an error code string and a result type string is minimal, the result type just includes the integer value of the error code as well to make it more debug friendly!
-
-Finally, each result type has a `ToString` convenience member function that calls the appropriate CakeMixLibrary function:
-```cpp
-// The following code is equivalent to calling DirOpResultToString
-UE_LOG(LogTemp, Warning, TEXT("To String (Dir): [%s]"), *DirOpResult.ToString());
-```
-
-For completeness, here are examples using both `FCakeFileOpResult` and `FCakeDirBatchResult`:
-
-{: .note }
-If these generic solutions do not have the formatting you desire, it is simple to write your own version of them! See the CakeMixLibrary's source code for the implementation details.
-
+{% assign bp_file_id="ec-string-file" %}
+{% include components/blueprint_image.md %}
 
 ## Iteration Error Handling
 {% assign bp_path="dir" %}
@@ -177,7 +90,7 @@ Just like IO operations, error handling for iterations is meant to be simple and
 
 Let's look at an example with a Sequential iteration:
 
-All iteration functions will send back at least two variables: a boolean indicating whether or not the iteration was successful (the definition of success will vary across iteration styles), and an enum outcome code that will contain more detailed context. 
+Just like IO operations, all iteration functions will send back at least two variables: a boolean indicating whether or not the iteration was successful (the definition of success will vary across iteration styles), and an enum outcome code that will contain more detailed context. 
 
 When we just need to know whether or not an iteration was successful and we don't care about the context surrounding success / failure, we can simply branch on the boolean.
 
@@ -189,10 +102,61 @@ If, however, we want to do more robust error handling, we can switch on the outc
 
 Handling either of these return values is entirely optional -- for quick and dirty scripts we can gleefully ignore all returned results returned and continue on our way.
 
-The following sections will describe each iteration style and articulate any differences its error handling might require. 
+Before we look at each iteration style and its potential outcomes, we need to first learn about the outcome value that is shared across all iteration styles.
 
+### Failure to Launch
+{% include common_failure_to_launch.md %}
+
+With that common value now explained, let's look into the unique differences that each iteration style has in relation to outcomes.
+
+{% assign bp_path="error-handling" %}
 ### Sequential Iterations
+**Sequential** iterations use the `ECakeDirIterationOutcome` type to represent their outcomes:
+{% assign bp_file_id="itr-ec-seq" %}
+{% include components/blueprint_image.md %}
+As we can see, there are three outcome values possible: **DidNotLaunch**, **Completed**, and **Aborted**.
+**Sequential** iterations are the simplest iteration type -- once launched, they will visit every target element in the source directory. They cannot be stopped until all elements have been visited; and because of this, the **Aborted** outcome does not apply. A **Sequential** iteration will either launch and be completed, or it will fail to launch. Thus, we can interpret the boolean value roughly as "did or didn't launch":
+{% assign bp_file_id="itr-bool-seq" %}
+{% include components/blueprint_image.md %}
+
+And that's all there is to handling outcomes from **Sequential** iterations.
 
 ### Guarded Iterations
+**Guarded** iterations also use the `ECakeDirIterationOutcome` type to represent their outcomes, only this time the **Aborted** value can also be sent back:
+{% assign bp_file_id="itr-ec-guard" %}
+{% include components/blueprint_image.md %}
+
+Whenever a **Guarded** iteration callback sends the signal **Abort**, the final outcome for that iteration will be **Aborted**. Since the callback determines what is or isn't worth aborting over, it will need to record additional context on its own (e.g., send out a log). From our perspective, we simply know that some error was encountered and the iteration did not fully complete. 
+
+The boolean return value implies more than its **Sequential** counterpart; we can interpret this boolean as either the iteration failed to launch OR the iteration was aborted early. 
+{% assign bp_file_id="itr-ec-guard" %}
+{% include components/blueprint_image.md %}
+
+Since it can indicate more than one outcome, the boolean represents a loss of information; as long as we only care whether or not the iteration completed, that should be an acceptable loss.
+{% assign bp_file_id="itr-bool-guard" %}
+{% include components/blueprint_image.md %}
+
+And that concludes our tour of **Guarded** iteration error handling, let's move on to **Search** iterations!
 
 ### Search Iterations
+**Search** iteration outcomes use the outcome type `ECakeDirSearchOutcome`. Since **Search** iterations are the most complex type of iteration, it is fitting they have a unique outcome type. However, complexity is relative, and the good news is that **Search** iteration outcomes are still quite straightforward and simple.
+
+{% assign bp_file_id="itr-ec-search" %}
+{% include components/blueprint_image.md %}
+
+Failure to launch is an expected outcome type, and **Aborted** is just like a **Guarded** iteration: it will be returned whenever an **Abort** signal is sent from a **Search** iteration callback. The new values are **Succeeeded** and **Failed**. Recall that a **Search** iteration expects its associated callback to have a defined goal; **Succeeded** is the outcome that will be returned when the **Complete** signal is sent from a search callback. If, however, all elements are visited (the iteration is exhausted) and the search callback has never sent a **Complete** signal, the entire **Search** iteration is considered a failure and will be assigned the outcome **Failed**.
+
+When we use the boolean returned by a **Search** iteration, we need to understand its implications. Just like a **Guarded** iteration, the boolean represents a loss of information. In the case of a **Search** iteration, the boolean will only be true if the outcome is **Succeeded**. This means that a false value can mean that either the iteration didn't launch OR the iteration was aborted OR the search was a failure. Because using the boolean from a **Search** iteration represents the greatest loss of information, be sure you understand the costs before using it. When the losses are deemed acceptable it can produce more ergonomic code.
+
+{% assign bp_file_id="itr-bool-search" %}
+{% include components/blueprint_image.md %}
+
+And that's all there is to handling **Search** iterations. We'll close out this section by seeing how we can get human-readable strings for our iteration outcomes.
+
+### Human-Readable Strings
+Just like the error codes for file and directory operations, we can easily get a human-readable string for our iteration outcomes via utility functions from CakeMixLibrary. Depending on the outcome type, we either use `GetDirIterationOutcomeAsString` or `GetDirSearchOutcomeAsString`:
+{% assign bp_file_id="ec-string-itr" %}
+{% include components/blueprint_image.md %}
+
+{% assign bp_file_id="ec-string-search" %}
+{% include components/blueprint_image.md %}

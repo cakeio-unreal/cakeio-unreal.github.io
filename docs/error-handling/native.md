@@ -134,6 +134,8 @@ else
 }
 ```
 
+{% include common_ad_error_map.md %}
+
 ### FCakeDirBatchResult
 {% assign in_source="CakeDirBatchResult" %}
 {% include components/source_info_ex.html %}

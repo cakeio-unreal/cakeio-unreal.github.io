@@ -173,6 +173,8 @@ We can use the following policies to further customize this delete operation:
 {% assign policy_id="ErrorHandling" %}
 * {% include link_policy.md %}
 
+> For CakeMix's Delete family of functions, the error that will trigger the **ErrorHandling** policy is when a delete operation on a file or subdirectory fails.
+
 ```cpp
 auto FileDeletePolicy = ECakePolicyFileDelete::UnlessReadOnly;
 ErrorPolicy = ECakePolicyErrorHandling::AbortOnError;
@@ -327,6 +329,8 @@ else
     UE_LOG(LogTemp, Warning, TEXT("No config files were found!"))
 }
 ```
+{: .note }
+The `FindFilesNamed` family of functions have `ContainedInName` as their default policy value for `NameComparison` value in order to be more ergonomic for the general use case. 
 
 {: .note }
 Both `FindFirstFileNamed` and `FindFilesNamed` have filtered versions: `FindFirstFileNamedWithFilter` and `FindFilesNamedWithFilter`. The usage is identical with the exception of the added policy parameters to control the filter logic.
