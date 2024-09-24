@@ -53,6 +53,7 @@ fcakefile = ClassErrorMap('FCakeFile',
         ]),
         FunctionErrorMap('AppendTextToFile / AppendBytesToFile',
         [
+            ErrorCode('NOP', None, 'Occurs when an empty string or empty byte array is submitted to be appended.'),
             from_common_with_ctx('DoesNotExist', 'Append is only intended for existing files, use Create otherwise.'),
             use_common('FailedOpenW'),
         ]),
