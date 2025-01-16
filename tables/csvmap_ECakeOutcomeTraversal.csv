@@ -1,0 +1,4 @@
+Enum Value,Display Name,Description
+DidNotLaunch,Did Not Launch,The traversal was unable to begin.
+Completed,Completed,The traversal completed without incident.
+Aborted,Aborted,The traversal was aborted due to an error.

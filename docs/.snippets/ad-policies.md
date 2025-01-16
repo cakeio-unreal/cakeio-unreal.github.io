@@ -1,0 +1,2 @@
+!!! note
+    The following section involves the use of various Cake Policy enums. If you are unfamiliar with a policy, please refer to the [Policies](../core-api/policies.md) section for a detailed introduction to each policy.

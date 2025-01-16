@@ -1,0 +1,1 @@
+ATTENTION: When you are creating error maps, you MUST ensure that `NoOp` is EXCLUSIVELY USED to indicate that an unnecessary IO operation was skipped. It is no longer allowed to indicate any kind of meta-error. 

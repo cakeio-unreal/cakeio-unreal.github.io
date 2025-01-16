@@ -1,0 +1,2 @@
+!!! note
+	The following functions all return the template struct `TCakeOrderFile`. It is a lightweight struct that bundles an `FCakeResultFileIO` and an associated payload together. The payload's type varies based upon what the caller wishes to receive from a target `FCakeFile`. For more details, read [this section](../core-api/special-types/orders.md#tcakeorderfile)

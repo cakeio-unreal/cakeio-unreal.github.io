@@ -1,0 +1,2 @@
+!!! note
+    The following section involves file extension types. If you are unfamiliar with how CakeIO classifies file extensions, please see [this section](../core-api/file-extensions.md#file-extension-classification).

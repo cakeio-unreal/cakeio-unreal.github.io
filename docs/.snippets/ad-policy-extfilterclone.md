@@ -1,0 +1,2 @@
+!!! note
+    This function has an optional [ECakePolicyExtFilterClone](../core-api/policies.md#extfilterclone) policy parameter that determines if the cloned directory should also clone the source directory's [file extension filter](../core-api/directories.md#file-extension-filter).

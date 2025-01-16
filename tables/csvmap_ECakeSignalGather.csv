@@ -1,0 +1,6 @@
+Enum Value,Display Name,Description
+Select,Select,Include the current element and continue the traversal.
+Reject,Reject,Exclude the current element and continue the traversal.
+SelectThenStop,Select Then Stop,Include the current element and then stop the traversal.
+RejectThenStop,Reject Then Stop,Exclude the current element and then stop the traversal.
+Abort,Abort,A critical error was encountered and the gather operation should immediately abort.

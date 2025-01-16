@@ -1,0 +1,3 @@
+Enum Value,Display Name,Description
+Relaxed,Relaxed,Select extensions whose multi or single forms are in the filter set.
+Exact,Exact,Select extensions whose full extension are in the filter set.

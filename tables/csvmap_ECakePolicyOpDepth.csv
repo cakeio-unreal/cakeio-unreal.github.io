@@ -1,0 +1,3 @@
+Enum Value,Display Name,Description
+Shallow,Shallow,"Apply the operation only on local directory elements, excluding children of any subdirectories."
+Deep,Deep,"Apply the operation across all elements in the directory, including all children of subdirectories."

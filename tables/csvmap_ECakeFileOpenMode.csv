@@ -1,0 +1,4 @@
+Enum Value,Display Name,Description
+Read,Read,The file should be opened as read-only.
+Write,Write,The file should be opened as write-only.
+ReadAndWrite,Read And Write,The file should be opened as read and write.

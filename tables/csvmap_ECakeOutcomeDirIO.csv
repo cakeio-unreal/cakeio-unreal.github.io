@@ -1,0 +1,13 @@
+Enum Value,Display Name,Description
+Ok,Ok,The operation was successful without incident.
+NoOp,No Op,The operation was skipped because it would have resulted in no effect.
+BadDirName,Bad Dir Name,The directory name is invalid.
+DoesNotExist,Does Not Exist,The directory does not exist.
+DestDirDoesNotExist,Dest Dir Does Not Exist,The destination directory does not exist.
+FailedCreatingMissingParents,Failed Creating Missing Parents,Failed creating missing parents required by the destination directory.
+AlreadyExists,Already Exists,The directory already exists.
+FailedDeletingPreexisting,Failed Deleting Preexisting,Failed deleting preexisiting directory meant to be overwritten.
+FailedStatQuery,Failed Stat Query,Failed while attempting to retrieve OS stat data for this file.
+FailedCreate,Failed Create,Failed to read the file's data.
+FailedDelete,Failed Delete,Failed to delete the file.
+FailedCopy,Failed Copy,Failed to copy the file.

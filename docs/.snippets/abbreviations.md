@@ -1,0 +1,1 @@
+*[string-like]: Some form of FString or FStringView. 

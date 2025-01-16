@@ -1,0 +1,2 @@
+!!! note
+    In the following sections, please understand that `NoOp` will indicate that the traversal did not launch and thus the operation involving the directory failed to accomplish anything. Because of this, we always want to see `Ok` from these operations rather than `Ok` OR `NoOp`. 

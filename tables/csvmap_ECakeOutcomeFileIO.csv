@@ -1,0 +1,19 @@
+Enum Value,Display Name,Description
+Ok,Ok,The operation was successful without incident.
+NoOp,No Op,The operation was skipped because it would have resulted in no effect.
+BadFileName,Bad File Name,The file name is invalid.
+DoesNotExist,Does Not Exist,The file does not exist.
+DestDirDoesNotExist,Dest Dir Does Not Exist,The destination directory does not exist.
+FailedCreatingMissingParents,Failed Creating Missing Parents,Failed creating missing parents required by the destination directory.
+AlreadyExists,Already Exists,The file already exists.
+FailedDeletingPreexisting,Failed Deleting Preexisting,Failed deleting preexisiting file meant to be overwritten.
+FailedStatQuery,Failed Stat Query,Failed while attempting to retrieve OS stat data for this file.
+FailedOpenRead,Failed Open Read,Failed to open the file as read-only.
+FailedOpenWrite,Failed Open Write,Failed to open the file as write-only.
+FailedOpenReadWrite,Failed Open Read Write,Failed to open the file as read-write.
+IsReadOnly,Is Read Only,The file is read only and the desired operation could not proceed.
+CouldNotChangePerms,Could Not Change Perms,Failed while attempting to change file permissions.
+FailedRead,Failed Read,Failed to read the file's data.
+FailedWrite,Failed Write,Failed to write data to the file.
+FailedDelete,Failed Delete,Failed to delete the file.
+FailedCopy,Failed Copy,Failed to copy the file.

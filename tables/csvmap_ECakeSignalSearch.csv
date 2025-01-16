@@ -1,0 +1,4 @@
+Enum Value,Display Name,Description
+Continue,Continue,The requirements for the search have yet to be satisfied and the next element should be visited.
+Success,Success,The requirements for the search have been satisfied and the traversal should stop.
+Abort,Abort,An error has been encountered and the search should terminate early in an unsuccessful state.

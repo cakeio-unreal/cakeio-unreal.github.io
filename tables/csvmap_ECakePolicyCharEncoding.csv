@@ -1,0 +1,5 @@
+Enum Value,Display Name,Description
+UTF8,UTF-8,Use UTF-8 character encoding.
+ANSI,ANSI,Use ANSI character encoding.
+UTF16,UTF-16,Use UTF-16 character encoding.
+UTF32,UTF-32,Use UTF-32 character encoding.

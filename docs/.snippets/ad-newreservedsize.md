@@ -1,0 +1,2 @@
+!!! note
+    This function takes an optional `int32` parameter `NewReservedSize` which will be forwarded to the path's internal `FString` member. You can use this to reserve a size for the path string buffer, just as you would with `FString`.

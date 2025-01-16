@@ -1,0 +1,2 @@
+!!! warning
+    Always check the bool returned by the function to see whether the query operation succeeded before using any value from a Query function. The values will only be valid if the the query operation did in fact succeed.

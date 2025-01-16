@@ -1,0 +1,2 @@
+!!! warning
+    Many operating systems allow for the `.` character to be in directory names as well. If the leaf component of the path you submit is not a file but contains a `.` character, you will get an incorrect file extension extracted. 

@@ -1,0 +1,5 @@
+Enum Value,Display Name,Description
+DidNotLaunch,Did Not Launch,The traversal was unable to begin.
+Succeeded,Succeeded,The search satisfied its requirements.
+Failed,Failed,All elements were visited and the search failed to satisfy its requirements.
+Aborted,Aborted,The traversal was aborted due to an error.

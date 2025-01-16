@@ -1,0 +1,2 @@
+!!! warning
+    The following examples use minimal error handling to keep the focus on core API usage. Please read the [advanced error handling] section for more details on what error handling strategies are available and recommended. 

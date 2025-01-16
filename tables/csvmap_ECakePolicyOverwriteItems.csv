@@ -1,0 +1,3 @@
+Enum Value,Display Name,Description
+OverwriteExistingItems,Overwrite Existing Items,Overwrite existing files or directories.
+DoNotOverwriteExistingItems,Do Not Overwrite Existing Items,Do not overwrite existing files or directories.

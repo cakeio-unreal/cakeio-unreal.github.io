@@ -1,0 +1,3 @@
+Enum Value,Display Name,Description
+SelectMatchingOnly,Select Matching Only,Only visit files whose extensions are in the filter set.
+ExcludeMatching,Exclude Matching,Only visit files whose extensions are NOT in the filter set.
