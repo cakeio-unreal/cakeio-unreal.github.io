@@ -271,7 +271,7 @@ To create a text or binary file, we use `CreateTextFile` or `CreateBinaryFile` r
 	}
 	```
 
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
 	{{ bp_img_file('Create Text File') }}
@@ -448,7 +448,7 @@ We can copy a CakeFile's referenced file to another location via `CopyFile`. Thi
 		UE_LOG(LogTemp, Warning, TEXT("Failed copying spells database to archive dir."))
 	}
 	```
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
 	{{ bp_img_file('Copy File') }}
@@ -465,7 +465,7 @@ If we want the copied file to have a file name that differs from the source file
 	}
 	```
 
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
 	{{ bp_img_file('Copy File Aliased') }}
@@ -486,7 +486,7 @@ We can move a file to another location via `MoveFile`. This takes an CakePath ar
 		UE_LOG(LogTemp, Warning, TEXT("Failed moving spells database to archive dir."))
 	}
 	```
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
 	{{ bp_img_file('Move File') }}
@@ -504,7 +504,7 @@ Just like copy interface, we can also change the name of the moved file via `Mov
 	}
 	```
 
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
 	{{ bp_img_file('Move File Aliased') }}

@@ -333,12 +333,12 @@ To copy the directory a CakeDir represents to another location on the filesystem
     }
     ```
 
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
 	{{ bp_img_dir('Copy Dir') }}
 
-We can give the copied directory a new name easily via `CopyDirAliased`. In addition to a destination path, we also need to provide a new name that the copied directory should have: 
+We can give the copied directory a new name easily via `CopyDirWithNewName`. In addition to a destination path, we also need to provide a new name that the copied directory should have: 
 
 === "C++"
 
@@ -347,15 +347,15 @@ We can give the copied directory a new name easily via `CopyDirAliased`. In addi
 
 	FCakePath PathDestDir{ TEXT("Z:/archive/") };
 
-	if (!DirectoryGame.CopyDirAliased(PathDestDir, TEXTVIEW("game_archive")))
+	if (!DirectoryGame.CopyDirWithNewName(PathDestDir, TEXTVIEW("game_archive")))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed copying game directory to archives!"))
 	}
     ```
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
-	{{ bp_img_dir('Copy Dir Aliased') }}
+	{{ bp_img_dir('Copy Dir With New Name') }}
 
 Assuming the copy succeeds, the copied directory's path would be `Z:/archive/game_archive`.
 
@@ -376,12 +376,12 @@ To move the directory a CakeDir represents to another location on the filesystem
     }
     ```
 
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
 	{{ bp_img_dir('Move Dir') }}
 
-We can give the moved directory a new name easily via `MoveDirAliased`. In addition to a destination path, we also need to provide a new name that the moved directory should have: 
+We can give the moved directory a new name easily via `MoveDirWithNewName`. In addition to a destination path, we also need to provide a new name that the moved directory should have: 
 
 === "C++"
 
@@ -390,15 +390,15 @@ We can give the moved directory a new name easily via `MoveDirAliased`. In addit
 
 	FCakePath PathDestDir{ TEXT("Z:/archive/") };
 
-	if (!DirectoryGame.MoveDirAliased(PathDestDir, TEXTVIEW("game_archive")))
+	if (!DirectoryGame.MoveDirWithNewName(PathDestDir, TEXTVIEW("game_archive")))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed moving game directory to archives!"))
 	}
     ```
-	--8<-- "ad-settings-createitem.md"
+	--8<-- "ad-settings-copyitem.md"
 
 === "Blueprint"
-	{{ bp_img_dir('Move Dir Aliased') }}
+	{{ bp_img_dir('Move Dir With New Name') }}
 
 Assuming the move succeeds, the moved directory's path would be `Z:/archive/game_archive`.
 
@@ -423,7 +423,7 @@ We can control whether or not the name change is allowed to overwrite existing d
 
 ### Retrieving Directory OS Stat Information
 === "C++"
-    We can get the `FFileStatData` for an **FCakeDir** via `QueryStatData`:
+    We can get the `FFileStatData` for an FCakeDir via `QueryStatData`:
 
     ```c++ hl_lines="3"
 	FCakeDir DirectoryGame{ FCakePath{TEXTVIEW("X:/game")} };
@@ -910,19 +910,19 @@ Sometimes we might want to clone a CakeDir object and just change its parent pat
 The cloned directory will hold the path: `Y:/archive/build/win64`.
 
 ### Path Utility Functions
-#### BuildPathUnder
-This convenience function is designed to provide an ergonomic interface for generating paths relative to (under) a specific CakeDir object's path. All we need to do is submit a [CakePath](paths.md) object that represents the desired child path, and `BuildPathUnder` will return a new CakePath object with that child path parented under the target CakeDir object's path:
+#### BuildChildPath
+This convenience function is designed to provide an ergonomic interface for generating child paths relative to a specific CakeDir object's path. All we need to do is submit a [CakePath](paths.md) object that represents the child path's relative location within the directory, and `BuildChildPath` will return a new CakePath object with that child path parented under the target CakeDir object's path:
 
 === "C++"
     ```c++ hl_lines="4"
 	FCakeDir ProjectDir{ FCakePath{TEXTVIEW("X:/cake-arena")} };
 	FCakePath AssetsFolder{ TEXTVIEW("data/assets") };
 
-	FCakePath AssetsFullPath{ ProjectDir.BuildPathUnder(AssetsFolder) };
+	FCakePath AssetsFullPath{ ProjectDir.BuildChildPath(AssetsFolder) };
 	// Path: "X:/cake-arena/data/assets"
     ```
 
 === "Blueprint"
-	{{ bp_img_dir('Build Path Under') }}
+	{{ bp_img_dir('Build Child Path') }}
 
 In the example above, the returned CakePath object's path will be `X:/cake-arena/data/assets`.

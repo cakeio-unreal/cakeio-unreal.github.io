@@ -3,14 +3,13 @@
 
 CakeIO uses lightweight structs called Settings to group associated function parameters that are used across multiple functions. These structs help enforce regular argument ordering, reduce the length of function signatures, and provide a single location in source code where defaults can be set. Furthermore, because CakeIO takes advantage of C++20, we can use designated initializer syntax in order to allow for a much more ergonomic handling of optional parameters. 
 
-
-## FCakeSettingsCreateItem
-This parameter pack is utilized by various Create / Write IO functions across CakeIO. It contains two Cake Policies: [OverwriteItems](policies.md#overwriteitems) and [MissingParents](policies.md#missingparents). 
+## FCakeSettingsCopyItem
+This settings struct is used in copy or move IO operations involving files or directories. Remember, a move operation is just a copy operation followed by a delete operation, which is why it also uses these settings. It contains two Cake Policies: [OverwriteItems](policies.md#overwriteitems) and [MissingParents](policies.md#missingparents). 
 
 ```c++
-struct FCakeCreateItemSettings
+struct FCakeSettingsCopyItem
 {
-	/** Determines if the new item can overwrite a prexisting item. */
+	/** Determines if the copied item can overwrite a prexisting item. */
 	ECakePolicyOverwriteItems OverwritePolicy{ CakePolicies::OverwriteItemsDefault };
 
 	/** Determines if any parent directories that don't exist in the destination path can be created. */
@@ -18,18 +17,25 @@ struct FCakeCreateItemSettings
 };
 ```
 
-An example of explicitly setting policy values for an **FCakeCreateItemPolicies**:
-```c++
-const bool bCreateOK = FileText.CreateTextFile(SourceDataText,
-    { 
-        .OverwritePolicy     = ECakePolicyOverwriteItems::DoNotOverwriteExistingItems,
-        .MissingParentPolicy = ECakePolicyMissingParents::CreateMissing
-    }
-);
+An example of explicitly setting the CopyItem values using designated initializer syntax:
+```c++ hl_lines="12 13"
+FCakeDir DirectoryGame{ FCakePath{TEXTVIEW("X:/game")} };
+FCakeDir DirectoryArchive{ FCakePath{TEXTVIEW("Z:/archive")} };
 
-if (!bCreateOK)
+FCakeFile ReadmeFile{ 
+	DirectoryGame.BuildChildPath(
+		FCakePath{ TEXTVIEW("info/readme.md") })
+};
+
+if (!ReadmeFile.CopyFile(
+	*DirectoryArchive,
+	{
+		.OverwritePolicy     = ECakePolicyOverwriteItems::DoNotOverwriteExistingItems,
+		.MissingParentPolicy = ECakePolicyMissingParents::CreateMissing
+	})
+)
 {
-    UE_LOG(LogTemp, Error, TEXT("Failed creating example text file."));
+	UE_LOG(LogTemp, Error, TEXT("Failed copying readme file!"))
 }
 ```
 
