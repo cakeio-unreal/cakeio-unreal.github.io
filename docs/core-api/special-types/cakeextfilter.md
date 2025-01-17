@@ -80,9 +80,7 @@ If we specify an empty string-like object for the constructor, the filter set wi
 	{{ bp_img_ext_filter('Clone All Extensions') }}
 
     !!! warning
-        This array will be empty if the extension filter is empty. Furthermore, keep in mind that this array is independent of the actual extension filter -- changes made to it will __not__ affect the CakeDir's extension filter.
-
-
+        This array will be empty if the extension filter is empty. Furthermore, keep in mind that this array is not the actual extension filter -- changes made to the returned array will __not__ affect the CakeDir's extension filter. If you need to modify the extension filter itself, see the next section regarding modification functions.
 
 ### Modifying the Filter Set
 
@@ -116,7 +114,7 @@ If we specify an empty string-like object for the constructor, the filter set wi
 
 	{{ bp_img_ext_filter('Add Extensions') }}
 
-    This sends back an integer representing the number of extensions actually added. Since the extension filter only keeps unique entries, sometimes this number might be different from the number of extensions submitted. In the example above, the number of extensions added will be 2 instead of 3 since `.jpg` already was already added to the set. In situations where we don't care about the exact number of extensions added, we are free to ignore the returned value.
+    This sends back an integer representing the number of extensions actually added. Since the extension filter only keeps unique entries, sometimes this number might be different from the number of extensions submitted. In the example above, the number of extensions added will be 2 instead of 3 since `.jpg` already was already in the set. In situations where we don't care about the exact number of extensions added, we are free to ignore the returned value.
 
 #### Removing Extensions
 === "C++"
@@ -173,9 +171,9 @@ To remove all extensions from the filter set, we can use `Reset`:
 === "Blueprint"
     To remove all extensions from the filter set, we use `ExtFilterReset`:
 
-	{{ bp_img_ext_filter('Set Extensions') }}
+	{{ bp_img_ext_filter('Reset') }}
 
-    We can supply an optional integer value indicating the minimum size we would like to reserve in the internal buffer collection (e.g., if we knew we were about to store 5 new extensions, we could submit 5). You can leave this at 0 for any situation where you don't need to reserve a size.
+    We can supply an optional integer value indicating the minimum amount of file extensions that the filter should hold (e.g., if we knew we were about to store 5 new extensions, we could submit 5). You can leave this at 0 for any situation where you don't need to reserve a size.
 
 ## Advanced Usage
 
@@ -195,9 +193,9 @@ To remove all extensions from the filter set, we can use `Reset`:
 === "Blueprint"
     We can check if a CakeDir's filter set contains a specific file extension via `ExtFilterContains`, which takes a [CakeFileExt] object that holds the file extension we wish to check for:
 
-	{{ bp_img_ext_filter('Ext Filter Contains') }}
+	{{ bp_img_ext_filter('Contains') }}
 
-    `ExtFilterContains` will return true if the submitted file extension is contained in the ext filter set, false otherwise.
+    `ExtFilterContains` will return true if the submitted file extension is in the extension filter, false otherwise.
 
 ### FCakeExtFilter Equality
 --8<-- "note-native-only.md"
