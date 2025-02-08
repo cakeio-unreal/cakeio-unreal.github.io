@@ -60,8 +60,9 @@ nav:
   - Home: index.md
   - Getting Started:
     - Installation: getting-started/installation.md
+    - Configuration: getting-started/configuration.md
     - Quick Start: getting-started/quick-start.md
-  - Core API: 
+  - Core API Documentation: 
     - API Overview: core-api/api-overview.md
 
     - Core Objects:
@@ -74,18 +75,19 @@ nav:
       - Outcomes: core-api/special-types/outcomes.md
       - Signals: core-api/special-types/signals.md
       - Results: core-api/special-types/results.md
-      - Orders: core-api/special-types/orders.md
+      - Cake Orders: core-api/special-types/cake-orders.md
       - Settings: core-api/special-types/settings.md
       - Cake Ext Filter: core-api/special-types/cakeextfilter.md
     - Error Handling:
       - Error Handling Patterns: core-api/error-handling.md
-  - Advanced: 
-    - Advanced Cake IO: advanced/index.md
-    - Cake Mix Library: advanced/cake-mix-library.md
-    - Advanced Error Types: advanced/advanced-error-types.md
-    - Advanced Error Handling: advanced/advanced-error-handling.md
-    - Async IO: advanced/async-io.md
-    - Low Level Services: advanced/services.md
+      - Error Maps: core-api/error-maps.md
+    - Advanced Usage: 
+      - Overview: core-api/advanced-usage.md
+      - Utility Libraries:
+        - CakeMix: core-api/cake-mix.md
+        - CakeAsyncIO: core-api/async-io.md
+      - CakeIO Services:
+        - CakeIO Services Overview: core-api/services.md
   - Miscellanous:
     - FStringView: misc/stringview.md
     - CakeIO and C++ 20: misc/cpp20-features.md

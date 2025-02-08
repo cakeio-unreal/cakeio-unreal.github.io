@@ -1,5 +1,14 @@
 ## CakeAsyncIO Overview
-CakeIO offers asynchronous versions of its core IO functions. There are asynchronous versions of every CakeFile, CakeDir, and CakeMixLibrary IO functions. Asynchronous directory traversal is also supported. The usage of these asynchronous functions is similar to the synchronous functions, but with a few changes. This documentation will not exhaustively cover each function, since the functions behave identically to their synchronous counterparts, with the exception that they are executed in an asynchronous context. Instead, this documentation will focus on the differences between the synchronous / asynchronous interfaces and provide a few examples involving them. Finally, there are a few special interfaces that only exist in the AsyncIO API, and these will also be covered in detail.
+CakeIO offers asynchronous versions of its core IO functions. The usage of these asynchronous functions is similar to the synchronous functions, but with a few changes. This documentation will not exhaustively cover each function, since the functions behave identically to their synchronous counterparts, with the exception that they are executed in an asynchronous context. Instead, this documentation will focus on the differences between the synchronous / asynchronous interfaces and provide a few examples involving them. Finally, there are a few special interfaces unique to CakeAsyncIO which will be covered.
+
+--8<-- "warning-lib-advanced.md"
+
+## Blueprint Differences
+Blueprint cannot safely support all asynchronous interfaces offered by CakeAsyncIO. This may change in the future, but for now the following asynchronous interfaces are not available in Blueprint:
+1. Directory Traversal
+1. CakeMix GatherCustom functions
+1. CakeAsyncIO Batch Operations
+
 
 === "C++"
 

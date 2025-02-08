@@ -5,25 +5,17 @@ CakePath objects are meant to provide an ergonomic and standardized way to work 
 
 ### Source Code Information
 === "C++"
-    The native path object in CakeIO is **FCakePath**. While the following documentation will provide usage and guidance instructions; the source code is also an excellent reference as it is fully documented, please consider studying it at some point if you wish to learn even more about CakeIO and its implementation.
+    {{ cpp_impl_source('path', 'FCakePath', 'CakePath') }}
     
-    FCakePath is defined in `CakePath.h`, and all code examples will assume the following include:
-    ``` c++
-    #include "CakeIO/CakePath.h"
-    ```
-
 === "Blueprint"
-    The Blueprint path object in CakeIO is **UCakePath**. Its C++ implementation is defined in `Blueprint/CakePath_BP.h`. It is fully documented and can also prove to be a useful resource.
-    ```c++
-    #include "CakeIO/Blueprint/CakePath_BP.h"
-    ```
+    {{ bp_impl_source('path', 'UCakePath', 'CakePath_BP') }}
 
 ## Basic Usage
-In this section we will cover only fundamental CakePath operations. Once you are comfortable using CakePaths, consider looking at the advanced usage section for examples of more complex (but less common) operations.
+In this section we will cover the fundamental CakePath operations. Once you are comfortable using CakePaths, consider looking at the advanced usage section for examples of more complex operations.
 
 ### Building CakePath Objects
 === "C++"
-    The most straightforward way to build a new **FCakePath** is via the constructor, which accepts an **FStringView**. 
+    The most straightforward way to build a new FCakePath is via the constructor, which accepts an FStringView. 
 
     --8<-- "ad-stringview.md"
 
@@ -67,7 +59,7 @@ In this section we will cover only fundamental CakePath operations. Once you are
 
 ### Copying Paths
 === "C++"
-    To get a copy of an existing **FCakePath**, we can use either the copy constructor directly or call the function `Clone` on the source path.
+    To get a copy of an existing FCakePath, we can use either the copy constructor directly or call the function `Clone` on the source path.
 
     ```c++ hl_lines="3-4"
     FCakePath SourcePath{ TEXTVIEW("x/game/data") };
@@ -95,7 +87,7 @@ In this section we will cover only fundamental CakePath operations. Once you are
 
 ### Reading the Path String
 === "C++"
-    To read an **FCakePath**'s path string, we can use `operator*` or `GetPathString`:
+    To read an FCakePath's path string, we can use `operator*` or `GetPathString`:
 
     ```c++ hl_lines="4 5"
     auto PrintPath = [](const FString& Path) { UE_LOG(LogTemp, Warning, TEXT("Path: [%s]"), *Path) };
@@ -106,13 +98,13 @@ In this section we will cover only fundamental CakePath operations. Once you are
     ```
 
 === "Blueprint"
-    To read the path as a string, we can use `Get Path String`:
+    To read the path as a string, we can use `GetPathString`:
 
     {{ bp_img_path('Get Path String') }}
 
 ### Modifying Paths
 === "C++"
-    We can change the path of an existing **FCakePath** via `SetPath`, which takes a string-like object just like the constructor:
+    We can change the path of an existing FCakePath via `SetPath`, which takes a string-like object just like the constructor:
 
     ```c++ hl_lines="3"
     FCakePath SourcePath{ TEXTVIEW("x/game/data") };
@@ -163,20 +155,21 @@ In this section we will cover only fundamental CakePath operations. Once you are
     --8<-- "note-reset-forwarding.md"
 
 === "Blueprint"
-    To change the path that a preexisting CakePath object holds, we use `Set Path`, submitting a string that represents the new path that the CakePath object should use:
+    To change the path that a preexisting CakePath object holds, we use `SetPath`, submitting a string that represents the new path that the CakePath object should use:
 
     {{ bp_img_path('Set Path') }}
-    !!! note
-        In the example above, the path will be `y:/network/profiling/` after the call to Set Path resolves.
 
-    If we want to set the path using another CakePath object's path, we can use `Set Path Via Other`:
+    !!! note
+        In the example above, the path will be set to `y:/network/profiling/`.
+
+    If we want to set the path using another CakePath object's path, we can use `SetPathViaOther`:
 
     {{ bp_img_path('Set Path Via Other') }}
 
     !!! note
         In the example above, the path will be `Z:/misc/data` after the call to Set Path resolves.
 
-    To check if a path is empty, we can use `Is Empty`:
+    To check if a path is empty, we can use `IsEmpty`:
 
     {{ bp_img_path('Is Empty') }}
 
@@ -184,13 +177,12 @@ In this section we will cover only fundamental CakePath operations. Once you are
 
     {{ bp_img_path('Reset') }}
 
-
     --8<-- "note-bp-newreservedsize.md"
 
 
 ### Combining Paths
 === "C++"
-    To make a new **FCakePath** that combines other **FCakePath** objects, use `operator/` or `Combine`.
+    To make a new FCakePath that combines other FCakePath objects, use `operator/` or `Combine`.
 
     ```c++ hl_lines="4 5"
 	FCakePath PathGame    { TEXTVIEW("x/game/")       };
@@ -208,7 +200,7 @@ In this section we will cover only fundamental CakePath operations. Once you are
 
     FCakePath PathDataCombined = PathDrive / PathGameOnly / PathDataOnly;
     ```
-    In order to avoid implicit type conversions and surprising results, the combination interfaces only accept **FCakePath** objects as inputs. In other words, you can't mix string-like objects and **FCakePath** objects in combination chains. However, there are two ways to work around this. The simplest way is to explicitly convert any string-like objects into **FCakePath** objects within the combination expression:
+    Note that the combination interfaces only accept FCakePath objects as inputs in order to avoid implicit type conversions and surprising results. In other words, you can't mix string-like objects and FCakePath objects in combination chains. However, there are two ways to work around this. The simplest way is to explicitly convert any string-like objects into FCakePath objects within the combination expression:
 
     ```c++ hl_lines="4"
     FCakePath PathDrive     { TEXT("x")    };
@@ -216,7 +208,7 @@ In this section we will cover only fundamental CakePath operations. Once you are
 
     FCakePath CombinedMix{ PathDrive / FCakePath(PathGameString) };
     ```
-    When combining multiple strings, you can use **FString**'s `operator/`, which also supports path concatenation, and then feed the combined **FString** into the **FCakePath** constructor, which will guarantee the final result is well-formed:
+    When combining multiple strings, you can use FString's `operator/`, which also supports path concatenation, and then feed the combined FString into the FCakePath constructor, which will guarantee the final result is well-formed:
 
     ```c++ hl_lines="4"
     FString PathDriveString { TEXT("x")    };
@@ -225,7 +217,7 @@ In this section we will cover only fundamental CakePath operations. Once you are
     FCakePath CombinedFromStrings{ PathDriveString / PathGameString };
     ```
 
-    To append another path onto a pre-existing **FCakePath**, we can use `operator/=` or `CombineInline`.
+    To append another path onto a pre-existing FCakePath, we can use `operator/=` or `CombineInline`.
 
     ```c++ hl_lines="5 8"
     FCakePath PathMisc   { TEXTVIEW("y/misc")         };
@@ -239,22 +231,22 @@ In this section we will cover only fundamental CakePath operations. Once you are
     ```
 
 === "Blueprint"
-    To build a CakePath object whose path is the combination of two preexisting CakePath objects, we use `Build Combined`. 
+    To build a CakePath object whose path is the combination of two preexisting CakePath objects, we use `Combine`. 
 
     {{ bp_img_path('Combine') }}
 
     In the example above, the returned CakePath object's path will be `x/game/data/assets/models`.
 
-    To append one CakePath object's path directly onto another CakePath object, we can use `Combine Inline`. 
+    To append one CakePath object's path directly onto another CakePath object, we can use `CombineInline`. 
 
     {{ bp_img_path('Combine Inline') }}
 
-    In the example above, after the call to `Combine Inline`, the target CakePath object's path will be `x/game/data/assets/models`.
+    In the example above, the target CakePath object's path will be `x/game/data/assets/models`.
 
 ### Path Equality
 Path equality in CakeIO is simple: two CakePath objects are equal if they refer to the same location on the filesystem.
 === "C++"
-    **FCakePath** uses `operator==` and `operator!=` for equality comparisons.
+    FCakePath uses `operator==` and `operator!=` for equality comparisons.
 
     ```c++ hl_lines="6 7 9 10"
     FCakePath PathData{ TEXT("x/game/data") };
@@ -269,16 +261,15 @@ Path equality in CakeIO is simple: two CakePath objects are equal if they refer 
     bPathsAreEqual = PathData != PathDataCopy; // => false
     ```
 === "Blueprint"
-    To check if two CakePath objects are equal, we use `Is Equal To`:
+    To check if two CakePath objects are equal, we use `IsEqualTo`:
 
     {{ bp_img_path('Is Equal To') }}
 
-    To check if two CakePath objects are not equal, we use `Is Not Equal To`:
+    To check if two CakePath objects are not equal, we use `IsNotEqualTo`:
 
     {{ bp_img_path('Is Not Equal To') }}
 
 ## Advanced Usage
-The following sections address some more advanced operations involving path manipulation.
 
 ### Path Leaf Manipulation
 The leaf of the path is its rightmost component. Given the path `x/game/data`, the leaf is `data`.

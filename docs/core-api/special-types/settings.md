@@ -1,19 +1,116 @@
-## Introduction
+## Overview
 {{ src_loc_group('Settings', 'CakeSettings')}}
 
 CakeIO uses lightweight structs called Settings to group associated function parameters that are used across multiple functions. These structs help enforce regular argument ordering, reduce the length of function signatures, and provide a single location in source code where defaults can be set. Furthermore, because CakeIO takes advantage of C++20, we can use designated initializer syntax in order to allow for a much more ergonomic handling of optional parameters. 
 
-## FCakeSettingsCopyItem
-This settings struct is used in copy or move IO operations involving files or directories. Remember, a move operation is just a copy operation followed by a delete operation, which is why it also uses these settings. It contains two Cake Policies: [OverwriteItems](policies.md#overwriteitems) and [MissingParents](policies.md#missingparents). 
+## Designated Initializers
+!!! hint
+	For all the gory details about designated initializers and more, please see [this reference](https://en.cppreference.com/w/cpp/language/aggregate_initialization).
+
+Since CakeIO uses C++20, we have access to designated initializers. Designated initializers are a compact and expressive way to create structs, initializing some or all of its members. When we group function parameters into structs, we can use designated initializers at function callsites. There are many benefits to this approach: We can more safely consume parameter lists with consecutive parameters of the same type, we can add clarity to function callsites via more self-documenting code, and we can eliminate much of the tedious boilerplate that can result from default parameters in C++. For these reasons and more, CakeIO uses structs to group parameters whenever possible.     
+
+Let's take a look at some quick examples using designated initalizer syntax to get familiar with it. We'll use FCakeFile's `CreateTextFile` function as our example. Let's look at the function signature:
+```c++
+[[nodiscard]] FCakeResultFileIO CreateTextFile(
+	FStringView FileContent = TEXTVIEW(""),
+	FCakeSettingsCreateTextFile CreateSettings = {}
+) const;
+```
+
+`CreateTextFile` uses a settings struct, CreateTextFile. As we can see, it is given a default value, which is a cryptic `{}` value. This is simply aggregate initialization where the default values of every member field are used. If we look at the definition of FCakeSettingsCreateTextFile, we can see what those would be:
 
 ```c++
-struct FCakeSettingsCopyItem
+/** Settings struct used in text file creation IO operations. */
+CAKEIO_API struct FCakeSettingsCreateTextFile
 {
-	/** Determines if the copied item can overwrite a prexisting item. */
+	/** Determines if any missing parents in the file path should be created. */
+	ECakePolicyMissingParents MissingParentPolicy{ CakePolicies::MissingParentsDefault };
+
+	/** Determines the character encoding that should be used when writing text data to the file. */
+	ECakePolicyCharEncoding CharEncodingPolicy{ CakePolicies::CharEncodingDefault };
+
+};
+```
+
+In this case, we can see that `{}` is equivalent to setting `MissingParentPolicy` to `MissingParentsDefault` and `CharEncodingPolicy` to `CharEncodingDefault`.
+
+!!! hint
+	Remember, you can change the defaults at both the struct settings definition and the CakePolicies namespace, so you can configure the defaults to whatever best works for your project.
+
+
+The important thing to remember is that if we just want to use the default settings for a parameter struct, we just need to use `{}`. This can be helpful in situations where we have multiple settings structs and just need to get to a settings struct further down the parameter list. 
+
+Let's use a designated initalizer to specify all of the FCakeSettingsCreateTextFile values explicitly:
+
+```c++ hl_lines="7 8"
+FCakeFile ReadmeFile{ FCakePath{TEXTVIEW("X:/cake-arena/readme.md")} };
+
+FCakeResultFileIO CreateTextFile{ 
+	ReadmeFile.CreateTextFile(
+		TEXTVIEW("This is the readme file!"),
+		{
+			.MissingParentPolicy = ECakePolicyMissingParents::CreateMissing,
+			.CharEncodingPolicy  = ECakePolicyCharEncoding::UTF8
+		}
+	)
+};
+```
+Designated initializer syntax looks much like an initializer list, except that we explicitly name each member field, prefixed by the `.` character. It should be noted that designated initializers in C++ are supposed to list the members in the same order as their declaration. //@FIX: Check if you can skip intermediate ones
+
+
+The advantage of designated initializers becomes apparent when we only want to change a single default parameter, leaving the rest to their default values. This time, let's say we want to write a text file and the only thing we want to change is the character encoding. With designated initializers, we can just omit the MissingParentPolicy member field and fill in the CharEncodingPolicy:
+```c++
+FCakeFile ReadmeFile{ FCakePath{TEXTVIEW("X:/cake-arena/readme.md")} };
+
+FCakeResultFileIO CreateTextFile{ 
+	ReadmeFile.CreateTextFile(
+		TEXTVIEW("This is the readme file!"),
+		{
+			.CharEncodingPolicy = ECakePolicyCharEncoding::ANSI
+		}
+	)
+};
+```
+Now we have a close approximation to keyword arguments in other programming languages. If the two policies contained within our settings struct were just independent parameters, we would have been forced to specify a value for the MissingParentsPolicy even though we just wanted it to maintain its default setting.
+
+One important detail to keep in mind when using designated initializers is that we must keep the order of the members the same as their declaration. If one member is declared before another, we must preserve that order. We can skip members, but we just have to make sure that the members we list maintain the same relative declaration order. Let's look at a quick example:
+```c++
+struct UserData
+{
+	int32 WarpCubes   { 0  };
+	int32 GoldenKeys  { 3  };
+	int32 SilverCoins { 55 };
+};
+
+UserData Data = {
+	.WarpCubes   =  5,
+	.SilverCoins = 33
+};
+```
+
+Here we skipped specifying a value for GoldenKey, and so its default value of 3 will be used. However, this initializer is still valid, because WarpCubes is declared before SilverCoins.
+
+```c++
+UserData Data = {
+	.SilverCoins = 33,
+	.WarpCubes   =  5
+};
+```
+
+The example above is not valid, because SilverCoins is not declared before WarpCubes in the definition of the UserData struct. 
+
+## FCakeSettingsNewItem
+This settings struct allows users to configure the overwrite and missing parent behavior desired when a new file or directory is created. It contains two Cake Policies as member fields: [OverwriteItems](policies.md#overwriteitems) and [MissingParents](policies.md#missingparents). 
+
+```c++
+struct FCakeSettingsNewItem
+{
+	/** Determines if the new item can overwrite a prexisting item. */
 	ECakePolicyOverwriteItems OverwritePolicy{ CakePolicies::OverwriteItemsDefault };
 
-	/** Determines if any parent directories that don't exist in the destination path can be created. */
+	/** Determines if any parent directories that don't exist in the new item's destination path can be created. */
 	ECakePolicyMissingParents MissingParentPolicy{ CakePolicies::MissingParentsDefault };
+
 };
 ```
 
@@ -60,18 +157,15 @@ This enum determines how data should be written by the file handle.
 
 {{ read_csv(open_csv_by_typename('ECakeFileWriteMode')) }}
 
-When opening a file handle in read-only mode, the write mode is completely ignored. The easiest way to open a file handle this way is via designated initializer syntax:
+When opening a file handle in read-only mode, the write mode is completely ignored. The easiest way to open a file handle this way is via a [designated initializer](#designated-initializers):
 ```c++
 	TUniquePtr<IFileHandle> ReadOnlyHandle{ 
 		SrcOrc.OpenFileHandleUnique({ .OpenMode = ECakeFileOpenMode::Read })
 	};
 ```
 
---8<-- "ad-designated-init.md"
-
-
 ## FCakeSettingsExtFilter
-This settings struct is utilized by [filtered directory traversals](../directories.md#filtered-traversals). It contains two Cake Policies: [ExtFilterMode](../policies.md#extfiltermode) and [ExtMatchMode](../policies.md#extmatchmode). 
+This settings struct is utilized by {{ link_cakedir('filtered directory traversals', 'filtered-traversals') }}. It contains two Cake Policies: {{ link_policy('ExtFilterMode') }} and {{ link_policy('ExtMatchMode') }}. 
 
 ```c++
 struct FCakeSettingsExtFilter
@@ -82,50 +176,10 @@ struct FCakeSettingsExtFilter
 
 ```
 
-## FCakeSettingsCopyItems
-This settings struct is utilized by in various [CakeMixLibrary functions](../../advanced/cake-mix-library.md#copyingmoving-files-from-a-directory). It holds three Cake policies:
+## Advanced Settings 
 
-1. [OverwriteItems](policies.md#overwriteitems)
-1. [ErrorHandling](policies.md#errorhandling)
-1. [FileRelativeParents](policies.md#filerelativeparents)
-
-For the ErrorHandling policy, if AbortOnError is selected, then the entire operation will be aborted immediately if any individual copy operation fails. 
-
-Be sure to read the specifics about `FileRelativeParents`, which in essence determines whether or not the copied files will placed directly in the source directory or if their parent subdirectories should also be copied into the source directory (e.g., if copying "x:/game/data/save.dat" to "y:/archive" should copy to "y:/archive/save.dat" or "y:/archive/data/save.dat").
-
-```c++
-CAKEIO_API struct FCakeSettingsCopyItems
-{
-	ECakePolicyOverwriteItems      OverwritePolicy      { CakePolicies::OverwriteItemsDefault      };
-	ECakePolicyErrorHandling       ErrorPolicy          { CakePolicies::ErrorHandlingDefault       };
-	ECakePolicyFileRelativeParents RelativeParentPolicy { CakePolicies::FileRelativeParentsDefault };
-};
-```
-
-## FCakeSettingsGatherSubdir
-This settings struct is only used on CakeMixLibrary's [GatherCustomSubirs] function. It merely bundles an [ErrorHandling](policies.md#errorhandling) policy with an [ExtFilterClone](policies.md#extfilterclone) policy. The ErrorHandling policy is used to determine how the overall GatherCustom operation will react to errors, and the ExtFilterClone policy is forwarded to the internal traversal. This means that if the caller requests that the extension filter is cloned, each CakeDirectory object passed to the GatherCustom predicate will also have an extension filter identical to the source directory.
-
-```c++
-struct FCakeSettingsGatherSubdir
-{
-	ECakePolicyErrorHandling  ErrorPolicy         { CakePolicies::ErrorHandlingDefault  };
-	ECakePolicyExtFilterClone ExtFilterClonePolicy{ CakePolicies::ExtFilterCloneDefault };
-};
-```
-
-## FCakeSettingsDeleteItems
-This is used by various directory deletion operations in [CakeMixLibrary](../../advanced/cake-mix-library.md#deleting-elements-from-a-directory). It combines a [DeleteFile](policies.md#deletefile) policy, which determines whether read-only files are allowed to be deleted and a [ErrorHandling](policies.md#errorhandling) policy, which determines whether the operation will halt if any delete operations fail.
-
-```c++
-struct FCakeSettingsDeleteItems
-{
-	ECakePolicyDeleteFile    DeleteFilePolicy{ CakePolicies::DeleteFileDefault    };
-	ECakePolicyErrorHandling ErrorPolicy     { CakePolicies::ErrorHandlingDefault };
-};
-```
-
-## FCakeSettingsAsyncTask
-This struct is used whenever we launch an [async IO](../../advanced/async-io.md) task. It lets us customize the task priority, task flags, and which thread the completion callback should be called from.
+### FCakeSettingsAsyncTask
+This struct is used whenever we launch an {{ link_asyncio('async IO') }} task. It lets us set the task priority, task flags, and which thread the completion callback should be called from.
 
 ```c++
 struct FCakeSettingsAsyncTask 

@@ -94,7 +94,7 @@ If we specify an empty string-like object for the constructor, the filter set wi
     ExtFilter.AddExtensions(TEXTVIEW("txt|jpg"));
         // Filter Set: [".txt", ".jpg"]
     ```
-    `AddExtensions` returns an discardable `int32` value we can capture, which indicates the number of extensions that were actually added. Since the filter set only allows for unique entries, even a fully well-formed filter syntax string might not result in every entry being added (if it already exists it is skipped):
+    `AddExtensions` returns a discardable `int32` value we can capture, which indicates the number of extensions that were actually added. This number can differ from the number of extensions submitted since the filter only stores unique entries:
 
     ```c++
     FCakeExtFilter ExtFilter{};

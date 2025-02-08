@@ -7,6 +7,9 @@ def strip_unreal_type_prefixes(source_type_id: str) -> str:
 def opt_param_list(functions: list[str], param_ids: list[str]):
     pass
 
+def inline_link(label, link):
+    return f'[{label}]({link})'
+
 def gen_bp_img_name(img_label: str) -> str:
     return img_label.lower().replace(' ', '-')
 
@@ -15,6 +18,36 @@ def bp_img(label: str, bp_section: str) -> str:
 
     #@GUIDANCE: We removed lazy loading for now, this is because the first time you switch between tabs it will abruptly put your scrollbar in an unrelated area. Very annoying! Not worth the performance "gains".
     return f'![{label}](img/bp/{bp_section}/{gen_bp_img_name(label)}.png)'
+
+def abs_link_coreapi():
+    return '/core-api'
+
+def abs_link_special_types():
+    return '/core-api/special-types'
+
+def abs_link_adv():
+    return '/advanced'
+
+def abs_link_adv_special_types():
+    return f'{abs_link_adv()}/special-types'
+
+def link_under(base_link, child_link, subsec: str|None = None):
+    if subsec is None:
+        return f'{base_link}/{child_link}'
+    else:
+        return f'{base_link}/{child_link}/#{subsec}'
+
+def link_under_coreapi(child_link, subsec: str|None = None):
+    return link_under(abs_link_coreapi(), child_link, subsec)
+
+def link_under_special_types(child_link, subsec: str|None = None):
+    return link_under(abs_link_special_types(), child_link, subsec)
+
+def link_under_special_types(child_link, subsec: str|None = None):
+    return link_under(abs_link_special_types(), child_link, subsec)
+
+def cpp_incl(relative_path):
+    return f'#include "CakeIO/{relative_path}.h"'
     
 def source_block_base(title, body, header_path):
     return f"""
@@ -31,8 +64,8 @@ def gen_header_path(file_name: str, rel_loc: str|None) -> str:
     result += f'{file_name}.h'
     return result
 
-def source_loc_single(type_id, rel_loc: str|None = None) -> str:
-    header_path = (strip_unreal_type_prefixes(type_id), rel_loc)
+def source_loc_single(type_id: str, file_name: str, rel_loc: str|None = None) -> str:
+    header_path = gen_header_path(file_name, rel_loc)
     body = f'{type_id} is defined in `{header_path}`'
     return source_block_base(type_id, body, header_path)
 
@@ -69,11 +102,11 @@ def define_env(env):
         return source_loc_custom(id, file_name, body, rel_loc)
 
     @env.macro
-    def give_source_loc_single(type_id, rel_loc=None):
-        return source_loc_single(type_id, rel_loc)
+    def src_loc_single(type_id, file_name: str, rel_loc: str|None=None):
+        return source_loc_single(type_id, file_name, rel_loc)
 
     @env.macro
-    def give_source_loc_single_bp(type_id, rel_loc=None):
+    def src_log_single_bp(type_id, rel_loc=None):
         bp_path = f'Blueprint'
         if rel_loc:
             bp_path += f'/{rel_loc}'
@@ -133,3 +166,80 @@ def define_env(env):
     @env.macro
     def bp_img_ext_filter(label):
         return bp_img(label, 'ext-filter')
+    
+    @env.macro
+    def cpp_assumed_include(rel_path):
+        return f"""
+    All C++ examples in this section assume the following include statement:
+
+    ```c++
+    {cpp_incl(rel_path)}
+    ```
+"""
+    @env.macro
+    def cpp_impl_source(obj_id, type_name, relative_src_path):
+        return f"""
+    The native {obj_id} object in CakeIO is **{type_name}**, which is defined in `CakeIO/{relative_src_path}.h`.
+
+{cpp_assumed_include(relative_src_path)}
+"""
+
+    @env.macro
+    def bp_impl_source(obj_id, type_name, relative_src_path):
+        return f"""
+    The Blueprint {obj_id} object in CakeIO is **{type_name}**, which is defined in `CakeIO/Blueprint/{relative_src_path}.h`.
+"""
+    
+    @env.macro
+    def policy_link(policy_id):
+        return f"""
+[{policy_id}](/core-api/special-types/policies/#{policy_id.lower()})
+"""
+    
+    @env.macro
+    def link_cakepath(label='CakePath', subsec: str|None = None):
+        return inline_link(label, link_under_coreapi('paths', subsec))
+
+    @env.macro
+    def link_cakefileext(label='CakeFileExt', subsec: str|None = None):
+        return inline_link(label, link_under_coreapi('file-extensions', subsec))
+
+    @env.macro
+    def link_cakefile(label='CakeFile', subsec: str|None = None):
+        return inline_link(label, link_under_coreapi('files', subsec))
+
+    @env.macro
+    def link_cakedir(label='CakeDir', subsec: str|None = None):
+        return inline_link(label, link_under_coreapi('directories', subsec))
+
+    @env.macro
+    def link_policies(label='CakePolicies', subsec: str|None = None):
+        return inline_link(label, link_under_special_types('policies', subsec))
+
+    @env.macro
+    def link_errormap(label='Error Maps', subsec: str|None = None):
+        return inline_link(label, link_under_coreapi('error-maps', subsec))
+
+    @env.macro
+    def link_outcomes(label='Outcomes', subsec: str|None = None):
+        return inline_link(label, link_under_special_types('outcomes', subsec))
+
+    @env.macro
+    def link_results(label='Results', subsec: str|None = None):
+        return inline_link(label, link_under_special_types('results', subsec))
+
+    @env.macro
+    def link_extfilter(label='CakeExtFilter', subsec: str|None = None):
+        return inline_link(label, link_under_special_types('cakeextfilter', subsec))
+
+    @env.macro
+    def link_cakemix(label='CakeMix', subsec: str|None = None):
+        return inline_link(label, link_under_coreapi('cake-mix', subsec))
+
+    @env.macro
+    def link_cakeasyncio(label='CakeAsyncIO', subsec: str|None = None):
+        return inline_link(label, link_under_coreapi('async-io', subsec))
+
+    @env.macro
+    def link_cakeservices(label='CakeIO Services', subsec: str|None = None):
+        return inline_link(label, link_under_coreapi('services', subsec))

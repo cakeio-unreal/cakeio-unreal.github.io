@@ -1,4 +1,4 @@
-## Introduction
+## Overview
 {{ src_loc_group('Signals', 'CakeSignals')}}
 
 Signals are a special enum type that are used by various operations that use callbacks. Signals are returned by the callbacks and allow the callbacks to influence the control flow of the associated operation.

@@ -1,11 +1,11 @@
 ## Introduction
-One of the primary design goals of CakeIO is to provide enhanced error reporting from IO operations. CakeIO accomplishes by using [outcome types](special-types/outcomes.md) which are defined for various types of IO operations. The following sections will showcase common usage patterns and idioms for error handling in CakeIO.
+One of the primary design goals of CakeIO is to provide enhanced error reporting from IO operations. CakeIO accomplishes this by using {{ link_outcomes('outcome types') }} which are defined for various types of IO operations. The following sections will showcase common usage patterns and idioms for error handling in CakeIO.
 
 ### Opt-In Error Handling
-Exhaustive error handling is often complex and tedious, and there are many contexts in which exhaustive error handling is not actually necessary. Because CakeIO is intended for use in a variety of circumstances, from in-house editor tools to end-user interfaces, error handling has been designed so that callers are allowed to opt-in to the level of complexity that best suits their current context. There are three main levels of error complexity, ranging from simplest to most complex. Regardless as to whether your use the C++ or Blueprint APIs, CakeIO will always return error information in such a way that you can choose any of these strategies.
+Exhaustive error handling is often complex and tedious, and there are many contexts in which exhaustive error handling is not actually necessary. Because CakeIO is intended for use in a variety of circumstances, from in-house editor tools to end-user interfaces, error handling has been designed so that callers are allowed to opt-in to the level of complexity that best suits their current context. There are three main levels of error complexity, ranging from simplest to most complex: **minimal**, **targeted**, and **exhaustive** error handling.
 
 #### Minimal Error Handling
-There is always an ergonomic way to view a particular IO operation outcome as a simple binary success or failure. This mirrors the original experience when using Unreal's built-in IO operations. In this strategy, we merely branch on the success flag and have two paths: one for the success state, and one for the error state.
+Minimal error handling views a particular IO operation outcome as a simple binary success or failure. This mirrors the original experience when using Unreal's built-in IO operations. In this strategy, we merely branch on a success flag and have two paths: one for the success state, and one for the error state.
 
 #### Targeted Error Handling
 While a particular IO operation might generate a large number of outcomes, there can be situations where a particular function is only equipped to handle a subset of those outcomes. In this strategy, we selectively target the possible outcome values that we want to handle.
@@ -19,9 +19,9 @@ As long as you know the complete list of outcomes a particular IO operation can 
 For our examples, we are going to use a [CakeFile](files.md) object. However, all of the idioms presented will work with [CakeDir](directories.md) objects. Only the possible outcome values will be different, since directory IO operations are distinct from file IO operations in CakeIO.
 
 === "C++"
-    File/Directory IO operations will return either an [FCakeResultFileIO](special-types/results.md#fcakeresultfileio) or an [FCakeResultDirIO](special-types/results.md#fcakeresultdirio) result type, respectively. If you are unfamiliar with result types, please glance over those sections and refer to them as necessary when viewing the following idioms.
+    File/Directory IO operations will return either an {{ link_results('FCakeResultFileIO', 'fcakeresultfileio') }} or an {{ link_results('FCakeResultDirIO', 'fcakeresultdirio') }} result type, respectively. If you are unfamiliar with result types, please glance over those sections and refer to them as necessary when viewing the following idioms.
 
-    The following examples will assume we have previously declared the following [FCakeFile](files.md) object:
+    The following examples will assume we have previously declared the following {{ link_cakefile() }} object:
 
     ```c++
 	FCakeFile FileReadme{ FCakePath{ TEXTVIEW("X:/Game/readme.md")} };
@@ -35,7 +35,7 @@ For our examples, we are going to use a [CakeFile](files.md) object. However, al
 		UE_LOG(LogTemp, Error, TEXT("Failed creating the readme file."));
 	}
     ```
-    This style is highly ergonomic when we don't need to worry about specific details of failure and just want to know whether or not an IO operation has succeeded.
+    This style is highly ergonomic when we don't need to worry about specific details of failure and just want to know whether an IO operation has succeeded.
 
     When we do want to examine the error more closely, we can save it to a variable:
 
@@ -104,13 +104,12 @@ For our examples, we are going to use a [CakeFile](files.md) object. However, al
 	}
 	``` 
 	!!! note
-		If you need a refresher regarding the differences between `Ok` and `NoOp`, please see [this section](special-types/outcomes.md#ok-and-no-op).
+		If you need a refresher regarding the differences between `Ok` and `NoOp`, please see {{ link_outcomes('this section', 'ok-and-no-op') }}.
 
 	Now we're leveraging the power of distinguishing between `Ok` and `NoOp`, as well as using targeted error handling. We recognize when the text that was submitted was empty, and so we can provide a specialized error message to better help the caller. However, if some other IO operation failed, we'll just use the same generic string report strategy as before. 
 
     !!! tip
-        This is an example of how the [error map](error-maps.md) can help us achieve better error handling, even when we don't care about exhaustive error handling. Use it!
-
+        This is an example of how the {{ link_errormap() }} can help us achieve better error handling, even when we don't care about exhaustive error handling. 
 
     Finally, let's see what exhaustive error handling might look like:
 
@@ -151,13 +150,13 @@ For our examples, we are going to use a [CakeFile](files.md) object. However, al
 	}
     ```
 
-    Exhaustive error handling will usually require referencing the appropriate [error map](error-maps.md#appendtextfile) unless you have a great memory or choose to delve into the implementation source code.
+    Exhaustive error handling will usually require referencing the {{ link_errormap() }}  unless you have a great memory or choose to delve into the implementation source code.
     For the sake of example we are just logging out the error, but we can easily imagine putting more robust error handling logic in each switch case.
 
 === "Blueprint"
-	Any IO operation will always return at least two variables related to the IO operation: a boolean to indicate whether the operation succeeded or failed as a whole, and an outcome value that identifies the exact outcome that the operation generated. For CakeFile IO operations, the outcome value we get back is of type [ECakeOutcomeFileIO](special-types/outcomes.md#ecakeoutcomefileio). For CakeDir IO operations, the outcome value we get back is of type [ECakeOutcomeDirIO](special-types/outcomes.md#ecakeoutcomedirio).
+	Any IO operation will always return at least two variables related to the IO operation: a boolean to indicate whether the operation succeeded or failed as a whole, and an outcome value that identifies the exact outcome that the operation generated. For CakeFile IO operations, the outcome value we get back is of type {{ link_outcomes('ECakeOutcomeFileIO', 'ecakeoutcomefileio') }}. For CakeDir IO operations, the outcome value we get back is of type {{ link_outcomes('ECakeOutcomeDirIO', 'ecakeoutcomedirio') }}.
 
-	It is important to understand that the bool will return true if the outcome is either `Ok` OR `NoOp`. If you are unfamiliar with the differences, please see [this section](special-types/outcomes.md#ok-and-no-op). 
+	It is important to understand that the bool will return true if the outcome is either `Ok` OR `NoOp`. If you are unfamiliar with the differences, please see {{ link_outcomes('this section', 'ok-and-no-op') }}. 
 
     The following examples will assume we have previously declared the following [CakeFile](files.md) object:
 
@@ -173,32 +172,31 @@ For our examples, we are going to use a [CakeFile](files.md) object. However, al
 
 	{{ bp_img_error_handling('Minimal Error Handling IO To String') }}
 
-	As mentioned earlier, the bool that indicates if the operation was successful returns true if the outcome is `Ok` OR `NoOp`. In some situations, we might want to distinguish between those two values; for instance, since we are using the AppendTextFile interface, a `NoOp` can be generated whenever it is submitted an empty string to append to a file. Since there is nothing to append, the IO operation will be skipped entirely. Since this is not technically an error from the API's standpoint, it is up to the caller to decide what to do. 
+	The bool `Op Ok` is true if the outcome is `Ok` or `NoOp`, false otherwise. In some situations, we might want to distinguish between those `Ok` and `NoOp`. for instance, since we are using the AppendTextFile interface, a `NoOp` can be generated whenever it is submitted an empty string to append to a file. Since there is nothing to append, the IO operation will be skipped entirely. Since this is not technically an error from the API's standpoint, it is up to the caller to decide what to do. 
 	
-	In our previous example, this wasn't possible, because we saw that we were sending in a string literal that wasn't empty. Now, however, let's imagine that we are accepting input from an outside source, like a text entry widget. At this point, we can't be certain that the string being sent to AppendTextFile is non-empty, and it would be good to know when it is empty. Since now we are interested in distinguishing between `Ok` and `NoOp`, but we still don't care about handling all potential outcome values, we will be using the targeted error handling approach. 
+	Let's imagine that we are accepting input from an outside source, like a GUI. At this point, we can't be certain that the string being sent to AppendTextFile is non-empty, and it would be good to know when it is empty. Since now we are interested in distinguishing between `Ok` and `NoOp`, but we still don't care about handling all potential outcome values, we will be using the targeted error handling approach. 
 
-	To do this, we'll still branch on the bool value, knowing that it will be true if the result is `Ok` or `NoOp`, and false otherwise. When it's false, we'll still just print the generic error message to the user. When it's true, however, we'll switch on the outcome and provide two new paths: one for `Ok`, and one for `NoOp`.
+	To do this, we'll still branch on the bool value, knowing that it will be true if the result is `Ok` or `NoOp`, and false otherwise. When it's false, we'll still just print the generic error message to the user. When it's true, however, we'll switch on the outcome and provide two new paths: one for `Ok` and one for `NoOp`.
 
 	Now we can more accurately report the outcome to our users. Below is the same Blueprint script, zoomed into the error handling part specifically:
 
 	{{ bp_img_error_handling('Targeted Error Handling IO') }}
 
-
 	Finally, let's take a look at the final strategy: exhaustive error handling. Exhaustive error handling will usually require referencing the appropriate [error map](error-maps.md#appendtextfile) unless you have a great memory or choose to delve into the implementation source code. This time we'll ignore the bool value entirely and just switch on the outcome value, handling every potential outcome value that AppendTextFile can send us. To keep the example simple, we'll just print a string for each outcome, but we can imagine that each of these print string nodes could instead be replaced with more complex, appropriate error handling:
 
 	{{ bp_img_error_handling('Exhaustive Error Handling IO') }}
 
-	As we can, exhaustive error handling greatly increases the complexity of our code. Strive to choose minimum complexity that satisfies your current context. 
+	As we can see, exhaustive error handling greatly increases the complexity of our code. Strive to choose the minimum complexity required by a given context. 
 
 
-And that concludes our tour through error handling with file and directory IO operations. Remember, the level of complexity for error handling depends entirely upon your use case. The balance between pragmatism and robustness is in your hands.
+And that concludes our tour through error handling with file and directory IO operations. Remember, the level of complexity for error handling depends entirely upon your use case. 
 
 ## Traversal Error Handling Idioms
 --8<-- "ad-traversal.md"
 
-For this section, we'll use a search traversal as our example, since it is the most complex kind of traversal. Any idioms shown here will work with the other kinds of traversal, but they will just be simpler and have less options.
+For this section we'll use a search traversal since it is the most complex kind of traversal. Any idioms shown here will work with the other kinds of traversal, but they will just be simpler and have less options.
 
-For our search, our goal is to collect 3 text files from a given directory. 
+For our search, our goal is to collect three text files from a given directory. 
 
 === "C++"
     For our example, we are going to assume the following directory is declared: 
@@ -337,7 +335,7 @@ For our search, our goal is to collect 3 text files from a given directory.
 	}
 	```
 
-	In our particular scenario, `Aborted` is impossible since we never actually return it in our callback, but in other situations this can certainly occur. Since this is example code, we are just logging messages in response to each outcome, but more robust error handling code could easily be substituted in.
+	The case statement for `Aborted` is useless in our scenario since we don't actually return it, but we have included it for completeness. 
 
 === "Blueprint"
     For our example, we are going to assume the following directory is declared: 
@@ -348,7 +346,7 @@ For our search, our goal is to collect 3 text files from a given directory.
 
 	{{ bp_img_error_handling('Search Callback Definition') }}
 
-	First, let's look at a minimal error handling example. The bool returned by a search traversal is only true if the search was successful. Since we're trying to gather 3 text files, we can be certain that a true value for this outcome means we did indeed gather 3 text files from the target directory.
+	First, let's look at a minimal error handling example. The bool returned by a search traversal is only true if the search was successful. Since we're trying to gather three text files, we can be certain that a true value for this outcome means we did indeed gather three text files from the target directory.
 
 	{{ bp_img_error_handling('Minimal Error Handling Search') }}
 
@@ -356,9 +354,9 @@ For our search, our goal is to collect 3 text files from a given directory.
 
 	{{ bp_img_error_handling('Minimal Error Handling Search To String') }}
 
-	By using the minimal error handling approach, we have lost some information. Namely, when a search does not succeed, we can't distinguish between a search failure (the directory doesn't meet the search requirements, i.e., it doesn't have at least 3 text files in our case) and a traversal error. Search traversal can abort due to IO errors, and furthermore all traversal operations can [fail to launch](special-types/outcomes.md#did-not-launch). 
+	By using the minimal error handling approach, we have lost some information. Namely, when a search does not succeed, we can't distinguish between a search failure (the directory doesn't meet the search requirements, i.e., it doesn't have at least three text files in our case) and a traversal error. Search traversal can abort due to IO errors, and furthermore all traversal operations can [fail to launch](special-types/outcomes.md#did-not-launch). 
 	
-	In our situation, we'll start by using targeted error handling to allow us to easily distinguish between search failure and error results. We will switch on the search outcome value, and we will provide special paths for success and failure, and we will route the remaining paths back to the generic string error report we used in the prior example:
+	We'll start by using targeted error handling to allow us to easily distinguish between search failure and error results. First, we will switch on the search outcome value, providing special paths for success and failure. Then we will route the remaining paths back to the generic string error report we used in the prior example:
 
 	{{ bp_img_error_handling('Targeted Error Handling Search') }}
 

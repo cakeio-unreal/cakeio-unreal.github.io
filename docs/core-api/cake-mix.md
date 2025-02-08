@@ -1,10 +1,7 @@
 ## Cake Mix Library
-CakeMixLibrary provides a suite of advanced functionality built on top of the CakeIO's [core API](../core-api/api-overview.md). Its primary purpose is to provide an ergonomic interface for some common complex operations, such as deleting specific files from a directory or collecting elements from a directory and storing them in a container. 
+CakeMixLibrary provides a suite of advanced functionality built on top of the CakeIO's [core API](../core-api/api-overview.md). Its primary purpose is to provide an ergonomic interface for some common complex operations, such as collecting elements from a directory and storing them in a container. 
 
-As of now, it only contains utility functions for directory and some `ToString` utilities for error reporting types.
-
-!!! warning
-    This library and its documentation require a firm understanding of CakeIO fundamentals and its core objects.
+--8<-- "warning-lib-advanced.md"
 
 === "C++"
 	CakeMixLibrary is located in the following header:
@@ -18,27 +15,25 @@ As of now, it only contains utility functions for directory and some `ToString` 
 	```c++
 	#include "CakeIO/Blueprint/CakeMixBlueprintLibrary.h"
 	``` 
-## Advanced IO
-CakeMixLibrary utilizes some more advanced types beyond the core CakeIO types, so please make sure you are familiar with the [advanced error types](../advanced/advanced-error-types.md) section. Many of the functions that will be shown here involve [mixed IO operations](../advanced/advanced-error-types.md#mixed-io), which are operations that involve both files and directories in the same operation.
 
 ## Directory Work Functions
 --8<-- "disclaimer-advanced-error-handling.md"
 Directory Work is defined as any operation that involves traversing a target CakeDir object's elements in order to accomplish some kind of work. The kind of work can vary greatly, from counting elements at a specific depth to gathering elements into an array for future processing.
 
 ### Directory Work Error Handling
-Every function involving directory work will return an [ECakeOutcomeDirWork](../core-api/special-types/outcomes.md#ecakeoutcomedirwork), which tells us the outcome of the overall work process. There are only a few types of errors we can encounter in directory work operations:
+Every function involving directory work will use an {{ link_outcomes('ECakeOutcomeDirWork', 'ecakeoutcomedirwork') }} to indicate the outcome of the overall work process. There are only a few types of errors we can encounter in directory work operations:
 
 1. If the source directory does not exist, `SourceDirectoryDoesNotExist` will be assigned to the outcome.
 1. If the traversal operation associated with the work fails to launch, `TraversalDidNotLaunch` will be assigned to the outcome.
 1. If the directory work encounters an error that causes it to abort, `Aborted` will be assigned to the error.
 1. Otherwise, `WorkCompleted` will be assigned to the outcome.
 
-__Not all directory work functions will generate `Aborted` outcomes__. Some directory work is free from critical errors assuming it can start. Each function group in this section will have a short error handling section to provide guidance regarding the `Aborted` outcome value.
+__Not all directory work functions will generate `Aborted` outcomes__. Some directory work is free from critical errors assuming it can start. Each function group in this section will have a short error handling section to provide guidance regarding the `Aborted` outcome value. Furthermore, feel free to reference the 
 
-The remaining outcomes here involve helping the caller ensure the operation itself actually was able to successfully run. Remember that traversal can fail to launch in a [variety of circumstances](../core-api/special-types/outcomes.md#did-not-launch). However, since the outcome has a specific value to inform you when the source directory doesn't exist, the only scenarios you need to worry about for traversals being launched are:
+The remaining outcomes here involve helping the caller ensure the operation itself actually was able to successfully run. Remember that traversal can fail to launch in a [variety of circumstances](/core-api/special-types/outcomes.md#did-not-launch). However, since the outcome has a specific value to inform you when the source directory doesn't exist, the only scenarios you need to worry about for traversals being launched are:
 
-1. That valid traversal arguments are being sent. Unless you are casting numeric values to enums these should be very rare.
-2. That your source directory has extensions in its extension filter when you are using a `WithFilter` variant of a particular directory work operation.
+1. Ensure valid traversal arguments are being sent. Unless you are casting numeric types to enums these should be very rare.
+2. Ensure the source directory has extensions in its extension filter when using a `WithFilter` variant of a particular directory work operation.
 
 ### Gathering Elements to an Array
 Often we'll want to collect files or subdirectories from a source directory and place them into a container for future processing. The Gather family of functions can help us accomplish this quickly and succinctly. These functions will use directory traversal to gather all target elements at a specified depth into an array. For instance, if we use `GatherFiles` and specify an [OpDepth](../core-api/special-types/policies.md#opdepth) of shallow, then the resulting array will contain all shallow files contained within the specified CakeDir object.
@@ -52,10 +47,10 @@ Gather error handling is very simple -- assuming the directory work operation su
 #### Gather Return Types
 
 === "C++"
-    The `Gather` functions return the CakeMix exclusive order type [TCakeMixOrderGather](#tcakemixordergather). This is a template type, and CakeMix uses the template aliases `FCakeMixOrderGatherFiles` for file gathering operations and `FCakeMixOrderGatherSubdirs` for subdir gathering operations.
+    The `Gather` functions return the CakeMix exclusive order type [TCakeMixBatch](#tcakemixbatch). 
 
 === "Blueprint"
-	Regardless as to which Gather function we use, the return types will follow a similar form. We get a bool that indicates whether or not the gather operation successfully completed, an [ECakeOutcomeDirWork](../core-api/special-types/outcomes.md) that indicates the gather operation outcome, and an array that contains all gathered elements.
+	Regardless as to which Gather function we use, the return types will follow a similar form. We get a bool that indicates whether or not the gather operation successfully completed, an {{ link_outcomes('ECakeOutcomeDirWork', 'ecakeoutcomedirwork') }} that indicates outcome of the gather operation, and an array that contains all gathered elements.
 
     {{ bp_img_cakemix('Gather Return Type Example') }}
 
@@ -65,7 +60,7 @@ Gather error handling is very simple -- assuming the directory work operation su
 To gather all files in a directory at a specific depth, we use `GatherFiles`:
 === "C++"
 
-    ```c++ hl_lines="5"
+    ```c++ hl_lines="5-8"
     FCakeDir ProjectDir{ FCakePath{TEXTVIEW("X:/cake-arena")} };
 
     FCakeMixBatchFiles ShallowFiles
@@ -87,8 +82,8 @@ To gather all files in a directory at a specific depth, we use `GatherFiles`:
 We can use `GatherFilesWithFilter` to utilize our source directory's extension filter:
 === "C++"
 
-    ```c++
-    FCakeDir ProjectDir{ FCakePath{TEXTVIEW("X:/cake-arena")}, TEXTVIEW("wav|ogg")};
+    ```c++ hl_lines="5-8"
+    FCakeDir ProjectDir{ FCakePath{TEXTVIEW("X:/cake-arena")}, TEXTVIEW("wav|ogg") };
 
     FCakeMixBatchFiles SoundFiles
     {
@@ -110,7 +105,7 @@ We can use `GatherFilesWithFilter` to utilize our source directory's extension f
 To gather all subdirectories in a directory at a specified depth, we use `GatherSubdirs`: 
 === "C++"
 
-    ```c++ hl_lines="3"
+    ```c++ hl_lines="4-7"
     FCakeDir ProjectDir{ FCakePath{TEXTVIEW("X:/cake-arena")} };
 
     FCakeMixBatchSubdirs ShallowSubdirs{
@@ -232,9 +227,9 @@ This new callback is logically equivalent to the previous one. Use whichever sty
 #### Gather Custom Callback Advanced Example
 The Gather signal also allows us to stop the gather process at any step. We can use either `SelectThenStop` or `RejectThenStop`, which will take action on the current item and then stop the traversal immediately.
 
-Let's upgrade the predicate we made in the previous example. We'll still gather text files that contain the magic phrase, but this time let's write a predicate that only gathers up to 2 files. Once two files have been gathered, we want the gather operation to stop. This is a perfect scenario to use the `ThenStop` signal values.
+Let's upgrade the predicate we made in the previous example. This time we'll make it so the predicate gathers two files and then stops. This is an ideal scenario to use the `ThenStop` signal value.
 
-We'll keep track of how many files we've gathered via an integer, and then we'll increment that integer whenever we find a text file that contains our magic phrase. When the number of gathered files reaches 2, we submit the `SelectThenStop` signal, which will gather the current item and then immediately stop the gather operation. Again, in the event that we encounter an IO operation error, we'll simply abort the gather operation.
+We'll keep track of how many files we've gathered via an integer, and then we'll increment that integer whenever we find a text file that contains our magic phrase. When the number of gathered files reaches two, we submit the `SelectThenStop` signal, which will gather the current item and then immediately stop the gather operation. Again, in the event that we encounter an IO operation error, we'll simply abort the gather operation.
 === "C++"
 
     ```c++ hl_lines="9-15"
@@ -264,7 +259,7 @@ We'll keep track of how many files we've gathered via an integer, and then we'll
 	This callback is getting a little large for screenshots. Here is the portion of the callback with the new logic zoomed:
 	{{ bp_img_cakemix('Gather Custom Callback Advanced Select Zoom') }}
 
-We used the `SelectThenStop` signal because of how we setup our number termination logic. We could also change the logic so that once the number is > 2 we want to stop, but this time we wouldn't want to gather the current file because we already have gathered enough files. `RejectThenStop` will cause our gather operation to immediately stop, and the current file we have been passed will not be added to the gather batch.
+We used the `SelectThenStop` signal because of how we setup our number termination logic. We could also change the logic so that once the number is greater than two we want to stop, but this time we wouldn't want to gather the current file because we already have gathered enough files. `RejectThenStop` will cause our gather operation to immediately stop, and the current file we have been passed will not be added to the gather batch.
 
 === "C++"
 
@@ -345,7 +340,7 @@ Sometimes we just want to know the count of a target element within a directory,
 The Count functions do not return an `Aborted` directory work outcome. Assuming the operation can launch, it will succeed.
 
 !!! warning
-	The value returned by the count operation is only valid if the count operation is reported as a success.
+	The value returned a Count function is only valid if the count operation succeeds.
 
 === "C++"
     All the count functions return an [FCakeMixCount](#fcakemixcount) object which just wraps an [FCakeResultDirWork](../core-api/special-types/results.md#fcakeresultdirwork) result and an `int32` representing the number of elements counted. That's all there is to this function, nothing more, nothing less.
@@ -447,13 +442,13 @@ CakeMixLibrary offers various `ToString` functions which generate human-readable
 === "Blueprint"
     ToString Utility Functions
 
-## CakeMix Special Native Types
-CakeMix introduces a few types exclusive to the C++ API.
+## CakeMix Exclusive C++ Types
+CakeMix introduces a few types exclusive to the C++ API. They are defined in `CakeIO/CakeMixTypes.h`.
 
 --8<-- "note-native-only.md"
 
 ### TCakeMixBatch
-This type is used by CakeMix to return a collection of files or subdirectories from some directory work operation. This type is quite simple, internally it wraps just a [FCakeResultDirWork](../core-api/special-types/results.md#fcakeresultdirwork) result type with a `TArray<T>`, where `T` is the element type:
+This type is used by CakeMix to return a collection of files or subdirectories from some directory work operation. This simple type merely combines a [FCakeResultDirWork](/advanced/special-types/results.md#fcakeresultdirwork) result type with a `TArray<T>`, where `T` is the element type:
 
 ```c++
 template <typename ElementType>
@@ -464,7 +459,7 @@ struct TCakeMixBatch
 	TArray<ElementType> Batch{};
 };
 ```
-CakeMixLibrary does not use the TCakeMixOrderGather type directly, but uses the template aliases FCakeMixOrderGatherFiles and FCakeMixOrderGatherSubdirs instead:
+CakeMixLibrary does not use the TCakeMixBatch type directly, but uses the template aliases FCakeMixBatchFiles and FCakeMixBatchSubdirs instead:
 ```c++
 using FCakeMixBatchFiles   = TCakeMixBatch<FCakeFile>;
 using FCakeMixBatchSubdirs = TCakeMixBatch<FCakeDir>;
@@ -479,12 +474,13 @@ There are a variety of convenience functions provided:
 	FORCEINLINE [[nodiscard]] operator bool() const { return WorkWasCompleted(); }
 
 	FORCEINLINE [[nodiscard]] bool GatheredAny() const { return Batch.Num() > 0; }
-	FORCEINLINE [[nodiscard]] bool WorkCompletedAndGatheredAny() const 
+	FORCEINLINE [[nodiscard]] bool WorkWasCompletedAndGatheredAny() const 
 	{ return Result.WorkWasCompleted() && GatheredAny(); }
+
 
 ```
 ### FCakeMixCount
-This is a simple type that bundles an [FCakeResultDirWork](../core-api/special-types/results.md#fcakeresultdirwork) directory work result with an integer that represents the number of elements counted.
+This is a simple type that bundles an [FCakeResultDirWork](/advanced/special-types/results.md#fcakeresultdirwork) with an integer that represents the number of elements counted.
 
 ``` c++
 struct FCakeMixCount

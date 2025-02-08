@@ -1,2 +1,2 @@
 !!! note
-    The parameter `NewReservedSize` can be used to reserve a minimum size for the internal path string. It is optional, and should be left at 0 whenever you don't need to specify a reserve size.
+    The parameter `NewReservedSize` can be used to reserve a minimum size for the internal path string. It is optional and should be left at 0 whenever you don't need to specify a reserve size.

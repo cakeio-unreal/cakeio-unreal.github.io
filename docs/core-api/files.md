@@ -2,24 +2,13 @@
 ## Overview
 CakeIO provides CakeFile objects to allow file manipulation in a type-safe and ergonomic manner.
 
-=== "C++"
-	The native file object in CakeIO is **FCakeFile**. FCakeFile is defined in `CakeFile.h`, and all code examples will assume the following include:
 
-	```c++
-	#include "CakeIO/CakeFile.h"
-	```
+### Source Code Information
+=== "C++"
+    {{ cpp_impl_source('file', 'FCakeFile', 'CakeFile') }}
 
 === "Blueprint"
-	The Blueprint file object in CakeIO is **UCakeFile**. UCakeFile is defined in `Blueprint/CakeFile_BP.h`:
-
-	```c++
-	#include "CakeIO/Blueprint/CakeFile_BP.h"
-	```
-
-	!!! tip
-		CakeIO offers automatic string to [CakePath](paths.md) conversions. You can pass a string to any function that expects a CakePath argument and it will automatically create a CakePath object from the string for you: 
-
-		{{ bp_img_file('Auto Str Conv') }}
+    {{ bp_impl_source('file', 'UCakeFile', 'CakeFile_BP') }}
 
 ## Basic Usage
 The following covers some of the core interfaces required to utilize and manipulate CakeFile objects.
@@ -43,6 +32,11 @@ The following covers some of the core interfaces required to utilize and manipul
 	If we need to make an empty CakeFile object whose path will be determined later, we can use `Build Cake File Empty`:
 
 	{{ bp_img_file('Build Cake File Empty') }}
+
+	!!! tip
+		CakeIO offers automatic string to [CakePath](paths.md) conversions. You can pass a string to any function that expects a CakePath argument and it will automatically create a CakePath object from the string for you: 
+
+		{{ bp_img_file('Auto Str Conv') }}
 
 ### Accessing the File Path
 === "C++"
@@ -83,21 +77,21 @@ The following covers some of the core interfaces required to utilize and manipul
 	const bool bEmptyFile   { EmptyFile.PathIsEmpty()     }; // => true
 	```
 === "Blueprint"
-	When we need to read a CakeFile's path as a string, we can use `Get Path String`:
+	When we need to read a CakeFile's path as a string, we can use `GetPathString`:
 
 	{{ bp_img_file('Get Path String') }}
 
-	If we want a copy of a CakeFile's path as a CakePath, we can use `Clone Path`:
+	If we want a copy of a CakeFile's path as a CakePath, we can use `ClonePath`:
 
 	{{ bp_img_file('Clone Path') }}
 
-	To check if a CakeFile's path is empty, we can use `Path is Empty`:
+	To check if a CakeFile's path is empty, we can use `PathIsEmpty`:
 
 	{{ bp_img_file('Path is Empty') }}
 
 ### Modifying the File Path
 === "C++"
-	We can change the file path an **FCakeFile** object represents via  `SetPath`, which takes an **FCakePath** to copy its path.
+	We can change the file path an FCakeFile object represents via `SetPath`, which takes an FCakePath to copy its path.
 
 	```c++ hl_lines="6"
 	FCakePath EnemiesDbPath{ TEXTVIEW("C:\\Game\\Data\\Enemies\\enemies_full.db") };
@@ -108,7 +102,7 @@ The following covers some of the core interfaces required to utilize and manipul
 	EnemiesDbFile.SetPath(NewEnemiesDb);
 	```
 
-	If we want to utilize move semantics instead of copy semantics, we can use  `StealPath`:
+	To use move semantics, we can use `StealPath`:
 
 	```c++ hl_lines="6"
 	FCakePath EnemiesDbPath{ TEXTVIEW("C:\\Game\\Data\\Enemies\\enemies_full.db") };
@@ -121,7 +115,7 @@ The following covers some of the core interfaces required to utilize and manipul
 
 	--8<-- "ad-copymove-ctor.md"
 
-	When we want to clear the file path contents of an **FCakePath**, we can call  `ResetPath`:
+	When we want to clear the file path contents of an FCakePath, we can call `ResetPath`:
 
 	```c++ hl_lines="4"
 	FCakePath EnemiesDbPath{ TEXTVIEW("C:/Game/Data/Enemies/enemies_full.db") };
@@ -134,18 +128,18 @@ The following covers some of the core interfaces required to utilize and manipul
 
 	```c++ hl_lines="5"
 	FCakePath EnemiesDbPath{ TEXTVIEW("C:/Game/Data/Enemies/enemies_full.db") };
-	FCakePath NewEnemiesDb{ TEXTVIEW("X:/Extra/Enemies/enemies_new.db") };
+	FCakePath NewEnemiesDb { TEXTVIEW("X:/Extra/Enemies/enemies_new.db")      };
 	FCakeFile EnemiesDbFile{ EnemiesDbPath };
 
 	EnemiesDbFile.ResetPath(NewEnemiesDb.QueryPathString().Len());
 	const bool bFileIsEmpty{ EnemiesDbFile.PathIsEmpty() }; // => true
 	```
 === "Blueprint"
-	To change the file path of an existing CakeFile object, we use `Set Path`:
+	To change the file path of an existing CakeFile object, we use `SetPath`:
 
 	{{ bp_img_file('Set Path') }}
 
-	To clear any path in an existing CakeFile object, we use `Reset Path`:
+	To clear any path in an existing CakeFile object, we use `ResetPath`:
 
 	{{ bp_img_file('Reset Path') }}
 
@@ -172,7 +166,7 @@ To get the file name of a CakeFile object as a string, we use `CloneFileName`:
 	There are other functions for generating different versions of a filename (e.g., one without its file extension data). For more information, please see the [File Name Types](#file-name-types) section.
 
 ### Accessing the File Extension
-If get the file extension associated with a CakeFile object, we use `CloneFileExt` to get a [CakeFileExt](file-extensions.md) object:
+To get the file extension from a CakeFile's file path we use `CloneFileExt`, which returns a [CakeFileExt](file-extensions.md) object:
 === "C++"
 	```c++ hl_lines="7"
 	auto PrintFileExt = [](const FString& FileExt) 
@@ -206,7 +200,7 @@ To get the file extension as a string, we can use `CloneFileExtString`:
 File equality mirrors Path equality: two File objects are equal if they refer to the same file on the filesystem.
 
 === "C++"
-	**FCakeFile** uses `operator==` and `operator!=` for equality comparisons.
+	FCakeFile uses `operator==` and `operator!=` for equality comparisons.
 
 	```c++ hl_lines="11-12"
 	FCakePath EnemiesDbPath{ TEXTVIEW("C:\\Game\\Data\\Enemies\\enemies_full.db") };
@@ -220,11 +214,11 @@ File equality mirrors Path equality: two File objects are equal if they refer to
 	```
 
 === "Blueprint"
-	To check if two CakeFile objects are equal, we use `Is Equal To`:
+	To check if two CakeFile objects are equal, we use `IsEqualTo`:
 
 	{{ bp_img_file('Is Equal To') }}
 
-	To check if two CakeFile objects are not equal, we use `Is Not Equal To`:
+	To check if two CakeFile objects are not equal, we use `IsNotEqualTo`:
 
 	{{ bp_img_file('Is Not Equal To') }}
 
@@ -254,11 +248,11 @@ To create a text or binary file, we use `CreateTextFile` or `CreateBinaryFile` r
 	```c++ hl_lines="9 14"
 	FCakePath IntDir{ FPaths::ProjectIntermediateDir() };
 
-	FCakeFile FileText { IntDir / FCakePath{ TEXTVIEW("controls.txt") } };
-	FCakeFile FileBinary{ IntDir / FCakePath{ TEXTVIEW("stats.bin")   } };
+	FCakeFile FileText  { IntDir / FCakePath{ TEXTVIEW("controls.txt") } };
+	FCakeFile FileBinary{ IntDir / FCakePath{ TEXTVIEW("stats.bin")    } };
 
-	FString      SourceDataText { TEXT("This is the source data.") };
-	TArray<uint8> SourceDataBytes{ 0x99, 0x98, 0x97, 0x96          };
+	FString      SourceDataText  { TEXT("This is the source data.") };
+	TArray<uint8> SourceDataBytes{ 0x99, 0x98, 0x97, 0x96           };
 
 	if (!FileText.CreateTextFile(SourceDataText))
 	{
@@ -271,7 +265,7 @@ To create a text or binary file, we use `CreateTextFile` or `CreateBinaryFile` r
 	}
 	```
 
-	--8<-- "ad-settings-copyitem.md"
+	--8<-- "ad-settings-newitem.md"
 
 === "Blueprint"
 	{{ bp_img_file('Create Text File') }}
@@ -283,11 +277,11 @@ If a file already exists, we generally should use the WriteTextFile or WriteBina
 	```c++ hl_lines="9 14"
 	FCakePath IntDir{ FPaths::ProjectIntermediateDir() };
 
-	FCakeFile FileText { IntDir / FCakePath{ TEXTVIEW("controls.txt") } };
-	FCakeFile FileBinary{ IntDir / FCakePath{ TEXTVIEW("stats.bin")   } };
+	FCakeFile FileText  { IntDir / FCakePath{ TEXTVIEW("controls.txt") } };
+	FCakeFile FileBinary{ IntDir / FCakePath{ TEXTVIEW("stats.bin")    } };
 
-	FString      SourceDataText { TEXT("This is the source data.") };
-	TArray<uint8> SourceDataBytes{ 0x99, 0x98, 0x97, 0x96          };
+	FString      SourceDataText  { TEXT("This is the source data.") };
+	TArray<uint8> SourceDataBytes{ 0x99, 0x98, 0x97, 0x96           };
 
 	if (!FileText.CreateOrWriteTextFile(SourceDataText))
 	{
@@ -319,22 +313,23 @@ To attempt to delete the file a CakeFile references, we use `DeleteFile`:
 === "Blueprint"
 	{{ bp_img_file('Delete File') }}
 
-In the event that the file does not exist, `DeleteFile` will return a [No Op](special-types/outcomes.md#ok-and-no-op) outcome value.
-   
---8<-- "ad-policy-filedelete.md"
+This function has an {{ policy_link('DeleteFile') }} parameter (optional in C++) that determines if read only files can be deleted.
 
+!!! note
+	In the event that the file does not exist, `DeleteFile` will return a [No Op](special-types/outcomes.md#ok-and-no-op) outcome value.
+   
 ### File Read/Write Operations
 Cake Files provide interfaces for handling files as text files or binary files. Text files will use string-like objects for read/write operations, and binary files will use `TArray<uint8>`.
 
 #### Reading File Data
 === "C++"
-	There are two approaches to reading file data from an **FCakeFile** object. We will explore these approaches through examples of reading a text file. 
+	There are two approaches to reading file data from an FCakeFile object. We will explore these approaches through examples of reading a text file. 
 
 	The first approach we can use is reading the file data into a pre-existing buffer:
 
 	```c++ hl_lines="5"
-	FCakePath IntDir{ FPaths::ProjectIntermediateDir() };
-	FCakeFile FileText { IntDir / FCakePath{ TEXTVIEW("controls.txt") } };
+	FCakePath IntDir  { FPaths::ProjectIntermediateDir()               };
+	FCakeFile FileText{ IntDir / FCakePath{ TEXTVIEW("controls.txt") } };
 
 	FString TextData{};
 	if (FileText.ReadTextFileToBuffer(TextData))
@@ -349,9 +344,9 @@ Cake Files provide interfaces for handling files as text files or binary files. 
 
 	The other approach is to have the file data and operation result returned in a CakeOrder type via `ReadTextFile`:
 
-	```c++ hl_lines="5"
-	FCakePath IntDir{ FPaths::ProjectIntermediateDir() };
-	FCakeFile FileText { IntDir / FCakePath{ TEXTVIEW("controls.txt") } };
+	```c++ hl_lines="6"
+	FCakePath IntDir  { FPaths::ProjectIntermediateDir()               };
+	FCakeFile FileText{ IntDir / FCakePath{ TEXTVIEW("controls.txt") } };
 
 	TCakeOrderFile<FString> ReadText{ FileText.ReadTextFile() };
 
@@ -360,7 +355,7 @@ Cake Files provide interfaces for handling files as text files or binary files. 
 		UE_LOG(LogTemp, Warning, TEXT("Text File Data: [%s]"), *ReadText.Order);
 	}
 	```
-	CakeOrders are simple template structs that bundle a result type with a template type that represents the data we want to receive from an IO operation. In our case, we are using a `TCakeOrderFile` which sends back [FCakeResultFileIO](special-types/results.md#fcakeresultfileio) result types, and our template type is `FString` since we're trying to get the text data as a string. For more details on CakeOrders and how to use them, please see [this section](special-types/orders.md#tcakeorder).
+	CakeOrders are simple template structs that bundle a result type with a template type that represents the data we want to receive from an IO operation. In our case, we are using a `TCakeOrderFile` which sends back [FCakeResultFileIO](special-types/results.md#fcakeresultfileio) result types, and our template type is `FString` since we're trying to get the text data as a string. For more details on CakeOrders and how to use them, please see [this section](/core-api/special-types/cake-orders).
 
 	For completeness, here is the equivalent code for binary files:
 

@@ -4,19 +4,12 @@ CakeIO offers FileExtension objects to enforce a standard representation of file
 --8<-- "native-bp-diff.md"
 
 === "C++"
-    The native file extension object in CakeIO is **FCakeFileExt**. 
-    
-    **FCakeFileExt** is defined in `CakeFileExt.h`, and all code examples will assume the following include:
+    The native file extension object in CakeIO is **FCakeFileExt**, which is defined in `CakeIO/CakeFileExt`. 
 
-    ``` c++
-    #include "CakeIO/CakeFileExt.h"
-    ```
+    {{ cpp_assumed_include('CakeFileExt') }} 
 
 === "Blueprint"
-    The Blueprint File Extension object is **UCakeFileExt**. It is defined in `Blueprint/CakeFileExt_BP.h`:
-    ``` c++
-    #include "CakeIO/Blueprint/CakeFileExt_BP.h"
-    ```
+    {{ bp_impl_source('file extension', 'UCakeFileExt', 'CakeFileExt_BP') }}
 
 ## File Extension Classification
 Before we look at the File Extension object interface, it is important to understand how CakeIO classifies file extensions. CakeIO defines two distinct types of file extension: **single** file extensions and **multi** file extensions.
@@ -24,7 +17,7 @@ Before we look at the File Extension object interface, it is important to unders
 
 > **Multi File Extension**: A file extension that contains more than one file extension component: e.g., `.cdr.txt` or `.bin.dat.zip`
 
-CakeIO represents file extension types via the enum **ECakeFileExtType**. File extensions that are empty will have the value `None`, file extensions with one component will be assigned the value `Single`, and file extensions with more than one component will have the value `Multi`.
+CakeIO represents file extension types via the enum ECakeFileExtType. File extensions that are empty will have the value `None`, file extensions with one component will be assigned the value `Single`, and file extensions with more than one component will have the value `Multi`.
 
 
 === "C++"
@@ -40,18 +33,18 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 ## Basic Usage
 ### Building File Extension Objects
 === "C++"
-    To build an **FCakeFileExt** object, we can use the constructor which takes an **FStringView** that represents the file extension we want to store.
+    To build an FCakeFileExt object, we can use the constructor which takes an FStringView that represents the file extension we want to store.
 
     ```c++
 	FCakeFileExt TextExt  { TEXTVIEW(".txt") };
 	FCakeFileExt BinaryExt{ TEXTVIEW("bin")  };
     ```
 
-    Because **FCakeFileExt** enforces a standard representation of file extensions, it doesn't matter if we supply the leading extension dot '.' when submitting an extension string.
+    Because FCakeFileExt enforces a standard representation of file extensions, it doesn't matter if we supply the leading extension dot '.' when submitting an extension string.
 
     --8<-- "ad-stringview.md"
 
-    To create an **FCakeFileExt** by extracting the file extension from a file name, we can use the static function `BuildFileExtFromFilePath`:
+    To create an FCakeFileExt by extracting the file extension from a file name, we can use the static function `BuildFileExtFromFilePath`:
 
     ```c++ hl_lines="3"
 	FCakePath FileReadme{ TEXTVIEW("data/example_file.txt") };
@@ -60,7 +53,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
     ```
     --8<-- "warn-file-ext-extractions.md"
 
-    We can create copies of a pre-existing **FCakeFileExt** through the copy constructor or the member function `Clone`:
+    We can create copies of a pre-existing FCakeFileExt through the copy constructor or the member function `Clone`:
 
     ```c++ hl_lines="3 4"
 	FCakeFileExt TextExt{ TEXTVIEW(".txt") };
@@ -69,7 +62,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 	FCakeFileExt TextClone{ TextExt.Clone() };
     ```
 
-    If we want a clone of the **FCakeFileExt**'s string only, we can use the member function `CloneFileExtString`:
+    If we want a clone of the FCakeFileExt's string only, we can use the member function `CloneFileExtString`:
 
     ```c++ hl_lines="3"
 	FCakeFileExt TextExt{ TEXTVIEW(".txt") };
@@ -78,7 +71,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
     ```
 
 === "Blueprint"
-    To build a new File Extension object, we use `BuildCakeFileExt`, submitting a string which represents the file extension the object should represent:
+    To build a new CakeFileExt object, we use `BuildCakeFileExt`, submitting a string which represents the file extension the object should represent:
 
     {{ bp_img_file_ext('Build Cake File Ext') }}
 
@@ -123,9 +116,9 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 
     {{ bp_img_file_ext('Get File Ext String') }}
 
-### Changing the File Extension
+### Modifying the File Extension
 === "C++"
-    We have many ways to change the file extension of a pre-existing **FCakeFileExt**. To change the extension string to another string that represents a file extension, we can use the member function `SetFileExt`.
+    We have many ways to change the file extension of a pre-existing FCakeFileExt. To change the extension string to another string that represents a file extension, we can use the member function `SetFileExt`.
 
     ```c++ hl_lines="3"
 	FCakeFileExt SourceExt{ TEXTVIEW(".txt") };
@@ -134,7 +127,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
     ```
     --8<-- "warn-file-ext-set-versus-extract.md"
 
-    To copy the file extension from another **FCakeFileExt** object, we can use the member function `SetFileExtViaOther`:
+    To copy the file extension from another FCakeFileExt object, we can use the member function `SetFileExtViaOther`:
 
     ```c++ hl_lines="4"
     FCakeFileExt SourceExt  { TEXTVIEW(".txt")     };
@@ -143,7 +136,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 	SourceExt.SetFileExtViaOther(GameSaveExt);
     ```
 
-    To steal the file extension from another **FCakeFileExt** object, we can use the member function `StealFileExt`:
+    To steal the file extension from another FCakeFileExt object, we can use the member function `StealFileExt`:
 
     ```c++ hl_lines="4"
 	FCakeFileExt SourceExt  { TEXTVIEW(".txt")     };
@@ -164,7 +157,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 
     --8<-- "ad-copymove-ctor.md"
 
-    We can check if an **FCakeFileExt** holds any file extension via the member function `IsEmpty`:
+    We can check if an FCakeFileExt holds any file extension via the member function `IsEmpty`:
 
     ```c++ hl_lines="4"
 	FCakeFileExt SourceExt{ TEXTVIEW(".txt")     };
@@ -173,7 +166,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 	const bool IsEmpty{ SourceExt.IsEmpty() }; // => true
     ```
 
-    To clear any existing file extension from an **FCakeFileExt** object, we can use the member function `Reset`:
+    To clear any existing file extension from an FCakeFileExt object, we can use the member function `Reset`:
 
     ```c++ hl_lines="3"
 	FCakeFileExt SourceExt{ TEXTVIEW(".txt")     };
@@ -211,7 +204,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 
     --8<-- "warn-file-ext-extractions.md"
 
-    To see if a FileExtension object's file extension is empty, we use `Is Empty`:
+    To see if a FileExtension object's file extension is empty, we use `IsEmpty`:
 
     {{ bp_img_file_ext('is-empty') }}
 
@@ -240,7 +233,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 	FCakeFileExt ExtCdrTxt{ ExtCdr.Combine(ExtTxt) }; // => ".cdr.txt"
     ```
 
-    To append a file extension onto a pre-existing **FCakeFileExt** object, we can use either member function `operator+=` or `CombineInline`:
+    To append a file extension onto a pre-existing FCakeFileExt object, we can use either member function `operator+=` or `CombineInline`:
 
     ```cpp
     FCakeFileExt ExtSrc   { TEXTVIEW(".txt")     };
@@ -263,7 +256,7 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
 
 ### Comparing File Extensions
 === "C++"
-    We can use equality comparison against **FCakeFileExt** objects via member functions `operator==` and `operator!=`. 
+    We can use equality comparison against FCakeFileExt objects via member functions `operator==` and `operator!=`. 
 
     ```c++ hl_lines="4-5"
 	FCakeFileExt ExtA{ TEXTVIEW(".txt") };
@@ -274,11 +267,11 @@ CakeIO represents file extension types via the enum **ECakeFileExtType**. File e
     ```
 
 === "Blueprint"
-    To check if one FileExtension object is equal to another, we use `Is Equal To`:
+    To check if one FileExtension object is equal to another, we use `IsEqualTo`:
 
     {{ bp_img_file_ext('Is Equal To') }}
 
-    To check if one FileExtension object is not equal to another, we use `Is Not Equal To`:
+    To check if one FileExtension object is not equal to another, we use `IsNotEqualTo`:
 
     {{ bp_img_file_ext('Is Not Equal To') }}
 
@@ -321,7 +314,8 @@ When we want to view the trailing extension of an existing FileExt object, we us
     `CloneAsSingle` will always return the trailing component on a file extension (assuming there is one), so it is safe to use on both single and multi extensions. This means that `CloneAsSingle` is a valuable tool when you are processing file extensions and only care about examining the trailing extension component, regardless of your source extension's actual number of extension components.
 
 ### Extracting a File Extension in Single Form
-Sometimes we want to just extract the trailing component from a filename. There is a special build function we can use to accomplish this goal.
+There are functions that allow us to extract only the trailing file extension component from a given file path.
+
 === "C++"
     We can extract just the trailing extension component from a file name via the static function `BuildFileExtFromFilePathSingle`:
     ```c++ hl_lines="4"

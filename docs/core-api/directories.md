@@ -3,31 +3,24 @@ CakeIO provides CakeDir objects that offer a comprehensive and ergonomic interfa
 
 --8<-- "native-bp-diff.md"
 
+### Source Code Information
 === "C++"
-    The native directory object in CakeIO is **FCakeDir**. FCakeDir is defined in `CakeDir.h`, and all code examples will assume the following include:
-
-    ``` c++
-    #include "CakeIO/CakeDir.h"
-    ```
+    {{ cpp_impl_source('directory', 'FCakeDir', 'CakeDir') }}
 
 === "Blueprint"
-    The Blueprint directory object in CakeIO is **UCakeDir**. UCakeDir is defined in `Blueprint/CakeDir_BP.h`:
-
-    ``` c++
-    #include "CakeIO/Blueprint/CakeDir_BP.h"
-    ```
+    {{ bp_impl_source('directory', 'UCakeDir', 'CakeDir_BP') }}
 
 ## Basic Usage
 
 ### Building CakeDir Objects
 === "C++"
-    We can build an **FCakeDir** via its constructor by submitting an `FCakePath` argument that represents the directory location.
+    We can build an FCakeDir via its constructor by submitting an FCakePath argument that represents the directory location.
 	```c++ 
     FCakeDir DirectoryGame{ FCakePath{TEXTVIEW("X:/game")} };
         // Path: "x/game"
         // File Extension Filter: []
 	```
-    We can pass a string-like object as the second argument to an **FCakeDir** constructor if we want to also set the starting elements in its [file extension filter](#file-extension-filter):
+    We can pass a string-like object as the second argument to an FCakeDirconstructor if we want to also set the starting elements in its [file extension filter](#file-extension-filter):
 
 	```c++ 
     FCakeDir DirectoryGame{ 
@@ -51,7 +44,7 @@ CakeIO provides CakeDir objects that offer a comprehensive and ergonomic interfa
 
     {{ bp_img_dir('Build Cake Dir Empty') }}
 
-We can get a copy of an existing **FCakeDir** via `Clone`:
+We can get a copy of an existing CakeDir via `Clone`:
 === "C++"
     ```cpp
     FCakeDir DirectoryGame{ FCakePath{TEXTVIEW("X:/game")}, TEXTVIEW("bin|dat") };
@@ -75,16 +68,16 @@ We can get a copy of an existing **FCakeDir** via `Clone`:
     ```
 
     !!! tip
-        In general, Clone functions in CakeIO behave identically to copy constructors. However, `FCakeDir`'s Clone function is an exception since it provides more control than its copy constructor counterpart.
+        In general, Clone functions in CakeIO behave identically to copy constructors. However, FCakeDir's `Clone` function is an exception since it provides more control than its copy constructor counterpart.
 
 === "Blueprint"
     {{ bp_img_dir('Clone') }}
 
-By default, this function will also ensure that the cloned **FCakeDir** has an identical file extension filter. We can control this directly via the [ExtFilterClone](special-types/policies.md#extfilterclone) policy parameter. (This parameter is optional in C++).
+By default, this function will also ensure that the cloned CakeDir has an identical file extension filter. We can control this directly via the {{ policy_link('ExtFilterClone') }} parameter. This parameter is optional in C++.
 
 ### Accessing the Directory Path
 === "C++"
-    We can access an **FCakeDir**'s associated **FCakePath** via `operator*` or `GetPath`:
+    We can access an FCakeDir's associated FCakePath via `operator*` or `GetPath`:
 	```c++ hl_lines="6-7"
     auto PrintPath = [](const FCakePath& Path) { 
         UE_LOG(LogTemp, Warning, TEXT("Path: [%s]"), **Path);
@@ -117,7 +110,7 @@ By default, this function will also ensure that the cloned **FCakeDir** has an i
 
 ### Modifying the Directory Path
 === "C++"
-    We can change the path an **FCakeDir** is using via `SetPath` or `StealPath`. `SetPath` operates on `const FCakePath&`, and `StealPath` operates on `FCakePath&&`.  
+    We can change the path an FCakeDir is using via `SetPath` or `StealPath`. `SetPath` operates on `const FCakePath&`, and `StealPath` operates on `FCakePath&&`.  
 
     ```c++ hl_lines="4-5"
     FCakeDir DirectoryGame{ FCakePath{TEXTVIEW("X:/game")}, TEXTVIEW("bin|dat") };
@@ -129,7 +122,7 @@ By default, this function will also ensure that the cloned **FCakeDir** has an i
     !!! tip
         Favor `StealPath` unless you are copying from a source `FCakePath` that needs to be used elsewhere.
 
-    We can check if an **FCakeDir**'s directory path is empty via `PathIsEmpty`:
+    We can check if an FCakeDir's directory path is empty via `PathIsEmpty`:
 
     ```c++ hl_lines="3"
     FCakeDir DirectoryGame{ FCakePath{TEXTVIEW("X:/game")}, TEXTVIEW("bin|dat") };
@@ -178,7 +171,7 @@ We can get the directory name as a string via `CloneDirName`:
 ### Directory Equality
 Directory equality mirrors path equality: two CakeDir objects are equal if they refer to the same directory location on the filesystem. The extension filters are not taken into consideration for equality since this would lead to unintuitive, misleading results.
 === "C++"
-    We use `operator==` and `operator!=` for **FCakeDir** equality, and can compare them against other **FCakeDir** or **FCakePath** objects.
+    We use `operator==` and `operator!=` for FCakeDirequality, and can compare them against other FCakeDiror FCakePath objects.
 
 	```c++ hl_lines="8 9 11 12"
     FCakePath PathData{ TEXTVIEW("X:/game/data") };
@@ -195,16 +188,16 @@ Directory equality mirrors path equality: two CakeDir objects are equal if they 
     bAreEqual = DirData != DirArc; // => true
 	```
 === "Blueprint"
-    We can check if two CakeDir objects are equal via `Is Equal To`:
+    We can check if two CakeDir objects are equal via `IsEqualTo`:
 
 	{{ bp_img_dir('Is Equal To') }}
 
-    We can check if two CakeDir objects are not equal via `Is Not Equal To`:
+    We can check if two CakeDir objects are not equal via `IsNotEqualTo`:
 
 	{{ bp_img_dir('Is Not Equal To') }}
 
 ### File Extension Filter
-All CakeDir objects have their own file extension filter, which contains a collection of unique file extensions stored as [FCakeFileExt](file-extensions.md) objects. This filter is used on specialized variations of file traversal and allows callers to decide which files in a directory are visited based upon their file extensions.
+All CakeDir objects have their own file extension filter, which contains a collection of unique file extensions stored as [CakeFileExt](file-extensions.md) objects. This filter is used on specialized variations of file traversal and allows callers to decide which files in a directory are visited based upon their file extensions.
 
 === "C++"
     We can get access to either a const or mutable reference to the file extension filter via `GetExtFilter` and `GetExtFilterMut`, respectively:
@@ -216,11 +209,11 @@ All CakeDir objects have their own file extension filter, which contains a colle
 	      FCakeExtFilter& FilterMutable{ DirectoryGame.GetExtFilterMut() };
     ```
 
-    For details on how to use the extension filter, please see the [FCakeExtFilter documentation](special-types/cakeextfilter.md).
 
 === "Blueprint"
-    Blueprint users will access the file extension filter via specific **UCakeDir** member functions. More details can be found [here](special-types/cakeextfilter.md).
+    Blueprint users cannot directly access the filter extension filter and instead control it via specific **UCakeDir** member functions. 
 
+For details on how to use the extension filter, please see the [FCakeExtFilter documentation](/core-api/special-types/cakeextfilter).
 
 ### Clearing All Data
 To clear the path and the file extension filter on a CakeDir object, we use `Reset`:
@@ -287,22 +280,10 @@ To create the directory a CakeDir object references, we use `CreateDir`:
 === "Blueprint"
 	{{ bp_img_dir('Create Dir') }}
 
-We can use the [MissingParents](policies.md#missingparents) policy parameter to control whether or not missing parent directories are allowed to be created. (This parameter is optional in C++).
+We can use the {{ policy_link('MissingParents') }} parameter to control whether any missing parent directories in the CakeDir's directory path are allowed to be created. (This parameter is optional in C++).
 
-`ExistsOrCreate` is a convenience function that checks if a directory exists and tries to create it for us if it doesn't. This function is ideal to use when you need a directory to exist before proceeding, but you aren't sure if it already exists.
-
-=== "C++"
-    ```c++
-    if (!DirectoryGame.ExistsOrCreate())
-    {
-        UE_LOG(LogTemp, Error, TEXT("Directory game does not exist and could not be created."));
-    }
-    ```
-=== "Blueprint"
-	{{ bp_img_dir('Exists Or Create') }}
-
-!!! note
-    `ExistsOrCreate` always creates any missing parent directories.
+!!! tip
+	`CreateDir` returns a NoOp if the directory already exists. In situations where you don't know if a directory exists but you want to ensure it's created before continuing, you can just call CreateDir and use the bool / IsOk to know whether or not the directory exists.
 
 ### Deleting Directories
 We can delete a CakeDir's referenced directory and all of its contents via `DeleteDir`:
@@ -416,9 +397,11 @@ To change the name of a directory on the filesystem, use `ChangeDirName`:
 	}
     ```
 === "Blueprint"
-	{{ bp_img_dir('Delete Dir') }}
+	{{ bp_img_dir('Change Dir Name') }}
 
-We can control whether or not the name change is allowed to overwrite existing directories via the second parameter, which is an [OverwriteItems](policies.md#overwriteitems) policy. (This parameter is optional in C++.)
+Assuming the name change succeeds, the new directory path will be `X:/game_main`.
+
+The {{ policy_link('OverwriteItems') }} parameter allows us to control whether the change name operation should continue if doing so would overwrite a preexisting directory.
 
 
 ### Retrieving Directory OS Stat Information
@@ -436,7 +419,7 @@ We can control whether or not the name change is allowed to overwrite existing d
 		// ...
 	}
     ```
-    `QueryStatData` will return a `TCakeOrderDir<FFileStatData>` that holds both the [FCakeResultDirIO](special-types/results.md#fcakeresultdirio) and the `FFileStatData`, which will be valid only if the query operation doesn't fail. For more information about TCakeOrder types and their usage, see [this section](special-types/orders.md#tcakeorder).
+    `QueryStatData` will return a `TCakeOrderDir<FFileStatData>` that holds both the [FCakeResultDirIO](special-types/results.md#fcakeresultdirio) and the `FFileStatData`, which will be valid only if the query operation doesn't fail. For more information about TCakeOrder types and their usage, see [this section](/core-api/special-types/cake-orders).
 
 
 === "Blueprint"
@@ -464,7 +447,7 @@ Before we examine the traversal interfaces, it is important to understand some t
 Each of these traits is independent of one another, and so they can be freely mixed in any combination the caller needs. Now, let's look a bit more in depth into each of the traits.
 
 #### Traversal Depth
-Traversal depth is controlled via the [OpDepth](policies.md#opdepth) policy. Full details about each setting can be found in its documentation.
+Traversal depth is controlled via the {{ policy_link('OpDepth') }} parameter. Full details about each setting can be found in its documentation.
 
 #### Traversal Targets
 There are three targets a caller can select for a traversal operation to visit at the specified depth: items will visit all files and directories, files will visit only files, and subdirectories will only visit subdirectories. The callback signature for traversals will change based on the target selected. For each target element visited, an items traversal will produce a [CakePath](paths.md) object and a boolean indicating if it is a directory, a files traversal will produce a [CakeFile](files.md) object, and a subdirectory traversal will produce a CakeDir object.
@@ -476,7 +459,7 @@ Unguarded traversal will visit every target element at the specified depth. The 
 
 Guarded traversal will attempt to visit every target element at a specified depth, but it can be stopped early by the caller if an error is encountered. In essence, this is traversal with error handling enabled. The goal of a guarded traversal is still to visit all target elements at the specified depth.
 
-Search traversal visits target elements at the specified depth until some conditions is met -- the caller is in complete control of this condition. As the name implies, a search traversal does not always expect to visit every target element within a directory -- it wishes to terminate as soon as it finds what it is looking for. Search traversals can be terminated early in two states -- if an error is encountered or if the search has found what it needs. If a search traversal visits all target elements and the search is not satisfied, then this traversal will be considered a failure (in terms of searching, not in terms of errors).
+Search traversal will visit target elements at the specified depth until a caller-defined condition is met or an error is encountered. As the name implies, a search traversal does not always expect to visit every target element within a directory -- it wishes to terminate as soon as it finds what it is looking for. Search traversals can be terminated early in two states -- if an error is encountered or if the search has found what it needs. If a search traversal visits all target elements and the search is not satisfied, then this traversal will be considered a failure (in terms of searching, not in terms of errors).
 
 #### Traversal Function Naming
 Traversal functions utilize the following naming pattern: `Traverse<style><target>`. Unguarded traversals do not have a style identifier in their name because they are the simplest form. Let's say we wish to traverse the files of a directory. We could use the following functions to traverse the files with each style:
@@ -493,8 +476,8 @@ Every traversal function will require a callback that is meant to handle each ta
 | Traversal Style | Return Type|
 | :-------------- | :----------|
 | Unguarded       | void       |
-| Guarded         | [ECakeSignalGuarded](special-types/signals.md#ecakesignalguarded) |
-| Search          | [ECakeSignalSearch](special-types/signals.md#ecakesignalsearch) | 
+| Guarded         | [ECakeSignalGuarded](core-api/special-types/signals/#ecakesignalguarded) |
+| Search          | [ECakeSignalSearch](/core-api/special-types/signals/#ecakesignalsearch) | 
 
 >Parameter Lists
 
@@ -509,14 +492,14 @@ Every traversal function will require a callback that is meant to handle each ta
 ### Using Traversals
 --8<-- "disclaimer-error-handling-traversal.md"
 
-Using traversals with Cake Directory objects follows a common pattern: we select a style and target by using a particular function, and then we submit an [OpDepth](policies.md#opdepth) policy parameter that determines the traversal depth and a callback parameter that will be called each time a target element is visited. The callback signature will change based upon the style and target element, and some functions will accept more parameters beyond the depth and callback. We will now look at examples using each traversal style.
+Using traversals with Cake Directory objects follows a common pattern: we select a style and target by using a particular function, and then we submit an {{ policy_link('OpDepth') }} parameter that determines the traversal depth and a callback parameter that will be called each time a target element is visited. The callback signature will change based upon the style and target element, and some functions will accept more parameters beyond the depth and callback. We will now look at examples using each traversal style.
 
 #### Unguarded Traversals
 Unguarded Traversals are the simplest form of traversal. Unless the traversal fails to launch due to an error, it will visit every target element at a specified depth for a given Cake Directory object. The user has no control over the traversal operation's termination, and the traversal will not stop until all elements at the specified depth are visited.
 The callback signature for unguarded traversals must accept the input parameters for the target element, and the callback should return void since no traversal control is granted to the caller.
 
 === "C++"
-    The callback signatures for **FCakeDir** are described via the following `TFunction` template aliases:
+    The callback signatures for FCakeDir are described via the following `TFunction` template aliases:
 
     ```c++ 
         /** Callback signature for an unguarded item traversal. */
@@ -671,7 +654,7 @@ A search traversal can end in three states:
 2. Success: The search goal was met.
 3. Aborted: The search traversal was terminated due to an error.
 
-Search traversal callbacks return [ECakeSignalSearch](special-types/signals.md#ecakesignalguarded) signals in order to inform the traversal operation of the search's state at each step of the traversal.
+Search traversal callbacks return [ECakeSignalSearch](/core-api/special-types/signals/#ecakesignalsearch) signals in order to inform the traversal operation of the search's state at each step of the traversal.
 
 === "C++"
     The callback signatures for search traversals are described via the following `TFunction` template aliases:
@@ -723,7 +706,7 @@ For this example, we'll use a search traversal to attempt to find a subdirectory
 When using [ECakeSignalSearch](special-types/signals.md#ecakesignalguarded), we return `Success` when the search is satisfied and the traversal should end. In our case, this is when the subdirectory name matches "config". Otherwise, we return `Continue`, which means the search is not yet satisfied and the next element should be visited.
 
 !!! note
-    We can also return an `Abort` signal, just like we can in a guarded traversal. However, it is not required -- we don't have any IO failure or other errors that could occur within our callback, and so we can safely leave that out.
+    We can also return an `Abort` signal just like a guarded traversal; however, it is not required. Since we don't have any IO failure or other critical errors that could occur within our callback, there is no need to return an `Abort` signal.
 
 We're now ready to launch our traversal, choosing the desired traversal depth when we call the appropriate search traversal function:
 
@@ -756,7 +739,7 @@ We're now ready to launch our traversal, choosing the desired traversal depth wh
 	}
 
     ```
-    The result from a search traversal will only return true if the search was successful, so we can branch on the result and safely use `ConfigDir` when it returns true. This is the most basic way to use the results from a search traversal, please see [traversal error handling](error-handling.md#traversal-error-handling) for a more detailed look at how to work with search traversal results.
+    The result from a search traversal will only return true if the search was successful, so we can branch on the result and safely use `ConfigDir` when it returns true. This is the most basic way to use the results from a search traversal, please see [traversal error handling](/core-api/error-handling/#traversal-error-handling-idioms) for a more detailed look at how to work with search traversal results.
 === "Blueprint"
 	{{ bp_img_dir('Traversal Example Search Launch') }}
 
@@ -767,13 +750,13 @@ Filtered traversals are a special kind of traversal that only works with files a
 1. `TraverseGuardedFilesWithFilter`
 1. `TraverseSearchFilesWithFilter`
 
-These functions behave exactly like their non-filtered counterparts, however, they take one extra (optional) [FCakeSettingsExtFilter](special-types/settings.md#fcakesettingsextfilter) settings struct. These settings control how the filter should be used to select which files to visit. 
-
-Unless you have changed the [default policy values](policies.md#default-policy-values) manually, the default behavior of the extension filter is to select any files whose file extensions are in the extension filter set.
-
+These functions add parameters in addition to the standard parameter list for that iteration style. These parameters allow us to control how the extension filter should be used to select which files to visit during the traversal operation. The default behavior of a filtered traversal is to visit any files whose file extensions are in the extension filter set.
 Let's start with a basic example: we'll use the filter to visit only `.txt` files in a directory and read the text data. Since we're using a file IO operation during each traversal step, we should use a guarded traversal so we can respond to errors.
 
 === "C++"
+	The native filtered traversal functions take one extra (optional) [FCakeSettingsExtFilter](/core-api/special-types/settings/#fcakesettingsextfilter) settings struct. These settings control how the filter should be used to select which files to visit. 
+
+	Unless you have changed the [default policy values](/core-api/special-types/policies/#default-policy-values) manually, the default behavior of the extension filter is to visit any files whose file extensions are in the extension filter set.
 
     ```c++ hl_lines="13-14"
 	FCakeDir DirectoryGame{ FCakePath{TEXTVIEW("X:/game")}, TEXTVIEW("txt") };
@@ -800,7 +783,7 @@ Let's start with a basic example: we'll use the filter to visit only `.txt` file
 
 	{{ bp_img_dir('Traversal Example Filtered Read Text Launch') }}
 
-We can change the filter behavior by submitting our own [FCakeSettingsExtFilter](special-types/settings.md#fcakesettingsextfilter) argument. In this next example, we'll invert the filter logic so that our traversal skips any files whose extensions are in the extension set. For this example, we'll collect all files from a target build directory, ignoring any build artifacts that we don't care about. Since we want all files in the directory and we are just going to be adding CakeFile objects to an array within the callback, we don't need any error handling, so we can just use a unguarded traversal. Note how simple our callback implementation is -- since the filter is being used to exclude build artifacts, we know that any files that we receive are files we are interested in using, so all we need to do is just add each file to the array.
+We can customize which files should be visited via the filter settings parameters. In this next example, we'll invert the filter logic so that our traversal skips any files whose extensions are in the extension set. For this example, we'll collect all files from a target build directory, ignoring any build artifacts that we don't care about. Since we want all files in the directory and we are just going to be adding CakeFile objects to an array within the callback, we don't need any error handling, so we can just use a unguarded traversal. Note how simple our callback implementation is -- since the filter is being used to exclude build artifacts, we know that any files that we receive are files we are interested in using, so all we need to do is just add each file to the array. This is the major benefit of using filtered traversals: we can focus entirely on operations involving files of interest, and we can delegate the filtering logic boilerplate to the traversal operation.
 
 === "C++"
 
@@ -838,7 +821,7 @@ We can change the filter behavior by submitting our own [FCakeSettingsExtFilter]
 ## Advanced Usage
 
 ### Checking if a Directory Contains Elements
-Sometimes we want to know whether or not a directory contains any of a specific element. We can use the `ContainsAny` family of functions, which return a `bool` indicating whether or not the CakeDir object contains at least one of the desired element. We can check for items, files, files with filter, or subdirectories.
+To check if a directory contains any items, files, or subdirectories, we can use the `ContainsAny` family of functions, which all return a `bool` that is true if the directory contains at least one element, false otherwise. We can also use a filtered version when checking for files.
 
 === "C++"
 
@@ -882,7 +865,7 @@ The returned CakeDir object will hold the new path `Y:/game/cake-arena/win64`, b
 
 
 #### CloneWithNewParent
-Sometimes we might want to clone a CakeDir object and just change its parent path. `CloneWithNewParent` allows us to submit a new [CakePath](paths.md) object that represents the parent, and it will return a CakeDir that has the new parent, but maintains the same directory name as the source CakeDir object. We can control whether the source CakeDir's extension filter should be copied as well via an [ExtFilterClone](special-types/policies.md#extfilterclone) policy argument, which by default will copy the extension filter.
+Sometimes we might want to clone a CakeDir object and just change its parent path. `CloneWithNewParent` allows us to submit a new [CakePath](/core-api/paths.md) object that represents the parent, and it will return a CakeDir that has the new parent, but maintains the same directory name as the source CakeDir object. We can control whether the source CakeDir's extension filter should be copied as well via an {{ policy_link('ExtFilterClone') }} policy argument, which by default will copy the extension filter.
 
 === "C++"
 
@@ -902,27 +885,68 @@ Sometimes we might want to clone a CakeDir object and just change its parent pat
 	// Ext Filter: []
     ```
 
-    As the example above shows, in C++ the [ExtFilterClone](special-types/policies.md#extfilterclone) policy parameter is optional. The default value is set to clone the filter.
-
 === "Blueprint"
 	{{ bp_img_dir('Clone With New Parent') }}
 
 The cloned directory will hold the path: `Y:/archive/build/win64`.
 
-### Path Utility Functions
+We can use the {{ policy_link('ExtFilterClone') }} parameter (optional in C++) to control whether the cloned directory should copy the source directory's file extension filter.
+
+### Building Child Items
+We can easily build CakePaths, CakeFiles, and CakeDirs that are parented under another CakeDir's directory path with the `BuildChild` family of functions. These are convenience functions meant to be used when a caller simply wants to create a child item without having to create any intermediate objects (e.g., the CakePath for a subsequent CakeFile).
+
 #### BuildChildPath
-This convenience function is designed to provide an ergonomic interface for generating child paths relative to a specific CakeDir object's path. All we need to do is submit a [CakePath](paths.md) object that represents the child path's relative location within the directory, and `BuildChildPath` will return a new CakePath object with that child path parented under the target CakeDir object's path:
+To build CakePath objects that are automatically parented under a CakeDir's directory path, we use `BuildChildPath`, passing a string-like argument that contains the __relative__ path to be parented:
 
 === "C++"
     ```c++ hl_lines="4"
 	FCakeDir ProjectDir{ FCakePath{TEXTVIEW("X:/cake-arena")} };
-	FCakePath AssetsFolder{ TEXTVIEW("data/assets") };
 
-	FCakePath AssetsFullPath{ ProjectDir.BuildChildPath(AssetsFolder) };
+	FCakePath AssetsPath{ 
+		ProjectDir.BuildChildPath( TEXTVIEW("data/assets") ) 
+	};
 	// Path: "X:/cake-arena/data/assets"
     ```
 
 === "Blueprint"
 	{{ bp_img_dir('Build Child Path') }}
 
-In the example above, the returned CakePath object's path will be `X:/cake-arena/data/assets`.
+In the example above, the returned CakePath's path will be `X:/cake-arena/data/assets`.
+
+#### BuildChildFile
+To build CakeFile objects whose file paths are automatically parented under a CakeDir's directory path, we use `BuildChildFile`, passing a string-like argument that contains the __relative__ file path to be parented:
+
+=== "C++"
+    ```c++ hl_lines="4"
+	FCakeDir ProjectDir{ FCakePath{TEXTVIEW("X:/cake-arena")} };
+
+	FCakeFile HealthPotion{ 
+		ProjectDir.BuildChildFile( TEXTVIEW("items/health-potion.dat") ) 
+	};
+	// File Path: "X:/cake-arena/items/health-potion.dat"
+    ```
+
+=== "Blueprint"
+	{{ bp_img_dir('Build Child File') }}
+
+In the example above, the returned CakeFile's file path will be `X:/cake-arena/items/health-potion.dat`.
+
+#### BuildChildDir
+To build CakeDir objects whose directory paths are automatically parented under a CakeDir's directory path, we use `BuildChildDir`, passing a string-like argument that contains the __relative__ directory path to be parented:
+
+=== "C++"
+    ```c++ hl_lines="4"
+	FCakeDir ProjectDir{ FCakePath{TEXTVIEW("X:/cake-arena")} };
+
+	FCakeDir ItemsDir{ 
+		ProjectDir.BuildChildDir( TEXTVIEW("items") ) 
+	};
+	// Directory Path: "X:/cake-arena/items"
+    ```
+
+=== "Blueprint"
+	{{ bp_img_dir('Build Child Dir') }}
+
+In the example above, the returned CakeDir's directory path will be `X:/cake-arena/items`.
+
+We can also use the {{ policy_link('ExtFilterClone') }} parameter (optional in C++) to control whether or not the child directory should copy the parent directory's file extension filter.

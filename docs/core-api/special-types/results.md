@@ -1,6 +1,6 @@
 --8<-- "note-native-only.md"
 
-## Introduction
+## Overview
 {{ src_loc_group('Results', 'CakeResults')}}
 
 Result types are lightweight structs that wrap [Outcome](outcomes.md) types and provide various convenience functions. They are returned from any C++ function that involves IO operations.
@@ -64,7 +64,7 @@ FCakeResultFileIO ReadFile()
 }
 ```
 
-When writing functions that return Result types, we will encounter scenarios when we want to return either an Ok or some error outcome if a particular operation succeeds or fails. We can use the `OkOrErr` static utility function for this, which accepts a `bool` indicating success/failure and an outcome value that represents the error that has occurred if the operation failed. If the `bool` argument is true, then a a Result type with an `Ok` outcome is created; otherwise, a Result type with the outcome argument is created instead.
+When writing functions that return Result types, we will encounter scenarios when we want to return either an Ok or some error outcome if a particular operation succeeds or fails. We can use the `OkOrErr` static utility function for this, which accepts a `bool` indicating success/failure and an outcome value that represents the error that has occurred if the operation failed. If the `bool` argument is true, then a Result type with an `Ok` outcome is created; otherwise, a Result type with the outcome argument is created instead.
 ```c++
 FCakeResultFileIO ResultOkFile{ 
     FCakeResultFileIO::OkOrErr(true, ECakeOutcomeFileIO::DoesNotExist) }; // => Ok
@@ -80,7 +80,7 @@ FCakeResultFileIO ResultFailedDeleteDir{
 ```
 
 ### Using IO Results
-Results have a minimal interface, offering just a few utility methods for common operations. Often callers will want to know whether or not an error has occurred to determine if they should examine the outcome value in detail. For this purpose, we can use `IsOk`, which returns true if the outcome value is either `Ok` or `NoOp`, and returns false otherwise: 
+Results have a minimal interface, offering just a few utility methods for common operations. Often callers will want to know if an error has occurred to determine if they should examine the outcome value in detail. For this purpose, we can use `IsOk`, which returns true if the outcome value is either `Ok` or `NoOp`, and returns false otherwise: 
 ```c++ hl_lines="2 15"
 	FCakeResultFileIO ResultOkFile{ FCakeResultFileIO::Ok() };
 	if (ResultOkFile.IsOk())
@@ -158,64 +158,6 @@ FCakeResultDirIO ResultDir{ FCakeResultDirIO::Ok() };
 
 LogOutcome(ResultFile.ToString());
 LogOutcome(ResultDir.ToString());
-```
-
-### FCakeResultBatchIO
-This Result type is used in complex operations that involve multiple IO operations. Generally it is used with operations that are applied across a directory, such as copying or deleting files. The Result type holds both a File and Dir result type, and also an `int32` that represents the number of items that were successfully processed. What the terms "items" and "processed" refer to will vary based on the function -- e.g., in a function that deletes files in a directory, we would infer that "items" means files and "processed" means "successfully deleted".
-``` c++
-struct FCakeResultBatchIO 
-{
-
-	int32 ItemsProcessed{ 0 };
-
-	FCakeResultDirIO  DirResult  { FCakeResultDirIO::NoOp()  };
-	FCakeResultFileIO FileResult { FCakeResultFileIO::NoOp() };
-
-    // ...
-};
-```
-
-The function `IsOk` on a BatchIO result is a little different -- it returns the conjunction of `IsOk` called on both Result types:
-```c++
-[[nodiscard]] FORCEINLINE bool IsOk() const
-{
-    return DirResult.IsOk() && FileResult.IsOk();
-}
-```
-The BatchIO result also has `operator bool` defined, which also is equivalent to calling `IsOk`.
-
-Often we will want to know whether or not the batch accomplished any work, and the convenience function  `DidAnyWork` returns true if `ItemsProcessed` is greater than 0, false otherwise.
-```c++
-FCakeResultBatchIO BatchResult{};
-
-if (BatchResult.DidAnyWork())
-{
-
-}
-```
-!!! warning
-    Keep in mind that `DidAnyWork` returning true does _NOT_ imply that `IsOk` is also true. It is possible that a batch operation successfully processed items but still encountered an error at some point during the operation.
-
-We can check whether or not the Dir or File Result has an error with the convenience functions `HasDirError` and `HasFileError`:
-```c++
-[[nodiscard]] FORCEINLINE bool HasDirError() const
-{
-    return !DirResult.IsOk();
-}
-
-[[nodiscard]] FORCEINLINE bool HasFileError() const
-{
-    return !FileResult.IsOk();
-}
-```
-
-Finally, in situations where we are creating our own batch result, we can use the convenience function `SetAllOk` to set both result types to their `Ok` value in one call:
-```c++
-FORCEINLINE void SetAllOk()
-{
-    DirResult  = FCakeResultDirIO::Ok();
-    FileResult = FCakeResultFileIO::Ok();
-}
 ```
 
 ## Directory Traversal Results
@@ -310,10 +252,10 @@ LogTraversalOutcome(ResultSearch.ToString());
 ```
 
 ### Using FCakeResultTraversal
-As mentioned earlier, this result type will be returned by both unguarded and guarded traversal styles. One thing that is important to understand is that unguarded traversals will never return an `Aborted` outcome value, since there is no error handling. So when you are dealing with unguarded traversals, you only ever have to look for `DidNotLaunch` or `Completed`.
+As mentioned earlier, this result type will be returned by both unguarded and guarded traversal styles.  
 
 To check if the traversal completed successfully, we can use `WasCompleted`:
-```c++
+```c++ hl_lines="3"
 FCakeResultTraversal ResultTraversal{ FCakeResultTraversal::Completed()}; 
 
 if (ResultTraversal.WasCompleted())
@@ -324,7 +266,7 @@ if (ResultTraversal.WasCompleted())
 
 We can also use `operator bool` instead, which is equivalent to calling `WasCompleted`:
 
-```c++
+```c++ hl_lines="3"
 FCakeResultTraversal ResultTraversal{ FCakeResultTraversal::Completed()}; 
 
 if (ResultTraversal)
@@ -335,7 +277,7 @@ if (ResultTraversal)
 
 We can check for the other possible outcomes via `WasNotLaunched` and `WasAborted`:
 
-```c++
+```c++ hl_lines="3 7"
 FCakeResultTraversal ResultTraversal{ FCakeResultTraversal::Completed()}; 
 
 if (ResultTraversal.WasNotLaunched())
@@ -348,19 +290,17 @@ else if (ResultTraversal.WasAborted())
 }
 ```
 
-These are purely convenience functions, since the outcome value is public there is nothing stopping a user from just branching on the outcome value itself.
+These are merely convenience functions that can enhance legibility in some situations. Since the outcome value is public we could have branched on the outcome value itself. Use whatever style you prefer.
 
 !!! tip
     Remember, unguarded traversals will never return an `Aborted` outcome.
 
-
-
 ### Using FCakeResultSearch
-This result type is only used in [search traversals](../directories.md#search-traversals). The important thing to remember is that we have a more complex way to define success and failure with search traversals via the [search outcome](outcomes.md#ecakeoutcomesearch) values. A search traversal can successfully run without incidents but still fail if the search itself is not satisfied. 
+This result type is only used in [search traversals](../directories.md#search-traversals). The important thing to remember is that we have a more complex way to define success and failure with search traversals via the [search outcome](outcomes.md#ecakeoutcomesearch) values. A search traversal can successfully run without errors but still fail if the search did not achieve its goal. 
 
 To check if the search was a success, we can use `WasSuccessful`:
 
-```c++
+```c++ hl_lines="3"
 FCakeResultSearch ResultSearch{ FCakeResultSearch::Succeeded()}; 
 
 if (ResultSearch.WasSuccessful())
@@ -370,7 +310,7 @@ if (ResultSearch.WasSuccessful())
 ```
 We can also use `operator bool` instead, which is equivalent to calling `WasSuccessful`:
 
-```c++
+```c++ hl_lines="3"
 FCakeResultSearch ResultSearch{ FCakeResultSearch::Succeeded()}; 
 
 if (ResultSearch)
@@ -380,7 +320,7 @@ if (ResultSearch)
 ```
 
 We can check if a search failed via `WasFailure`:
-```c++
+```c++ hl_lines="3"
 FCakeResultSearch ResultSearch{ FCakeResultSearch::Succeeded()}; 
 
 if (ResultSearch.WasFailure())
@@ -391,7 +331,7 @@ if (ResultSearch.WasFailure())
 
 We can also check for the error outcomes via `WasAborted` and `WasNotLaunched`:
 
-```c++
+```c++ hl_lines="3 7"
 FCakeResultSearch ResultSearch{ FCakeResultSearch::Succeeded() }; 
 
 if (ResultSearch.WasNotLaunched())
@@ -403,12 +343,12 @@ else if (ResultSearch.WasAborted())
     // ...
 }
 ```
-Just like the traversal result, these are purely convenience functions; since, the outcome value is public there is nothing stopping a user from just branching on the outcome value itself. Use whichever style you prefer.
+These are merely convenience functions that can enhance legibility in some situations. Since the outcome value is public we could have branched on the outcome value itself. Use whatever style you prefer.
 
 ## Advanced Results
 
 ### FCakeResultDirWork
-FCakeResultDirWork is used extensively in [CakeMixLibrary](../../advanced/cake-mix-library.md) functions. It wraps an [ECakeOutcomeDirWork](outcomes.md#ecakeoutcomedirwork) value and provides a minimal set of convenience functions. For an overview of Directory Work operations, see [this section](../../advanced/cake-mix-library.md#directory-work-error-handling).
+FCakeResultDirWork is used extensively in [CakeMixLibrary](/advanced/cake-mix-library) functions. It wraps an [ECakeOutcomeDirWork](outcomes.md#ecakeoutcomedirwork) value and provides a minimal set of convenience functions. For an overview of Directory Work operations, see [this section](../../advanced/cake-mix-library.md#directory-work-error-handling).
 
 ```c++
 struct FCakeResultDirWork
@@ -431,7 +371,7 @@ struct FCakeResultDirWork
 ```
 
 ### FCakeResultBatchOp
-This result type is used in the async exclusive [Batch Operation](../../advanced/async-io.md#batch-operations) functions. It wraps an [ECakeOutcomeBatchOp](outcomes.md#ecakeoutcomebatchop) value and provides a few utility functions. 
+This result type is used in the async exclusive [Batch Operation](/core-api/async-io/#batch-operations) functions. It wraps an [ECakeOutcomeBatchOp](outcomes.md#ecakeoutcomebatchop) value and provides a few utility functions. 
 
 ```c++
 struct CAKEIO_API FCakeResultBatchOp

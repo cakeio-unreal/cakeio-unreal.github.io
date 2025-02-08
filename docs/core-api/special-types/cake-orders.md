@@ -1,10 +1,9 @@
 --8<-- "note-native-only.md"
 
-## Introduction
-{{ src_loc_group('Orders', 'CakeOrders')}}
-
 ## TCakeOrder
-CakeIO uses the template struct TCakeOrder for IO operations that need to return additional data in addition to the IO operation result. It holds just two member fields: The relevant [result](results.md) type that indicates the outcome of the IO operation, and a payload field which holds the desired data obtained via the IO operation. The type of the payload field will vary.
+{{ src_loc_single('TCakeOrder', 'CakeOrders') }}
+
+CakeIO uses the template struct TCakeOrder for IO operations that need to return additional data in addition to the IO operation result. It holds just two member fields: a result type of the operation and the data produced by the operation. The type of data produced will vary based on the operation.
 
 ```c++
 template<CakeConcepts::CCakeOpResult ResultType, CakeConcepts::CNotPtrOrRef OrderType>
@@ -49,5 +48,3 @@ if (TCakeOrderFile<int64> Query = TestFile.QueryFileSizeInBytes())
     UE_LOG(LogTemp, Warning, TEXT("File size: [%d] bytes."), *Query);
 }
 ```
-!!! note
-    `operator*` is provided purely for convenience, the TCakeOrder fields are all public and thus callers have full control and access over the data returned.
