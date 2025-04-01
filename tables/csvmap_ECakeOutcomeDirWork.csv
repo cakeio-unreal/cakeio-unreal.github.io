@@ -1,5 +1,5 @@
 Enum Value,Display Name,Description
 WorkCompleted,Work Completed,The directory work completed successfully.
-SourceDirectoryDoesNotExist,Source Directory Does Not Exist,The submitted source directory does not exist and the directory work was unable to begin.
+SourceDirDoesNotExist,Source Dir Does Not Exist,The submitted source directory does not exist and the directory work was unable to begin.
 TraversalDidNotLaunch,Traversal Did Not Launch,The traversal operation was unable to launch.
 Aborted,Aborted,The directory work was aborted due to an error.

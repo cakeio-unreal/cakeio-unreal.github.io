@@ -165,7 +165,7 @@ When opening a file handle in read-only mode, the write mode is completely ignor
 ```
 
 ## FCakeSettingsExtFilter
-This settings struct is utilized by {{ link_cakedir('filtered directory traversals', 'filtered-traversals') }}. It contains two Cake Policies: {{ link_policy('ExtFilterMode') }} and {{ link_policy('ExtMatchMode') }}. 
+This settings struct is utilized by {{ link_cakedir('filtered directory traversals', 'filtered-traversals') }}. It contains two Cake Policies: {{ policy_link('ExtFilterMode') }} and {{ policy_link('ExtMatchMode') }}. 
 
 ```c++
 struct FCakeSettingsExtFilter
@@ -179,7 +179,7 @@ struct FCakeSettingsExtFilter
 ## Advanced Settings 
 
 ### FCakeSettingsAsyncTask
-This struct is used whenever we launch an {{ link_asyncio('async IO') }} task. It lets us set the task priority, task flags, and which thread the completion callback should be called from.
+This struct is used whenever we launch an {{ link_cakeasyncio('async IO') }} task. It lets us set the task priority, task flags, and which thread the completion callback should be called from.
 
 ```c++
 struct FCakeSettingsAsyncTask 

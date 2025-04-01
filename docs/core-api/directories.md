@@ -364,6 +364,113 @@ To move the directory a CakeDir represents to another location on the filesystem
 
 We can give the moved directory a new name easily via `MoveDirWithNewName`. In addition to a destination path, we also need to provide a new name that the moved directory should have: 
 
+### Understanding Copy / Move Overwrite behavior
+When moving or copying directories to a new location on the filesystem, it's important to understand what happens when the destination directory already exists and contains files and subdirectories. First of all, it is important to understand that the copy or move operations offered by CakeDir objects will __merge__ into preexisting directories. This means that any files or subdirectories in the destination directory that do not share names with files in the copied directory will be left entirely untouched. During a copy operation, subdirectories are only created if they do not already exist; otherwise, they are left alone. The {{ policy_link('OverwriteItems') }} policy parameter involved in a directory copy or move will resolve any remaining clashes between files -- if a file shares the same relative path in both the destination and the source directory, then it will be overwritten with the source directory's file if overwriting is allowed, or the file will be skipped otherwise.   
+
+Let's look at a couple of examples to solidify our understanding.
+
+We'll start off with an easy example, the situation where the destination directory does not contain any content that will be merged:
+
+
+```
+Destination Directory
+📁 Game
+    📁 Data 
+	📁 Tables 
+```
+
+```
+Source Directory
+📁 Models
+    📁 Characters 
+        📄 elf.fbx
+	📁 Enemies 
+        📄 orc.fbx
+        📄 goblin.fbx
+```
+
+If we want to copy the `Models` directory into the `Game` directory, then the final destination path will be `Game/Models`. The `Game` directory has no `Models` directory, and so the copy will proceed without encountering any overwriting scenarios. After the copy operation is successful, our destination directory looks like this:
+
+```
+Destination Directory (Before Copy)
+📁 Game
+    📁 Data 
+	📁 Tables 
+```
+
+```
+Source Directory
+📁 Models
+    📁 Characters 
+        📄 elf.fbx
+	📁 Enemies 
+        📄 orc.fbx
+        📄 goblin.fbx
+```
+
+```
+Destination Directory (After Copy)
+📁 Game
+    📁 Data 
+	📁 Tables 
+	📁 Models
+		📁 Characters 
+			📄 elf.fbx
+		📁 Enemies 
+			📄 orc.fbx
+			📄 goblin.fbx
+```
+
+Now let's look at a scenario that involves overwriting. This time our `Game` directory has a `Models` folder, and it also has a `Characters/elf.fbx` file. It also has some new files and another subdirectory:
+```
+Destination Directory (Before Copy)
+📁 Game
+    📁 Data 
+	📁 Tables 
+	📁 Models
+		📁 Characters 
+			📄 elf.fbx [Overwrite Collision]
+			📄 elf-archer.fbx 
+			📄 elf-mage.fbx 
+		📁 Special 
+			📄 health-potion.fbx 
+```
+
+The source directory we wish to copy has the same form:
+```
+Source Directory
+📁 Models
+    📁 Characters 
+        📄 elf.fbx [Overwrite Collision]
+	📁 Enemies 
+        📄 orc.fbx
+        📄 goblin.fbx
+```
+Now if we wish to copy `Models` into `Game` again, the copy operation will encounter a collision when it attempts to copy over `elf.fbx`. How that collision is resolved depends on the value of the {{ policy_link('OverwriteItems') }} argument we send in. If we allow overwriting, then the source directory's `elf.fbx` will be copied over. If we disallow overwriting, then the source directory's `elf.fbx` file will be skipped and the destination directory's version of `elf.fbx` will be preserved.
+
+After the copy operation has resolved, our `Game` directory now looks like this:
+
+```
+Destination Directory (Before Copy)
+📁 Game
+    📁 Data 
+	📁 Tables 
+	📁 Models
+		📁 Characters 
+			📄 elf.fbx 
+			📄 elf-archer.fbx 
+			📄 elf-mage.fbx 
+		📁 Enemies 
+			📄 orc.fbx
+			📄 goblin.fbx
+		📁 Special 
+			📄 health-potion.fbx 
+```
+
+As we can see, the two versions of the `Models` directory have merged. Any overwrite collsions have been resolved via the rule set by the {{ policy_link('OverwriteItems') }} argument, and the final `Models` directory contains the source directory's content as well as the extra files and subdirectories not contained in the source directory.  
+!!! tip 
+	If you want a copy to replace its destination directory rather than merge with it, you will first need to ensure that the destination directory is deleted prior to the copy or move.
+
 === "C++"
 
     ```c++ hl_lines="5"

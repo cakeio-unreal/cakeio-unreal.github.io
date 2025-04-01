@@ -243,3 +243,9 @@ def define_env(env):
     @env.macro
     def link_cakeservices(label='CakeIO Services', subsec: str|None = None):
         return inline_link(label, link_under_coreapi('services', subsec))
+
+    @env.macro
+    def bp_currently_unsupported(feature_label: str):
+        return f'''
+{feature_label} is not currently supported for Blueprint due to limitations inherent with UObjects and multi-threaded contexts. As Unreal Engine evolves CakeIO will be looking for opportunities to add this functionality to the Blueprint API.
+'''
