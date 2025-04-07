@@ -1,2 +1,2 @@
 # Welcome
-CakeIO is a plugin for Unreal Engine that provides an ergonomic and comprehensive API for IO related tasks. CakeIO is built directly on top of Unreal Engine's low level IO interfaces, leveraging its maturity and stability while providing an enriched and modernized set of objects and APIs to provide a first-class developer experience for common IO related tasks. 
+Cake IO is a plugin for Unreal Engine that provides an ergonomic and comprehensive API for IO related tasks. Cake IO is built directly on top of Unreal Engine's low level IO interfaces, leveraging its maturity and stability while providing an enriched and modernized set of objects and APIs to provide a first-class developer experience for common IO related tasks. 

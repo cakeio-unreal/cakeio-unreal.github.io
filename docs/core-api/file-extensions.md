@@ -1,10 +1,10 @@
 ## Introduction
-CakeIO offers FileExtension objects to enforce a standard representation of file extensions as well as to offer a variety of utilities involving file extension classification and manipulation. The standard representation enforced by the objects mean we no longer have to care about remembering whether or not our extensions require a leading '.' character. The FileExtension objects will handle that for us, and as a bonus they will also sanitize and fix malformed extension inputs like `.src..txt` => `.src.txt`.
+Cake IO offers FileExtension objects to enforce a standard representation of file extensions as well as to offer a variety of utilities involving file extension classification and manipulation. The standard representation enforced by the objects mean we no longer have to care about remembering whether or not our extensions require a leading '.' character. The FileExtension objects will handle that for us, and as a bonus they will also sanitize and fix malformed extension inputs like `.src..txt` => `.src.txt`.
 
 --8<-- "native-bp-diff.md"
 
 === "C++"
-    The native file extension object in CakeIO is **FCakeFileExt**, which is defined in `CakeIO/CakeFileExt`. 
+    The native file extension object in Cake IO is **FCakeFileExt**, which is defined in `Cake IO/CakeFileExt`. 
 
     {{ cpp_assumed_include('CakeFileExt') }} 
 
@@ -12,12 +12,12 @@ CakeIO offers FileExtension objects to enforce a standard representation of file
     {{ bp_impl_source('file extension', 'UCakeFileExt', 'CakeFileExt_BP') }}
 
 ## File Extension Classification
-Before we look at the File Extension object interface, it is important to understand how CakeIO classifies file extensions. CakeIO defines two distinct types of file extension: **single** file extensions and **multi** file extensions.
+Before we look at the File Extension object interface, it is important to understand how Cake IO classifies file extensions. Cake IO defines two distinct types of file extension: **single** file extensions and **multi** file extensions.
 > **Single File Extension**: A file extension that contains only one file extension component: e.g., `.txt` or `.bin`
 
 > **Multi File Extension**: A file extension that contains more than one file extension component: e.g., `.cdr.txt` or `.bin.dat.zip`
 
-CakeIO represents file extension types via the enum ECakeFileExtType. File extensions that are empty will have the value `None`, file extensions with one component will be assigned the value `Single`, and file extensions with more than one component will have the value `Multi`.
+Cake IO represents file extension types via the enum ECakeFileExtType. File extensions that are empty will have the value `None`, file extensions with one component will be assigned the value `Single`, and file extensions with more than one component will have the value `Multi`.
 
 
 === "C++"

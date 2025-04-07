@@ -1,5 +1,5 @@
 ## Cake Mix Library
-CakeMixLibrary provides a suite of advanced functionality built on top of the CakeIO's [core API](../core-api/api-overview.md). Its primary purpose is to provide an ergonomic interface for some common complex operations, such as collecting elements from a directory and storing them in a container. 
+CakeMixLibrary provides a suite of advanced functionality built on top of the Cake IO's [core API](../core-api/api-overview.md). Its primary purpose is to provide an ergonomic interface for some common complex operations, such as collecting elements from a directory and storing them in a container. 
 
 --8<-- "warning-lib-advanced.md"
 
@@ -7,13 +7,13 @@ CakeMixLibrary provides a suite of advanced functionality built on top of the Ca
 	CakeMixLibrary is located in the following header:
 
 	```c++
-	#include "CakeIO/CakeMixLibrary.h"
+	#include "Cake IO/CakeMixLibrary.h"
 	```
 === "Blueprint"
 	The Blueprint implementation of CakeMixLibrary is UCakeMixBlueprintLibrary, located in the following header:
 
 	```c++
-	#include "CakeIO/Blueprint/CakeMixBlueprintLibrary.h"
+	#include "Cake IO/Blueprint/CakeMixBlueprintLibrary.h"
 	``` 
 
 ## Directory Work Functions
@@ -199,7 +199,7 @@ If the File IO Read operation fails, we return `Abort`, which signifies a critic
 === "Blueprint"
 	{{ bp_img_cakemix('Gather Custom Callback Example Simple') }}
 
-The form `if (cond) { Select } else { Reject }` is quite common when writing GatherCustom predicates, and so CakeIO offers some convenience utilities to make writing that a bit more concise:
+The form `if (cond) { Select } else { Reject }` is quite common when writing GatherCustom predicates, and so Cake IO offers some convenience utilities to make writing that a bit more concise:
 
 === "C++"
 	The CakeSignalGather namespace has utility functions to help spare us the boilerplate. We can use `SelectIf` as the equivalent for `if (cond) { Select }  else { Reject }`:
@@ -400,42 +400,42 @@ CakeMixLibrary offers various `ToString` functions which generate human-readable
 
     ```c++ 
 		/** @return A human-readable string that describes the file IO outcome value. */
-		CAKEIO_API [[nodiscard]] FString ToStringOutcomeFileIO(ECakeOutcomeFileIO Outcome); 
+		Cake IO_API [[nodiscard]] FString ToStringOutcomeFileIO(ECakeOutcomeFileIO Outcome); 
 
 		/** @return A human-readable string that describes the directory IO outcome value. */
-		CAKEIO_API [[nodiscard]] FString ToStringOutcomeDirIO(ECakeOutcomeDirIO Outcome);
+		Cake IO_API [[nodiscard]] FString ToStringOutcomeDirIO(ECakeOutcomeDirIO Outcome);
 
 		/** @return A human-readable string that describes the directory traversal outcome value. */
-		CAKEIO_API [[nodiscard]] FString ToStringOutcomeTraversal(ECakeOutcomeTraversal Outcome);
+		Cake IO_API [[nodiscard]] FString ToStringOutcomeTraversal(ECakeOutcomeTraversal Outcome);
 
 		/** @return A human-readable string that describes the directory search outcome value. */
-		CAKEIO_API [[nodiscard]] FString ToStringOutcomeSearch(ECakeOutcomeSearch Outcome);
+		Cake IO_API [[nodiscard]] FString ToStringOutcomeSearch(ECakeOutcomeSearch Outcome);
 
 		/** @return A human-readable string that describes the directory work outcome value. */
-		CAKEIO_API [[nodiscard]] FString ToStringOutcomeDirWork(ECakeOutcomeDirWork Outcome);
+		Cake IO_API [[nodiscard]] FString ToStringOutcomeDirWork(ECakeOutcomeDirWork Outcome);
 
 		/** @return A human-readable string that describes the batch operation outcome value. */
-		CAKEIO_API [[nodiscard]] FString ToStringOutcomeBatchOp(ECakeOutcomeBatchOp Outcome);
+		Cake IO_API [[nodiscard]] FString ToStringOutcomeBatchOp(ECakeOutcomeBatchOp Outcome);
 
 
 
 		/** @return A human-readable string that describes the file IO result value. */
-		CAKEIO_API [[nodiscard]] FString ToStringResultFileIO(FCakeResultFileIO Result);
+		Cake IO_API [[nodiscard]] FString ToStringResultFileIO(FCakeResultFileIO Result);
 
 		/** @return A human-readable string that describes the directory IO result value. */
-		CAKEIO_API [[nodiscard]] FString ToStringResultDirIO(FCakeResultDirIO Result);
+		Cake IO_API [[nodiscard]] FString ToStringResultDirIO(FCakeResultDirIO Result);
 
 		/** @return A human-readable string that describes the directory traversal result value. */
-		CAKEIO_API [[nodiscard]] FString ToStringResultTraversal(FCakeResultTraversal Result);
+		Cake IO_API [[nodiscard]] FString ToStringResultTraversal(FCakeResultTraversal Result);
 
 		/** @return A human-readable string that describes the directory search result value. */
-		CAKEIO_API [[nodiscard]] FString ToStringResultSearch(FCakeResultSearch Result);
+		Cake IO_API [[nodiscard]] FString ToStringResultSearch(FCakeResultSearch Result);
 
 		/** @return A human-readable string that describes the directory work result value. */
-		CAKEIO_API [[nodiscard]] FString ToStringResultDirWork(FCakeResultDirWork Result);
+		Cake IO_API [[nodiscard]] FString ToStringResultDirWork(FCakeResultDirWork Result);
 
 		/** @return A human-readable string that describes the batch operation result value. */
-		CAKEIO_API [[nodiscard]] FString ToStringResultBatchOp(FCakeResultBatchOp Result);
+		Cake IO_API [[nodiscard]] FString ToStringResultBatchOp(FCakeResultBatchOp Result);
 
     ```
 
@@ -443,7 +443,7 @@ CakeMixLibrary offers various `ToString` functions which generate human-readable
     ToString Utility Functions
 
 ## CakeMix Exclusive C++ Types
-CakeMix introduces a few types exclusive to the C++ API. They are defined in `CakeIO/CakeMixTypes.h`.
+CakeMix introduces a few types exclusive to the C++ API. They are defined in `Cake IO/CakeMixTypes.h`.
 
 --8<-- "note-native-only.md"
 

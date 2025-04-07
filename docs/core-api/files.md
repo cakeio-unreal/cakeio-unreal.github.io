@@ -1,6 +1,6 @@
 
 ## Overview
-CakeIO provides CakeFile objects to allow file manipulation in a type-safe and ergonomic manner.
+Cake IO provides CakeFile objects to allow file manipulation in a type-safe and ergonomic manner.
 
 
 ### Source Code Information
@@ -34,7 +34,7 @@ The following covers some of the core interfaces required to utilize and manipul
 	{{ bp_img_file('Build Cake File Empty') }}
 
 	!!! tip
-		CakeIO offers automatic string to [CakePath](paths.md) conversions. You can pass a string to any function that expects a CakePath argument and it will automatically create a CakePath object from the string for you: 
+		Cake IO offers automatic string to [CakePath](paths.md) conversions. You can pass a string to any function that expects a CakePath argument and it will automatically create a CakePath object from the string for you: 
 
 		{{ bp_img_file('Auto Str Conv') }}
 
@@ -694,10 +694,10 @@ This function takes an `ECakeFilePermissions` enum argument, which allows to spe
 ## Advanced Usage
 
 ### Advanced File Name Extraction
-Cake File objects allow callers to clone its associated file name into three different forms. It is important to understand how CakeIO classifies file names before we examine the clone interfaces.
+Cake File objects allow callers to clone its associated file name into three different forms. It is important to understand how Cake IO classifies file names before we examine the clone interfaces.
 
 #### File Name Types
-**CakeIO** classifies file names into three different categories. 
+**Cake IO** classifies file names into three different categories. 
 
 Using the file name `info.cdr.txt` as an example, we can view the file name according to three different categories:
 

@@ -1,10 +1,10 @@
 ## CakeAsyncIO Overview
-CakeIO offers asynchronous versions of its core IO functions. The usage of these asynchronous functions is similar to the synchronous functions, but with a few changes. This documentation will not exhaustively cover each function, since the functions behave identically to their synchronous counterparts, with the exception that they are executed in an asynchronous context. Instead, this documentation will focus on the differences between the synchronous / asynchronous interfaces and provide a few examples involving them. Finally, there are a few special interfaces unique to CakeAsyncIO which will be covered.
+Cake IO offers asynchronous versions of its core IO functions. The usage of these asynchronous functions is similar to the synchronous functions, but with a few changes. This documentation will not exhaustively cover each function, since the functions behave identically to their synchronous counterparts, with the exception that they are executed in an asynchronous context. Instead, this documentation will focus on the differences between the synchronous / asynchronous interfaces and provide a few examples involving them. Finally, there are a few special interfaces unique to CakeAsyncIO which will be covered.
 
 --8<-- "warning-lib-advanced.md"
 
 ## Blueprint Differences
-Blueprint cannot safely support all asynchronous interfaces offered by CakeAsyncIO. This may change in the future as Unreal Engine and CakeIO evolve, but for now the following asynchronous interfaces are not available in Blueprint:
+Blueprint cannot safely support all asynchronous interfaces offered by CakeAsyncIO. This may change in the future as Unreal Engine and Cake IO evolve, but for now the following asynchronous interfaces are not available in Blueprint:
 
 1. Directory Traversal
 1. CakeMix GatherCustom functions
@@ -18,13 +18,13 @@ Blueprint cannot safely support all asynchronous interfaces offered by CakeAsync
     !!! note
         All CakeAsyncIO interfaces can be found in the following header:
         ```c++
-        #include "CakeIO/Async/CakeAsyncIO.h"
+        #include "Cake IO/Async/CakeAsyncIO.h"
         ```
 
-    It is important to understand that CakeAsyncIO is not meant to be the single solution for any asynchronous code involving CakeIO objects and interfaces. This is a key difference between the C++ and Blueprint APIs for CakeAsyncIO. Blueprint offers much less options to its users for asynchronous interactions, whereas asynchronous code in C++ is complicated and Unreal Engine offers many different approaches for asynchronous execution. Being a general purpose API it cannot meet every requirement for every user and thus developing your own implementation often can be the correct solution since it will give more control over error handling, performance, and other characteristics. Using the core CakeIO objects and interfaces in an asynchronous context is quite straightforward since the objects are lightweight and easy to pass by value. The source code for CakeAsyncIO can also be viewed as a reference point when developing your own async implementations.
+    It is important to understand that CakeAsyncIO is not meant to be the single solution for any asynchronous code involving Cake IO objects and interfaces. This is a key difference between the C++ and Blueprint APIs for CakeAsyncIO. Blueprint offers much less options to its users for asynchronous interactions, whereas asynchronous code in C++ is complicated and Unreal Engine offers many different approaches for asynchronous execution. Being a general purpose API it cannot meet every requirement for every user and thus developing your own implementation often can be the correct solution since it will give more control over error handling, performance, and other characteristics. Using the core Cake IO objects and interfaces in an asynchronous context is quite straightforward since the objects are lightweight and easy to pass by value. The source code for CakeAsyncIO can also be viewed as a reference point when developing your own async implementations.
 
 === "Blueprint"
-    CakeIO provides async functionality in the form of latent Blueprint nodes. As with any Blueprint latent node we can only use these nodes in event graphs:
+    Cake IO provides async functionality in the form of latent Blueprint nodes. As with any Blueprint latent node we can only use these nodes in event graphs:
 	
     {{ bp_img_async('Async Node Example') }}
 	
@@ -124,7 +124,7 @@ While much of the asynchronous interfaces mirror their synchronous counterparts,
 === "Blueprint"
 	>Task Priority
 
-	Every CakeIO async node has a Task Priority parameter. This is an `ECakeTaskPriority`, which is an enum that partially mirrors a native Unreal enum:
+	Every Cake IO async node has a Task Priority parameter. This is an `ECakeTaskPriority`, which is an enum that partially mirrors a native Unreal enum:
 
     {{ bp_img_async('Cake Task Priority') }}
 	
@@ -145,7 +145,7 @@ While much of the asynchronous interfaces mirror their synchronous counterparts,
     {{ bp_img_async('Async Task Launch Failure') }}
 	
 	!!! tip
-		If you have CakeIO logging enabled, you will get a warning that gives more context regarding why the task could not be launched.
+		If you have Cake IO logging enabled, you will get a warning that gives more context regarding why the task could not be launched.
 
 ## Async Examples
 ### File IO
@@ -340,7 +340,7 @@ CakeAsyncIO interfaces use their own private copy of source objects in order to 
     ```
 
 === "Blueprint"
-{{ bp_currently_unsupported('Directory traversal') }}
+	{{ bp_currently_unsupported('Directory traversal') }}
 
 ### CakeMixLibrary
 CakeAsyncIO provides asynchronous versions of all of the [CakeMixLibrary](../cake-mix) IO functions. For our example, we'll use the async version of `CountSubdirs`.
@@ -422,7 +422,7 @@ A batch operation runs a user-supplied callback on an array of CakeFiles or Cake
 	};
 	```	
 
-    We submit a TArray of our corresponding CakeIO object to the batch processing function, followed by the action callback, and our done callback:
+    We submit a TArray of our corresponding Cake IO object to the batch processing function, followed by the action callback, and our done callback:
 
     ```c++ hl_lines="28-31"
 	FCakeDir DirCakeArena{ 

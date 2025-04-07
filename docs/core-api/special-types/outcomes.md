@@ -47,10 +47,10 @@ When a traversal is called on a CakeDir object, that traversal operation will fi
 This would visit files in a way that the caller does not want, and so the traversal will fail to launch.
 
 3. **A policy argument with an out of range value was submitted.**
-All CakeIO policies are enums, so out of range issues should be quite rare. The only way these are able to occur is by casting integer values to the policy type. When an out of range policy argument is encountered, the traversal will fail to launch.
+All Cake IO policies are enums, so out of range issues should be quite rare. The only way these are able to occur is by casting integer values to the policy type. When an out of range policy argument is encountered, the traversal will fail to launch.
 
 !!! tip
-    If CakeIO logging is enabled, it will describe the error that prevented the traversal from launching.
+    If Cake IO logging is enabled, it will describe the error that prevented the traversal from launching.
 
 ### ECakeOutcomeTraversal
 This outcome value is used by both unguarded and guarded traversal styles. 

@@ -1,13 +1,13 @@
 ## Introduction
-CakeIO has special policy types that allow users to customize various behaviors across the API. These policies are represented by UENUM types and they are the same in both Blueprint and C++ code. This will give a brief overview and explanation of public policies. Please see the source code if you want to view the complete set of policies.
+Cake IO has special policy types that allow users to customize various behaviors across the API. These policies are represented by UENUM types and they are the same in both Blueprint and C++ code. This will give a brief overview and explanation of public policies. Please see the source code if you want to view the complete set of policies.
 
 All Cake Policy enums are defined in the header `CakePolicies.h`:
 ```c++
-#include "CakeIO/CakePolicies.h"
+#include "Cake IO/CakePolicies.h"
 ```
 
 ## Default Policy Values
-Within the `CakePolicies.h` header file, the namespace `CakePolicies` defines default values for each Cake Policy enum. Any function parameter with a default value uses these default values, so if you wish to change the default CakeIO behavior for your project, you only have to change one place in the source code to accomplish this.
+Within the `CakePolicies.h` header file, the namespace `CakePolicies` defines default values for each Cake Policy enum. Any function parameter with a default value uses these default values, so if you wish to change the default Cake IO behavior for your project, you only have to change one place in the source code to accomplish this.
 
 !!! note
     The `CakePolicies` namespace also contains some utility functions that can make working with the enums a bit more ergonomic. If you are curious, please browse the source code for more information.

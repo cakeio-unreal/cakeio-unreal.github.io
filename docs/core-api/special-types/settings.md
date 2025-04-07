@@ -1,13 +1,13 @@
 ## Overview
 {{ src_loc_group('Settings', 'CakeSettings')}}
 
-CakeIO uses lightweight structs called Settings to group associated function parameters that are used across multiple functions. These structs help enforce regular argument ordering, reduce the length of function signatures, and provide a single location in source code where defaults can be set. Furthermore, because CakeIO takes advantage of C++20, we can use designated initializer syntax in order to allow for a much more ergonomic handling of optional parameters. 
+Cake IO uses lightweight structs called Settings to group associated function parameters that are used across multiple functions. These structs help enforce regular argument ordering, reduce the length of function signatures, and provide a single location in source code where defaults can be set. Furthermore, because Cake IO takes advantage of C++20, we can use designated initializer syntax in order to allow for a much more ergonomic handling of optional parameters. 
 
 ## Designated Initializers
 !!! hint
 	For all the gory details about designated initializers and more, please see [this reference](https://en.cppreference.com/w/cpp/language/aggregate_initialization).
 
-Since CakeIO uses C++20, we have access to designated initializers. Designated initializers are a compact and expressive way to create structs, initializing some or all of its members. When we group function parameters into structs, we can use designated initializers at function callsites. There are many benefits to this approach: We can more safely consume parameter lists with consecutive parameters of the same type, we can add clarity to function callsites via more self-documenting code, and we can eliminate much of the tedious boilerplate that can result from default parameters in C++. For these reasons and more, CakeIO uses structs to group parameters whenever possible.     
+Since Cake IO uses C++20, we have access to designated initializers. Designated initializers are a compact and expressive way to create structs, initializing some or all of its members. When we group function parameters into structs, we can use designated initializers at function callsites. There are many benefits to this approach: We can more safely consume parameter lists with consecutive parameters of the same type, we can add clarity to function callsites via more self-documenting code, and we can eliminate much of the tedious boilerplate that can result from default parameters in C++. For these reasons and more, Cake IO uses structs to group parameters whenever possible.     
 
 Let's take a look at some quick examples using designated initalizer syntax to get familiar with it. We'll use FCakeFile's `CreateTextFile` function as our example. Let's look at the function signature:
 ```c++
@@ -21,7 +21,7 @@ Let's take a look at some quick examples using designated initalizer syntax to g
 
 ```c++
 /** Settings struct used in text file creation IO operations. */
-CAKEIO_API struct FCakeSettingsCreateTextFile
+Cake IO_API struct FCakeSettingsCreateTextFile
 {
 	/** Determines if any missing parents in the file path should be created. */
 	ECakePolicyMissingParents MissingParentPolicy{ CakePolicies::MissingParentsDefault };
@@ -140,7 +140,7 @@ if (!ReadmeFile.CopyFile(
 This settings struct contains two fields, one describing the read/write permissions for a file handle, and the other specifying how data should be written to the file. 
 
 ```c++
-CAKEIO_API struct FCakeSettingsFileHandle
+Cake IO_API struct FCakeSettingsFileHandle
 {
 	ECakeFileOpenMode  OpenMode { ECakeFileOpenMode::Read           };
 	ECakeFileWriteMode WriteMode{ ECakeFileWriteMode::OverwriteData };

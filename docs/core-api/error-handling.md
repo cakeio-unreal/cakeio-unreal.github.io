@@ -1,8 +1,8 @@
 ## Introduction
-One of the primary design goals of CakeIO is to provide enhanced error reporting from IO operations. CakeIO accomplishes this by using {{ link_outcomes('outcome types') }} which are defined for various types of IO operations. The following sections will showcase common usage patterns and idioms for error handling in CakeIO.
+One of the primary design goals of Cake IO is to provide enhanced error reporting from IO operations. Cake IO accomplishes this by using {{ link_outcomes('outcome types') }} which are defined for various types of IO operations. The following sections will showcase common usage patterns and idioms for error handling in Cake IO.
 
 ### Opt-In Error Handling
-Exhaustive error handling is often complex and tedious, and there are many contexts in which exhaustive error handling is not actually necessary. Because CakeIO is intended for use in a variety of circumstances, from in-house editor tools to end-user interfaces, error handling has been designed so that callers are allowed to opt-in to the level of complexity that best suits their current context. There are three main levels of error complexity, ranging from simplest to most complex: **minimal**, **targeted**, and **exhaustive** error handling.
+Exhaustive error handling is often complex and tedious, and there are many contexts in which exhaustive error handling is not actually necessary. Because Cake IO is intended for use in a variety of circumstances, from in-house editor tools to end-user interfaces, error handling has been designed so that callers are allowed to opt-in to the level of complexity that best suits their current context. There are three main levels of error complexity, ranging from simplest to most complex: **minimal**, **targeted**, and **exhaustive** error handling.
 
 #### Minimal Error Handling
 Minimal error handling views a particular IO operation outcome as a simple binary success or failure. This mirrors the original experience when using Unreal's built-in IO operations. In this strategy, we merely branch on a success flag and have two paths: one for the success state, and one for the error state.
@@ -16,7 +16,7 @@ As long as you know the complete list of outcomes a particular IO operation can 
 --8<-- "ad-error-map.md"
 
 ## File/Directory IO Error Handling Idioms
-For our examples, we are going to use a [CakeFile](files.md) object. However, all of the idioms presented will work with [CakeDir](directories.md) objects. Only the possible outcome values will be different, since directory IO operations are distinct from file IO operations in CakeIO.
+For our examples, we are going to use a [CakeFile](files.md) object. However, all of the idioms presented will work with [CakeDir](directories.md) objects. Only the possible outcome values will be different, since directory IO operations are distinct from file IO operations in Cake IO.
 
 === "C++"
     File/Directory IO operations will return either an {{ link_results('FCakeResultFileIO', 'fcakeresultfileio') }} or an {{ link_results('FCakeResultDirIO', 'fcakeresultdirio') }} result type, respectively. If you are unfamiliar with result types, please glance over those sections and refer to them as necessary when viewing the following idioms.
@@ -150,7 +150,7 @@ For our examples, we are going to use a [CakeFile](files.md) object. However, al
 	}
     ```
 
-    Exhaustive error handling will usually require referencing the {{ link_errormap() }}  unless you have a great memory or choose to delve into the implementation source code.
+    Exhaustive error handling will usually require referencing the appropriate [error map](../core-api/error-maps/#appendfile-text-binary) unless you have a great memory or choose to delve into the implementation source code.
     For the sake of example we are just logging out the error, but we can easily imagine putting more robust error handling logic in each switch case.
 
 === "Blueprint"
@@ -182,7 +182,7 @@ For our examples, we are going to use a [CakeFile](files.md) object. However, al
 
 	{{ bp_img_error_handling('Targeted Error Handling IO') }}
 
-	Finally, let's take a look at the final strategy: exhaustive error handling. Exhaustive error handling will usually require referencing the appropriate [error map](error-maps.md#appendtextfile) unless you have a great memory or choose to delve into the implementation source code. This time we'll ignore the bool value entirely and just switch on the outcome value, handling every potential outcome value that AppendTextFile can send us. To keep the example simple, we'll just print a string for each outcome, but we can imagine that each of these print string nodes could instead be replaced with more complex, appropriate error handling:
+	Finally, let's take a look at the final strategy: exhaustive error handling. Exhaustive error handling will usually require referencing the appropriate [error map](../core-api/error-maps/#appendfile-text-binary) unless you have a great memory or choose to delve into the implementation source code. This time we'll ignore the bool value entirely and just switch on the outcome value, handling every potential outcome value that AppendTextFile can send us. To keep the example simple, we'll just print a string for each outcome, but we can imagine that each of these print string nodes could instead be replaced with more complex, appropriate error handling:
 
 	{{ bp_img_error_handling('Exhaustive Error Handling IO') }}
 

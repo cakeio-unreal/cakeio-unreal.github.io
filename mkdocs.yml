@@ -1,5 +1,5 @@
-site_name: CakeIO 
-site_url: https://cakeio-unreal.github.io
+site_name: Cake IO 
+site_url: https://Cake IO-unreal.github.io
 theme:
   name: material
   font:
@@ -59,10 +59,6 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Tour: tour.md
-  - Getting Started:
-    - Installation: getting-started/installation.md
-    - Configuration: getting-started/configuration.md
-    - Quick Start: getting-started/quick-start.md
   - Core API Documentation: 
     - API Overview: core-api/api-overview.md
 
@@ -87,12 +83,11 @@ nav:
       - Utility Libraries:
         - CakeMix: core-api/cake-mix.md
         - CakeAsyncIO: core-api/async-io.md
-      - CakeIO Services:
-        - CakeIO Services Overview: core-api/services.md
-  - Miscellanous:
-    - FStringView: misc/stringview.md
-    - CakeIO and C++ 20: misc/cpp20-features.md
-    - CakeIO and Lifetimes: misc/lifetimes.md
+      - Cake IO Services:
+        - Cake IO Services Overview: core-api/services.md
+  - Examples: 
+    - Overview: examples/examples.md
+  - Future Development: future-dev/future-development.md
 watch:
   - tables
   - img

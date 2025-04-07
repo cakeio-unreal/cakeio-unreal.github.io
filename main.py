@@ -47,7 +47,7 @@ def link_under_special_types(child_link, subsec: str|None = None):
     return link_under(abs_link_special_types(), child_link, subsec)
 
 def cpp_incl(relative_path):
-    return f'#include "CakeIO/{relative_path}.h"'
+    return f'#include "Cake IO/{relative_path}.h"'
     
 def source_block_base(title, body, header_path):
     return f"""
@@ -58,7 +58,7 @@ def source_block_base(title, body, header_path):
     ```
 """
 def gen_header_path(file_name: str, rel_loc: str|None) -> str:
-    result = 'CakeIO/'
+    result = 'Cake IO/'
     if rel_loc:
         result += f'{rel_loc}/'
     result += f'{file_name}.h'
@@ -166,6 +166,10 @@ def define_env(env):
     @env.macro
     def bp_img_ext_filter(label):
         return bp_img(label, 'ext-filter')
+
+    @env.macro
+    def bp_img_tour(label):
+        return bp_img(label, 'tour')
     
     @env.macro
     def cpp_assumed_include(rel_path):
@@ -179,7 +183,7 @@ def define_env(env):
     @env.macro
     def cpp_impl_source(obj_id, type_name, relative_src_path):
         return f"""
-    The native {obj_id} object in CakeIO is **{type_name}**, which is defined in `CakeIO/{relative_src_path}.h`.
+    The native {obj_id} object in Cake IO is **{type_name}**, which is defined in `Cake IO/{relative_src_path}.h`.
 
 {cpp_assumed_include(relative_src_path)}
 """
@@ -187,7 +191,7 @@ def define_env(env):
     @env.macro
     def bp_impl_source(obj_id, type_name, relative_src_path):
         return f"""
-    The Blueprint {obj_id} object in CakeIO is **{type_name}**, which is defined in `CakeIO/Blueprint/{relative_src_path}.h`.
+    The Blueprint {obj_id} object in Cake IO is **{type_name}**, which is defined in `Cake IO/Blueprint/{relative_src_path}.h`.
 """
     
     @env.macro
@@ -241,11 +245,11 @@ def define_env(env):
         return inline_link(label, link_under_coreapi('async-io', subsec))
 
     @env.macro
-    def link_cakeservices(label='CakeIO Services', subsec: str|None = None):
+    def link_cakeservices(label='Cake IO Services', subsec: str|None = None):
         return inline_link(label, link_under_coreapi('services', subsec))
 
     @env.macro
     def bp_currently_unsupported(feature_label: str):
         return f'''
-{feature_label} is not currently supported for Blueprint due to limitations inherent with UObjects and multi-threaded contexts. As Unreal Engine evolves CakeIO will be looking for opportunities to add this functionality to the Blueprint API.
+    {feature_label} is not currently supported for Blueprint due to limitations inherent with UObjects and multi-threaded contexts. As Unreal Engine evolves Cake IO will be looking for opportunities to add this functionality to the Blueprint API.
 '''
