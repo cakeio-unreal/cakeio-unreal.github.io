@@ -63,8 +63,6 @@ nav:
   - Home: index.md
   - Tour: tour.md
   - Core API Documentation: 
-    - API Overview: core-api/api-overview.md
-
     - Core Objects:
       - Paths: core-api/paths.md
       - File Extensions: core-api/file-extensions.md
