@@ -1,5 +1,5 @@
 site_name: Cake IO 
-site_url: https://Cake IO-unreal.github.io
+site_url: https://cakeio-unreal.github.io
 theme:
   name: material
   logo: assets/DocIcon256.png
@@ -62,6 +62,8 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Tour: tour.md
+  - Installation: 
+    - Fab: installation/fab.md
   - Core API Documentation: 
     - Core Objects:
       - Paths: core-api/paths.md
