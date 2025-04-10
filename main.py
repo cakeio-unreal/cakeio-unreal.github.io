@@ -15,11 +15,12 @@ def gen_bp_img_name(img_label: str) -> str:
 
 def img_link(label: str, parent_path: str, file_name: str) -> str:
     return f'![{label}]({parent_path}/{file_name}.png)'
+
 def bp_img(label: str, bp_section: str) -> str:
     #return f'![{label}](img/bp/{bp_section}/{gen_bp_img_name(label)}.png){{ loading=lazy }}'
 
     #@GUIDANCE: We removed lazy loading for now, this is because the first time you switch between tabs it will abruptly put your scrollbar in an unrelated area. Very annoying! Not worth the performance "gains".
-    parent_path = 'img/bp/{bp_section}'
+    parent_path = f'img/bp/{bp_section}'
     file_name = gen_bp_img_name(label)
     return img_link(label, parent_path, file_name)
 
