@@ -32,7 +32,7 @@ Cake IO is a plugin for Unreal Engine that provides an ergonomic and comprehensi
 -   :material-antenna:{ .lg .top} __Contact Us__
 
     ---
-    :fontawesome-brands-discord: [Discord Server](https://discord.gg/BwQ2Vmcqtv)
+    :fontawesome-brands-discord: [Discord Server](https://discord.gg/sjnVsmMU9A)
 
     :fontawesome-solid-envelope: [makinacube@gmail.com](mailto:makinacube@gmail.com)
 
