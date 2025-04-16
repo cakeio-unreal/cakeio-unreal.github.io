@@ -1,5 +1,0 @@
-## Intro
-
-## Basic Usage
-
-## Pitfalls

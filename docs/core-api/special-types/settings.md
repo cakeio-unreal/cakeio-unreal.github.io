@@ -1,4 +1,6 @@
 ## Overview
+--8<-- "note-native-only.md"
+
 {{ src_loc_group('Settings', 'CakeSettings')}}
 
 Cake IO uses lightweight structs called Settings to group associated function parameters that are used across multiple functions. These structs help enforce regular argument ordering, reduce the length of function signatures, and provide a single location in source code where defaults can be set. Furthermore, because Cake IO takes advantage of C++20, we can use designated initializer syntax in order to allow for a much more ergonomic handling of optional parameters. 
@@ -55,8 +57,7 @@ FCakeResultFileIO CreateTextFile{
 	)
 };
 ```
-Designated initializer syntax looks much like an initializer list, except that we explicitly name each member field, prefixed by the `.` character. It should be noted that designated initializers in C++ are supposed to list the members in the same order as their declaration. //@FIX: Check if you can skip intermediate ones
-
+Designated initializer syntax looks much like an initializer list, except that we explicitly name each member field, prefixed by the `.` character. It should be noted that designated initializers in C++ are supposed to list the members in the same order as their declaration. 
 
 The advantage of designated initializers becomes apparent when we only want to change a single default parameter, leaving the rest to their default values. This time, let's say we want to write a text file and the only thing we want to change is the character encoding. With designated initializers, we can just omit the MissingParentPolicy member field and fill in the CharEncodingPolicy:
 ```c++
@@ -100,7 +101,7 @@ UserData Data = {
 The example above is not valid, because SilverCoins is not declared before WarpCubes in the definition of the UserData struct. 
 
 ## FCakeSettingsNewItem
-This settings struct allows users to configure the overwrite and missing parent behavior desired when a new file or directory is created. It contains two Cake Policies as member fields: [OverwriteItems](policies.md#overwriteitems) and [MissingParents](policies.md#missingparents). 
+This settings struct allows users to configure the overwrite and missing parent behavior desired when a new file or directory is created. It contains two Cake Policies as member fields: [OverwriteItems](/core-api/special-types/policies/#overwriteitems) and [MissingParents](/core-api/special-types/policies/#missingparents). 
 
 ```c++
 struct FCakeSettingsNewItem
@@ -108,7 +109,8 @@ struct FCakeSettingsNewItem
 	/** Determines if the new item can overwrite a prexisting item. */
 	ECakePolicyOverwriteItems OverwritePolicy{ CakePolicies::OverwriteItemsDefault };
 
-	/** Determines if any parent directories that don't exist in the new item's destination path can be created. */
+	/** Determines if any parent directories that don't exist in the new item's destination 
+	 path can be created. */
 	ECakePolicyMissingParents MissingParentPolicy{ CakePolicies::MissingParentsDefault };
 
 };
@@ -225,21 +227,25 @@ There are a variety of convenience static functions that create FCakeSettingsAsy
 ```c++
 static constexpr FCakeSettingsAsyncTask PriorityNormal_CallbackGameThread() 
 {
-	return FCakeSettingsAsyncTask(UE::Tasks::ETaskPriority::Normal, ECallbackThread::CallbackInGameThread);
+	return FCakeSettingsAsyncTask(
+		UE::Tasks::ETaskPriority::Normal, ECallbackThread::CallbackInGameThread);
 }
 
 static constexpr FCakeSettingsAsyncTask PriorityHigh_CallbackGameThread() 
 {
-	return FCakeSettingsAsyncTask(UE::Tasks::ETaskPriority::High, ECallbackThread::CallbackInGameThread);
+	return FCakeSettingsAsyncTask(
+		UE::Tasks::ETaskPriority::High, ECallbackThread::CallbackInGameThread);
 }
 
 static constexpr FCakeSettingsAsyncTask PriorityNormal_CallbackAsyncThread()
 {
-	return FCakeSettingsAsyncTask(UE::Tasks::ETaskPriority::Normal, ECallbackThread::CallbackInAsyncThread);
+	return FCakeSettingsAsyncTask(
+		UE::Tasks::ETaskPriority::Normal, ECallbackThread::CallbackInAsyncThread);
 }
 
 static constexpr FCakeSettingsAsyncTask PriorityHigh_CallbackAsyncThread() 
 {
-	return FCakeSettingsAsyncTask(UE::Tasks::ETaskPriority::High, ECallbackThread::CallbackInAsyncThread);
+	return FCakeSettingsAsyncTask(
+		UE::Tasks::ETaskPriority::High, ECallbackThread::CallbackInAsyncThread);
 }
 ```

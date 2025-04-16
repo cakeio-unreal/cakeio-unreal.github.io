@@ -4,7 +4,7 @@ theme:
   name: material
   logo: assets/DocIcon256.png
   font:
-    text: Inter
+    text: Onest
     code: Fira Code
   palette: 
     # Palette toggle for light mode
@@ -12,14 +12,14 @@ theme:
       toggle:
         icon: material/brightness-7 
         name: Switch to dark mode
-      primary: pink
+      primary: black
 
     # Palette toggle for dark mode
     - scheme: slate
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-      primary: pink 
+      primary: black 
 
   features:
     - navigation.tabs
@@ -52,6 +52,7 @@ markdown_extensions:
   - pymdownx.details  
   - abbr
   - attr_list
+  - md_in_html
   - pymdownx.snippets:
       base_path: "docs/.snippets/"
       auto_append:
@@ -62,14 +63,18 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Tour: tour.md
-  - Installation: 
-    - Fab: installation/fab.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
   - Core API Documentation: 
+    - Overview: core-api/overview.md 
     - Core Objects:
       - Paths: core-api/paths.md
       - File Extensions: core-api/file-extensions.md
       - Files: core-api/files.md
       - Directories: core-api/directories.md
+    - Error Handling:
+      - Error Handling Patterns: core-api/error-handling.md
+      - Error Maps: core-api/error-maps.md
     - Special Types:
       - Policies: core-api/special-types/policies.md
       - Outcomes: core-api/special-types/outcomes.md
@@ -78,9 +83,6 @@ nav:
       - Cake Orders: core-api/special-types/cake-orders.md
       - Settings: core-api/special-types/settings.md
       - Cake Ext Filter: core-api/special-types/cakeextfilter.md
-    - Error Handling:
-      - Error Handling Patterns: core-api/error-handling.md
-      - Error Maps: core-api/error-maps.md
     - Advanced Usage: 
       - Overview: core-api/advanced-usage.md
       - Utility Libraries:
@@ -93,6 +95,5 @@ nav:
   - Future Development: future-dev/future-development.md
 watch:
   - tables
-  - img
 
   

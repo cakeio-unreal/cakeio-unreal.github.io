@@ -168,7 +168,7 @@ For our examples, we are going to use a [CakeFile](files.md) object. However, al
 
 	This style is ergonomic and ideal for situations where we don't actually care about the specific details regarding failure, but still want to know whether the operation succeeded or failed.
 
-	Using the outcome value returned by an IO operation will give us greater context and the ability to implement more refined error handling. Even when using the simple branch technique described above, we can use a [CakeMixLibrary](../advanced/cake-mix-library.md#error-handling) utility function to get a human-readable string of the outcome when it fails, giving any readers a better understanding of the actual point of failure:
+	Using the outcome value returned by an IO operation will give us greater context and the ability to implement more refined error handling. Even when using the simple branch technique described above, we can use a [CakeMixLibrary](/core-api/cake-mix/#error-handling) utility function to get a human-readable string of the outcome when it fails, giving any readers a better understanding of the actual point of failure:
 
 	{{ bp_img_error_handling('Minimal Error Handling IO To String') }}
 
@@ -182,7 +182,7 @@ For our examples, we are going to use a [CakeFile](files.md) object. However, al
 
 	{{ bp_img_error_handling('Targeted Error Handling IO') }}
 
-	Finally, let's take a look at the final strategy: exhaustive error handling. Exhaustive error handling will usually require referencing the appropriate [error map](../core-api/error-maps/#appendfile-text-binary) unless you have a great memory or choose to delve into the implementation source code. This time we'll ignore the bool value entirely and just switch on the outcome value, handling every potential outcome value that AppendTextFile can send us. To keep the example simple, we'll just print a string for each outcome, but we can imagine that each of these print string nodes could instead be replaced with more complex, appropriate error handling:
+	Finally, let's take a look at the final strategy: exhaustive error handling. Exhaustive error handling will usually require referencing the appropriate [error map](/core-api/error-maps/#appendfile-text-binary) unless you have a great memory or choose to delve into the implementation source code. This time we'll ignore the bool value entirely and just switch on the outcome value, handling every potential outcome value that AppendTextFile can send us. To keep the example simple, we'll just print a string for each outcome, but we can imagine that each of these print string nodes could instead be replaced with more complex, appropriate error handling:
 
 	{{ bp_img_error_handling('Exhaustive Error Handling IO') }}
 
@@ -350,7 +350,7 @@ For our search, our goal is to collect three text files from a given directory.
 
 	{{ bp_img_error_handling('Minimal Error Handling Search') }}
 
-	Just like with CakeFile / CakeDir IO operations, we can use a utility function from [CakeMixLibrary](../advanced/cake-mix-library.md#error-handling) to get a human-readable string of the outcome:
+	Just like with CakeFile / CakeDir IO operations, we can use a utility function from [CakeMixLibrary]/core-api/cake-mix/#error-handling) to get a human-readable string of the outcome:
 
 	{{ bp_img_error_handling('Minimal Error Handling Search To String') }}
 

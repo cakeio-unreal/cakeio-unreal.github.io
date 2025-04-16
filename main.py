@@ -42,7 +42,7 @@ def abs_link_adv_special_types():
 
 def link_under(base_link, child_link, subsec: str|None = None):
     if subsec is None:
-        return f'{base_link}/{child_link}'
+        return f'{base_link}/{child_link}/'
     else:
         return f'{base_link}/{child_link}/#{subsec}'
 
@@ -56,7 +56,7 @@ def link_under_special_types(child_link, subsec: str|None = None):
     return link_under(abs_link_special_types(), child_link, subsec)
 
 def cpp_incl(relative_path):
-    return f'#include "Cake IO/{relative_path}.h"'
+    return f'#include "CakeIO/{relative_path}.h"'
     
 def source_block_base(title, body, header_path):
     return f"""
@@ -67,7 +67,7 @@ def source_block_base(title, body, header_path):
     ```
 """
 def gen_header_path(file_name: str, rel_loc: str|None) -> str:
-    result = 'Cake IO/'
+    result = 'CakeIO/'
     if rel_loc:
         result += f'{rel_loc}/'
     result += f'{file_name}.h'
@@ -196,7 +196,7 @@ def define_env(env):
     @env.macro
     def cpp_impl_source(obj_id, type_name, relative_src_path):
         return f"""
-    The native {obj_id} object in Cake IO is **{type_name}**, which is defined in `Cake IO/{relative_src_path}.h`.
+    The native {obj_id} object in Cake IO is **{type_name}**, which is defined in `CakeIO/{relative_src_path}.h`.
 
 {cpp_assumed_include(relative_src_path)}
 """
@@ -204,7 +204,7 @@ def define_env(env):
     @env.macro
     def bp_impl_source(obj_id, type_name, relative_src_path):
         return f"""
-    The Blueprint {obj_id} object in Cake IO is **{type_name}**, which is defined in `Cake IO/Blueprint/{relative_src_path}.h`.
+    The Blueprint {obj_id} object in Cake IO is **{type_name}**, which is defined in `CakeIO/Blueprint/{relative_src_path}.h`.
 """
     
     @env.macro

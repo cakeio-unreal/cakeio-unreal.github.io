@@ -1,7 +1,5 @@
 ## Overview
-Cake IO provides CakeDir objects that offer a comprehensive and ergonomic interface for directory traversal and other common directory IO operations. Just like CakeFile objects, CakeDir objects store their paths using CakePath objects. In addition to their path, however, CakeDir objects also have a special array of [CakeFileExt](file-extensions.md) objects, called the **file extension filter**, which can be used to filter the results when traversing through the files of a directory.
-
---8<-- "native-bp-diff.md"
+Cake IO provides CakeDir objects that offer a comprehensive and ergonomic interface for directory traversal and other common directory IO operations. Just like CakeFile objects, CakeDir objects store their paths using CakePath objects. In addition to their path, however, CakeDir objects also store a collection of [CakeFileExt](/core-api/file-extensions/) objects, called the **file extension filter**, which can be used to selectively visit the files contained in a directory.
 
 ### Source Code Information
 === "C++"
@@ -213,7 +211,7 @@ All CakeDir objects have their own file extension filter, which contains a colle
 === "Blueprint"
     Blueprint users cannot directly access the filter extension filter and instead control it via specific **UCakeDir** member functions. 
 
-For details on how to use the extension filter, please see the [FCakeExtFilter documentation](/core-api/special-types/cakeextfilter).
+For details on how to use the extension filter, please see the [FCakeExtFilter documentation](/core-api/special-types/cakeextfilter/).
 
 ### Clearing All Data
 To clear the path and the file extension filter on a CakeDir object, we use `Reset`:
@@ -526,7 +524,7 @@ The {{ policy_link('OverwriteItems') }} parameter allows us to control whether t
 		// ...
 	}
     ```
-    `QueryStatData` will return a `TCakeOrderDir<FFileStatData>` that holds both the [FCakeResultDirIO](special-types/results.md#fcakeresultdirio) and the `FFileStatData`, which will be valid only if the query operation doesn't fail. For more information about TCakeOrder types and their usage, see [this section](/core-api/special-types/cake-orders).
+    `QueryStatData` will return a `TCakeOrderDir<FFileStatData>` that holds both the [FCakeResultDirIO](special-types/results.md#fcakeresultdirio) and the `FFileStatData`, which will be valid only if the query operation doesn't fail. For more information about TCakeOrder types and their usage, see [this section](/core-api/special-types/cake-orders/).
 
 
 === "Blueprint"
@@ -583,7 +581,7 @@ Every traversal function will require a callback that is meant to handle each ta
 | Traversal Style | Return Type|
 | :-------------- | :----------|
 | Unguarded       | void       |
-| Guarded         | [ECakeSignalGuarded](core-api/special-types/signals/#ecakesignalguarded) |
+| Guarded         | [ECakeSignalGuarded](/core-api/special-types/signals/#ecakesignalguarded) |
 | Search          | [ECakeSignalSearch](/core-api/special-types/signals/#ecakesignalsearch) | 
 
 >Parameter Lists
@@ -810,7 +808,7 @@ For this example, we'll use a search traversal to attempt to find a subdirectory
 === "Blueprint"
 	{{ bp_img_dir('Traversal Example Search Callback Definition') }}
 
-When using [ECakeSignalSearch](special-types/signals.md#ecakesignalguarded), we return `Success` when the search is satisfied and the traversal should end. In our case, this is when the subdirectory name matches "config". Otherwise, we return `Continue`, which means the search is not yet satisfied and the next element should be visited.
+When using [ECakeSignalSearch](/core-api/special-types/signals/#ecakesignalsearch), we return `Success` when the search is satisfied and the traversal should end. In our case, this is when the subdirectory name matches "config". Otherwise, we return `Continue`, which means the search is not yet satisfied and the next element should be visited.
 
 !!! note
     We can also return an `Abort` signal just like a guarded traversal; however, it is not required. Since we don't have any IO failure or other critical errors that could occur within our callback, there is no need to return an `Abort` signal.
@@ -857,7 +855,7 @@ Filtered traversals are a special kind of traversal that only works with files a
 1. `TraverseGuardedFilesWithFilter`
 1. `TraverseSearchFilesWithFilter`
 
-These functions add parameters in addition to the standard parameter list for that iteration style. These parameters allow us to control how the extension filter should be used to select which files to visit during the traversal operation. The default behavior of a filtered traversal is to visit any files whose file extensions are in the extension filter set.
+These functions add parameters in addition to the standard parameter list for that traversal style. These parameters allow us to control how the extension filter should be used to select which files to visit during the traversal operation. The default behavior of a filtered traversal is to visit any files whose file extensions are in the extension filter set.
 Let's start with a basic example: we'll use the filter to visit only `.txt` files in a directory and read the text data. Since we're using a file IO operation during each traversal step, we should use a guarded traversal so we can respond to errors.
 
 === "C++"
@@ -972,7 +970,7 @@ The returned CakeDir object will hold the new path `Y:/game/cake-arena/win64`, b
 
 
 #### CloneWithNewParent
-Sometimes we might want to clone a CakeDir object and just change its parent path. `CloneWithNewParent` allows us to submit a new [CakePath](/core-api/paths.md) object that represents the parent, and it will return a CakeDir that has the new parent, but maintains the same directory name as the source CakeDir object. We can control whether the source CakeDir's extension filter should be copied as well via an {{ policy_link('ExtFilterClone') }} policy argument, which by default will copy the extension filter.
+Sometimes we might want to clone a CakeDir object and just change its parent path. `CloneWithNewParent` allows us to submit a new [CakePath](/core-api/paths/) object that represents the parent, and it will return a CakeDir that has the new parent, but maintains the same directory name as the source CakeDir object. We can control whether the source CakeDir's extension filter should be copied as well via an {{ policy_link('ExtFilterClone') }} policy argument, which by default will copy the extension filter.
 
 === "C++"
 

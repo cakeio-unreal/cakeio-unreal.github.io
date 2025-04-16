@@ -1,3 +1,0 @@
-## Intro
-
-## Designated Initializer Syntax

@@ -2,7 +2,6 @@
 ## Overview
 Cake IO provides CakeFile objects to allow file manipulation in a type-safe and ergonomic manner.
 
-
 ### Source Code Information
 === "C++"
     {{ cpp_impl_source('file', 'FCakeFile', 'CakeFile') }}
@@ -355,7 +354,7 @@ Cake Files provide interfaces for handling files as text files or binary files. 
 		UE_LOG(LogTemp, Warning, TEXT("Text File Data: [%s]"), *ReadText.Order);
 	}
 	```
-	CakeOrders are simple template structs that bundle a result type with a template type that represents the data we want to receive from an IO operation. In our case, we are using a `TCakeOrderFile` which sends back [FCakeResultFileIO](special-types/results.md#fcakeresultfileio) result types, and our template type is `FString` since we're trying to get the text data as a string. For more details on CakeOrders and how to use them, please see [this section](/core-api/special-types/cake-orders).
+	CakeOrders are simple template structs that bundle a result type with a template type that represents the data we want to receive from an IO operation. In our case, we are using a `TCakeOrderFile` which sends back [FCakeResultFileIO](special-types/results.md#fcakeresultfileio) result types, and our template type is `FString` since we're trying to get the text data as a string. For more details on CakeOrders and how to use them, please see [this section](/core-api/special-types/cake-orders/).
 
 	For completeness, here is the equivalent code for binary files:
 
@@ -571,7 +570,7 @@ To get all OS stat info for a CakeFile object, we use `QueryStatData`
 === "C++"
 	--8<-- "ad-order-file.md"
 
-	`QueryStatData` returns a [TCakeOrderFile](special-types/orders.md#tcakeorder) whose payload is the Unreal type `FFileStatData`.
+	`QueryStatData` returns a TCakeOrderFile whose payload is the Unreal type `FFileStatData`.
 
 	```c++ hl_lines="3"
 	FCakeFile SrcGoblin{ FCakePath{TEXTVIEW("enemies/ai/goblin.cpp")} };

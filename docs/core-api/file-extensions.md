@@ -1,12 +1,8 @@
 ## Introduction
-Cake IO offers FileExtension objects to enforce a standard representation of file extensions as well as to offer a variety of utilities involving file extension classification and manipulation. The standard representation enforced by the objects mean we no longer have to care about remembering whether or not our extensions require a leading '.' character. The FileExtension objects will handle that for us, and as a bonus they will also sanitize and fix malformed extension inputs like `.src..txt` => `.src.txt`.
-
---8<-- "native-bp-diff.md"
+Cake IO offers FileExtension objects provide a type-safe way to extract, examine, classify, and manipulate file extensions. 
 
 === "C++"
-    The native file extension object in Cake IO is **FCakeFileExt**, which is defined in `Cake IO/CakeFileExt`. 
-
-    {{ cpp_assumed_include('CakeFileExt') }} 
+    {{ cpp_impl_source('file extension', 'FCakeFileExt', 'CakeFileExt') }}
 
 === "Blueprint"
     {{ bp_impl_source('file extension', 'UCakeFileExt', 'CakeFileExt_BP') }}
@@ -41,8 +37,6 @@ Cake IO represents file extension types via the enum ECakeFileExtType. File exte
     ```
 
     Because FCakeFileExt enforces a standard representation of file extensions, it doesn't matter if we supply the leading extension dot '.' when submitting an extension string.
-
-    --8<-- "ad-stringview.md"
 
     To create an FCakeFileExt by extracting the file extension from a file name, we can use the static function `BuildFileExtFromFilePath`:
 

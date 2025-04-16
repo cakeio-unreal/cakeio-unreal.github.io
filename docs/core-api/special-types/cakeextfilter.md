@@ -159,15 +159,16 @@ If we specify an empty string-like object for the constructor, the filter set wi
     This sends back an integer that represents the total number of extensions in the set. Since the extension filter only keeps unique elements, this can differ from the extensions submitted. In our example, the number will be 2 instead of 3 since we submitted a duplicate `bin` extension. As with the other filter functions, we are always free to ignore the number returned from this function.
 
 #### Clearing the Filter Set
-=== "C++"
-To remove all extensions from the filter set, we can use `Reset`:
-    ```c++
-        FCakeExtFilter ExtFilter{TEXTVIEW("jpg|jpeg|png")};
 
-        ExtFilter.Reset();
-    ```
-!!! note
-    `Reset` takes an optional int32 parameter that indicates the size the internal filter set buffer should reserve. It behaves identically to Unreal's container `Reset` interface.
+=== "C++"
+    To remove all extensions from the filter set, we can use `Reset`:
+        ```c++
+            FCakeExtFilter ExtFilter{TEXTVIEW("jpg|jpeg|png")};
+
+            ExtFilter.Reset();
+        ```
+    !!! note
+        `Reset` takes an optional int32 parameter that indicates the size the internal filter set buffer should reserve. It behaves identically to Unreal's container `Reset` interface.
 === "Blueprint"
     To remove all extensions from the filter set, we use `ExtFilterReset`:
 

@@ -69,7 +69,7 @@ While much of the asynchronous interfaces mirror their synchronous counterparts,
 
     The function signatures for async IO operations follow a regular pattern. As mentioned earlier, all functions return `FCakeAsyncTasks`. Any types that the synchronous IO operation would return instead will be supplied via parameters to a callback that is invoked when the async operation is done. 
     
-    The parameter lists will follow a standard ordering: if there is a target object (e.g., the file for a move operation), the target object is the first parameter. Next, all non-optional parameters used by the IO operation will be listed. The last non-optional parameter will always be the async specific callback invoked when the async operation is done. Generally this callback will also pass back the results of the operation, which will vary in type based upon the operation being used. The first _optional_ parameter in an asynchronous function signature will be an [FCakeSettingsAsyncTask](../core-api/special-types/settings.md). We can use this to customize the behavior of the asynchronous operation. Finally, if there are any remaining _optional_ parameters that the IO operation takes they will be listed after the settings struct.
+    The parameter lists will follow a standard ordering: if there is a target object (e.g., the file for a move operation), the target object is the first parameter. Next, all non-optional parameters used by the IO operation will be listed. The last non-optional parameter will always be the async specific callback invoked when the async operation is done. Generally this callback will also pass back the results of the operation, which will vary in type based upon the operation being used. The first _optional_ parameter in an asynchronous function signature will be an [FCakeSettingsAsyncTask](/core-api/special-types/settings/#fcakesettingsasynctask). We can use this to customize the behavior of the asynchronous operation. Finally, if there are any remaining _optional_ parameters that the IO operation takes they will be listed after the settings struct.
 
     Let's look at an example by comparing CakeDir's `CreateDir` signature versus the CakeAsyncIO `CreateDir` signature: 
 
@@ -151,9 +151,9 @@ While much of the asynchronous interfaces mirror their synchronous counterparts,
 ### File IO
 Let's examine async File IO using the async version of CakeFile's `DeleteFile`. Since we are using the asynchronous function which is not a member function, we need to pass the CakeFile object as the first argument to the async version.
 === "C++"
-    The namespace CakeAsyncIO::File contains asynchronous versions of all the [FCakeFile IO Operations](../core-api/files.md#io-operations).
+    The namespace CakeAsyncIO::File contains asynchronous versions of all the [FCakeFile IO Operations](/core-api/files/#io-operations).
 
-    The result callback signature for file IO requires one parameter: an [FCakeResultFileIO](../core-api/special-types/results.md#fcakeresultfileio) that the IO operation returned.
+    The result callback signature for file IO requires one parameter: an [FCakeResultFileIO](/core-api/special-types/results/#fcakeresultfileio) that the IO operation returned.
 
     ```c++ hl_lines="11-13"
 	FCakeFile FileItemsDb{ 
@@ -207,7 +207,7 @@ Let's examine async File IO using the async version of CakeFile's `DeleteFile`. 
 In this example, we'll use an async version of `DeleteDir` to delete the directory our CakeDir object references.
 
 === "C++"
-    The namespace `CakeAsyncIO::Dir` contains asynchronous versions of all the [FCakeDir IO Operations](../core-api/directories.md#io-operations).
+    The namespace `CakeAsyncIO::Dir` contains asynchronous versions of all the [FCakeDir IO Operations](/core-api/directories/#io-operations).
 
     The result callback signature for directory IO requires one parameter: an [FCakeResultDirIO](../core-api/special-types/results.md#fcakeresultdirio) that the IO operation returned.
 
@@ -292,7 +292,7 @@ CakeAsyncIO interfaces use their own private copy of source objects in order to 
 
 	Asynchronous directory traversal is quite similar to synchronous traversal, but we must always remain cognizant of the fact that our traversal callback is being invoked on a different thread. This means that all sorts of wonderful thread-related nightmares can befall upon us, so we must be vigilant when we choose to use this asynchronous traversal.
 
-	We must be very careful regarding what sort of data we might mutate. If we are doing things like adding data to a collection, it is the caller's burden to ensure that everything is handled in a thread-safe manner. Whenever possible, favor interfaces like CakeMixLibrary's Gather or GatherCustom, which will build an isolated container during the asynchronous operation and then pass it back when it can be safely used.
+	We must be very careful regarding what sort of data we might mutate. If we are doing things like adding data to a collection, it is the caller's burden to ensure that everything is handled in a thread-safe manner. Whenever possible, favor interfaces like CakeMix's Gather or GatherCustom, which will build an isolated container during the asynchronous operation and then pass it back when it can be safely used.
 
 	We'll now look at two examples, one involving unguarded traversal and the other involving search traversal. Our unguarded traversal will simply print the directory names it encounters, and our search traversal will look for a readme file and stop immediately once the first file that matches our criteria is found. 
 
@@ -342,8 +342,8 @@ CakeAsyncIO interfaces use their own private copy of source objects in order to 
 === "Blueprint"
 	{{ bp_currently_unsupported('Directory traversal') }}
 
-### CakeMixLibrary
-CakeAsyncIO provides asynchronous versions of all of the [CakeMixLibrary](../cake-mix) IO functions. For our example, we'll use the async version of `CountSubdirs`.
+### CakeMix
+CakeAsyncIO provides asynchronous versions of all of the [CakeMix](/core-api/cake-mix/) IO functions. For our example, we'll use the async version of `CountSubdirs`.
 
 === "C++"
     Async versions of CakeMixLibrary functions are located under the namespace `CakeAsyncIO::CakeMix`. The CakeMixLibrary namespace is mirrored underneath, so if a function is located in `CakeMixLibrary::Dir`, then the async function is found in `CakeAsyncIO::CakeMix::Dir`.

@@ -1,5 +1,5 @@
 ## Cake Mix Library
-CakeMixLibrary provides a suite of advanced functionality built on top of the Cake IO's [core API](../core-api/api-overview.md). Its primary purpose is to provide an ergonomic interface for some common complex operations, such as collecting elements from a directory and storing them in a container. 
+CakeMixLibrary provides a suite of advanced functionality built on top of the Cake IO's core APIs and objects. Its primary purpose is to provide an ergonomic interface for some common complex operations, such as collecting elements from a directory and storing them in a container. 
 
 --8<-- "warning-lib-advanced.md"
 
@@ -17,7 +17,6 @@ CakeMixLibrary provides a suite of advanced functionality built on top of the Ca
 	``` 
 
 ## Directory Work Functions
---8<-- "disclaimer-advanced-error-handling.md"
 Directory Work is defined as any operation that involves traversing a target CakeDir object's elements in order to accomplish some kind of work. The kind of work can vary greatly, from counting elements at a specific depth to gathering elements into an array for future processing.
 
 ### Directory Work Error Handling
@@ -30,7 +29,7 @@ Every function involving directory work will use an {{ link_outcomes('ECakeOutco
 
 __Not all directory work functions will generate `Aborted` outcomes__. Some directory work is free from critical errors assuming it can start. Each function group in this section will have a short error handling section to provide guidance regarding the `Aborted` outcome value. Furthermore, feel free to reference the 
 
-The remaining outcomes here involve helping the caller ensure the operation itself actually was able to successfully run. Remember that traversal can fail to launch in a [variety of circumstances](/core-api/special-types/outcomes.md#did-not-launch). However, since the outcome has a specific value to inform you when the source directory doesn't exist, the only scenarios you need to worry about for traversals being launched are:
+The remaining outcomes here involve helping the caller ensure the operation itself actually was able to successfully run. Remember that traversal can fail to launch in a [variety of circumstances](/core-api/special-types/outcomes/#did-not-launch). However, since the outcome has a specific value to inform you when the source directory doesn't exist, the only scenarios you need to worry about for traversals being launched are:
 
 1. Ensure valid traversal arguments are being sent. Unless you are casting numeric types to enums these should be very rare.
 2. Ensure the source directory has extensions in its extension filter when using a `WithFilter` variant of a particular directory work operation.
@@ -440,7 +439,18 @@ CakeMixLibrary offers various `ToString` functions which generate human-readable
     ```
 
 === "Blueprint"
-    ToString Utility Functions
+    CakeMix ensures that we can always easily turn an outcome value into a human readable string. When you are working with an outcome value, you can either call the appropriate ToString function manually:
+
+
+    {{ bp_img_cakemix('To String Outcome') }}
+
+	Or you can use the auto-conversion node by just connecting the outcome value to a string node:
+
+    {{ bp_img_cakemix('To String Outcome Auto') }}
+
+	Finding the appropriate ToString function is simple, just drag off the outcome value, ensure Context Sensitive is checked, type in 'ToString', and you should easily find the function you need:
+
+    {{ bp_img_cakemix('To String Search') }}
 
 ## CakeMix Exclusive C++ Types
 CakeMix introduces a few types exclusive to the C++ API. They are defined in `Cake IO/CakeMixTypes.h`.
@@ -448,7 +458,7 @@ CakeMix introduces a few types exclusive to the C++ API. They are defined in `Ca
 --8<-- "note-native-only.md"
 
 ### TCakeMixBatch
-This type is used by CakeMix to return a collection of files or subdirectories from some directory work operation. This simple type merely combines a [FCakeResultDirWork](/advanced/special-types/results.md#fcakeresultdirwork) result type with a `TArray<T>`, where `T` is the element type:
+This type is used by CakeMix to return a collection of files or subdirectories from some directory work operation. This simple type merely combines a [FCakeResultDirWork](/core-api/special-types/results/#fcakeresultdirwork) result type with a `TArray<T>`, where `T` is the element type:
 
 ```c++
 template <typename ElementType>
@@ -480,7 +490,7 @@ There are a variety of convenience functions provided:
 
 ```
 ### FCakeMixCount
-This is a simple type that bundles an [FCakeResultDirWork](/advanced/special-types/results.md#fcakeresultdirwork) with an integer that represents the number of elements counted.
+This is a simple type that bundles an [FCakeResultDirWork](/core-api/special-types/results/#fcakeresultdirwork) with an integer that represents the number of elements counted.
 
 ``` c++
 struct FCakeMixCount

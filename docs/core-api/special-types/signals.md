@@ -20,11 +20,11 @@ This signal is used to control search traversals.
 These are specialized signals used in higher level, advanced operations.
 
 ### ECakeSignalGather
-This signal is used in the CakeMix [GatherCustom](../../advanced/cake-mix-library.md#gathercustom) family of functions.
+This signal is used in the CakeMix [GatherCustom](/core-api/cake-mix/#gathering-elements-via-custom-predicate) family of functions.
 
 {{ read_csv(open_csv_by_typename('ECakeSignalGather')) }}
 
 ### ECakeSignalBatchOp
-This signal is used in the [CakeAsyncIO](../../advanced/async-io.md) exclusive [Batch Operation](../../advanced/async-io.md#batch-operations) functions.
+This signal is used in the CakeAsyncIO exclusive [Batch Operation](/core-api/async-io/#batch-operations) functions.
 
 {{ read_csv(open_csv_by_typename('ECakeSignalBatchOp')) }}

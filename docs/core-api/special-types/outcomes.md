@@ -26,14 +26,14 @@ This is the outcome value that is dedicated to represent outcomes associated wit
 {{ read_csv(open_csv_by_typename('ECakeOutcomeDirIO')) }}
 
 ### File / Directory Name Sanitization
-Both file and directory outcomes have a value that represents an invalid file or directory name. Right now this value is returned only in functions that involve changing the file or directory name, and it is returned when the new file/directory name is empty. __There currently is no validation that occurs regarding illegal characters in paths.__
+Both file and directory outcomes have a value that represents an invalid file or directory name. Right now this value is returned only in functions that involve changing the file or directory name, and it is returned when the new file/directory name is empty or contains only whitespace and/or path separators. __There is no platform specific validation that occurs regarding illegal characters in paths.__  
 
 ### FailedDeletingPreexisting
 While most outcomes are self-explanatory, this particular outcome value could benefit from a little extra explanation. This outcome can occur when the user runs an IO operation that allows preexisting items to be overwritten by the IO operation. In the event that an item already exists at the destination path, the IO operation will attempt to first delete that item in order to ensure the main IO operation can proceed. If the item at the destination path cannot be deleted, this value is returned.
 
 ## Directory Traversal Outcomes
 !!! note
-    This section deals with directory traversal. If you are unfamiliar with this concept, please see [this section](../directories.md#directory-traversal).
+    This section deals with directory traversal. If you are unfamiliar with this concept, please see [this section](/core-api/directories/#directory-traversal).
 
 The following outcome enums are used to represent the result of directory traversal. 
 
@@ -43,7 +43,7 @@ All traversal outcomes have a value to indicate that a traversal operation faile
 1. **The source directory does not exist.**
 When a traversal is called on a CakeDir object, that traversal operation will first ensure that the directory it represents actually exists on the filesystem. If it does not, the traversal will fail to launch.
 
-2. **A [filtered traversal](../directories.md#filtered-traversals) is called on a CakeDir object when its extension filter is empty.** 
+2. **A [filtered traversal](/core-api/directories/#filtered-traversals) is called on a CakeDir object when its extension filter is empty.** 
 This would visit files in a way that the caller does not want, and so the traversal will fail to launch.
 
 3. **A policy argument with an out of range value was submitted.**
@@ -65,11 +65,11 @@ This outcome value is used only by search traversals.
 ## Advanced Outcomes
 
 ### ECakeOutcomeDirWork
-This outcome value that is used by higher level functions that perform some work on elements within a source directory. Used extensively in [CakeMixLibrary](/advanced/cake-mix-library) functions.
+This outcome value that is used by higher level functions that perform some work on elements within a source directory. Used extensively in [CakeMix](/core-api/cake-mix/) functions.
 
 {{ read_csv(open_csv_by_typename('ECakeOutcomeDirWork')) }}
 
 ### ECakeOutcomeBatchOp
-This outcome value that is used by CakeAsyncIO's [batch operations](/advanced/async-io/#batch-operations).
+This outcome value that is used by CakeAsyncIO's [batch operations](/core-api/async-io/#batch-operations).
 
 {{ read_csv(open_csv_by_typename('ECakeOutcomeBatchOp')) }}

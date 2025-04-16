@@ -348,7 +348,7 @@ These are merely convenience functions that can enhance legibility in some situa
 ## Advanced Results
 
 ### FCakeResultDirWork
-FCakeResultDirWork is used extensively in [CakeMixLibrary](/advanced/cake-mix-library) functions. It wraps an [ECakeOutcomeDirWork](outcomes.md#ecakeoutcomedirwork) value and provides a minimal set of convenience functions. For an overview of Directory Work operations, see [this section](../../advanced/cake-mix-library.md#directory-work-error-handling).
+FCakeResultDirWork is used extensively in [CakeMixLibrary](/core-api/cake-mix) functions. It wraps an [ECakeOutcomeDirWork](../outcomes/#ecakeoutcomedirwork) value and provides a minimal set of convenience functions. For an overview of Directory Work operations, see [this section](/core-api/cake-mix/#directory-work-error-handling).
 
 ```c++
 struct FCakeResultDirWork

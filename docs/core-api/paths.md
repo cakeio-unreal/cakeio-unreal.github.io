@@ -1,7 +1,5 @@
 ## Overview
-CakePath objects are meant to provide an ergonomic and standardized way to work with filesystem paths in Unreal Engine. The main job of the CakePath is to ensure that paths follow standardized representation that eliminates some of the inconsistencies between platforms. Mainly this means establishing a common path separator, and handling small details such as whether or not trailing slashes are included for directory-like paths. The end result is that we can send in paths of various styles for various platforms -- e.g., we can submit Windows-style paths like `C:\data` or Unix-style paths like `/c/data` and CakePath objects will ensure that the final path is transformed into that common convention. Callers don't have to worry about converting between path separators, or whether or not to include trailing slashes. CakePath also offers a variety of utility methods that make path manipulation and handling easier. The following documentation will provide general usage and guidance instructions. 
-
---8<-- "native-bp-diff.md"
+CakePath objects provide an ergonomic and standardized way to work with filesystem paths in Unreal Engine. 
 
 ### Source Code Information
 === "C++"
@@ -17,8 +15,6 @@ In this section we will cover the fundamental CakePath operations. Once you are 
 === "C++"
     The most straightforward way to build a new FCakePath is via the constructor, which accepts an FStringView. 
 
-    --8<-- "ad-stringview.md"
-
     ```c++
     FCakePath FirstPath{ TEXTVIEW("x/game/data") };
     ```
@@ -28,7 +24,7 @@ In this section we will cover the fundamental CakePath operations. Once you are 
     FCakePath FirstPath{ TEXTVIEW("X:\\game\\data") };
     ```
 
-    It also doesn't matter whether or not we include trailing path separators for directory paths. The following **FCakePath** objects hold the exact same path:
+    It also doesn't matter whether or not we include trailing path separators for directory paths. The following FCakePath objects hold the exact same path:
 
     ```c++
     FCakePath PathA{ TEXTVIEW("x/game/data") };
@@ -130,14 +126,14 @@ In this section we will cover the fundamental CakePath operations. Once you are 
     --8<-- "ad-copymove-ctor.md"
 
 
-    To check if an **FCakePath**'s path is empty, we can use the `IsEmpty` member function:
+    To check if an FCakePath's path is empty, we can use the `IsEmpty` member function:
 
     ```c++ hl_lines="3"
     FCakePath SourcePath{ TEXTVIEW("x/game/data") };
 
     const bool bPathIsEmpty{ SourcePath.IsEmpty() }; // => false
     ```
-    To reset an **FCakePath**'s path back to empty, we can use the `Reset` member function:
+    To reset an FCakePath's path back to empty, we can use the `Reset` member function:
 
     ```c++ hl_lines="2"
     FCakePath SourcePath{ TEXTVIEW("x/game/data") };
