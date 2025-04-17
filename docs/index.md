@@ -10,7 +10,7 @@ Cake IO is a plugin for Unreal Engine that provides an ergonomic and comprehensi
 
     Want to learn more? 
 
-    [:octicons-arrow-right-24: Take the Tour](/tour)
+    [:octicons-arrow-right-24: Take the Tour](/tour/)
 
 -   :material-application-cog:{ .lg .top}  __Installation__
 
@@ -19,7 +19,7 @@ Cake IO is a plugin for Unreal Engine that provides an ergonomic and comprehensi
     Already own Cake IO? Get it up and running.
 
 
-    [:octicons-arrow-right-24: Getting Started ](/getting-started)
+    [:octicons-arrow-right-24: Getting Started ](/getting-started/installation/)
 
 -   :material-book-open-page-variant:{ .lg .top } __Documentation__
 
@@ -27,7 +27,7 @@ Cake IO is a plugin for Unreal Engine that provides an ergonomic and comprehensi
 
     Get all the details about the API.
 
-    [:octicons-arrow-right-24: API Documentation](/core-api/overview)
+    [:octicons-arrow-right-24: API Documentation](/core-api/overview/)
 
 -   :material-antenna:{ .lg .top} __Contact Us__
 
