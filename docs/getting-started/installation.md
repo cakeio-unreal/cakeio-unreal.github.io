@@ -18,4 +18,25 @@ Click the checkbox next to the Cake IO icon to enable the plugin for this projec
 
 {{ img_install_fab('Enabling the Cake IO Plugin', 'enabling-plugin') }}
 
-Once enabled, you will need to restart the Unreal Editor. Once the editor restarts, you are ready to start using Cake IO in your project!
+Once enabled, you will need to restart the Unreal Editor. 
+
+At this point, Blueprint users are good to go. If you are using the C++ API, you will need to add the "CakeIO" module as a dependency to any module that wishes to use it. Just add "CakeIO" to either PublicDependencyModuleNames or PrivateDependencyModuleNames in the consuming module's Build.cs. For example:
+
+```c# hl_lines="11"
+	public MyModule(ReadOnlyTargetRules Target) : base(Target)
+	{
+        // ...
+		PublicDependencyModuleNames.AddRange(new string[] { 
+			"Core", 
+			"CoreUObject", 
+			"Engine", 
+			"InputCore", 
+			"UMG", 
+			"SlateCore", 
+			"CakeIO" 
+		});
+        // ...
+    }
+```
+
+
