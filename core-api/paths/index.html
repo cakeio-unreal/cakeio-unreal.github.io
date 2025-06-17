@@ -1,0 +1,2232 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://cakeio-unreal.github.io/core-api/paths/">
+      
+      
+        <link rel="prev" href="../overview/">
+      
+      
+        <link rel="next" href="../file-extensions/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Paths - Cake IO</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Onest:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Onest";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cake IO" class="md-header__button md-logo" aria-label="Cake IO" data-md-component="logo">
+      
+  <img src="../../assets/DocIcon256.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cake IO
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Paths
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tour/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tour
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+  Core API Documentation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../examples/examples/" class="md-tabs__link">
+          
+  
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../future-dev/future-development/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Future Development
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cake IO" class="md-nav__button md-logo" aria-label="Cake IO" data-md-component="logo">
+      
+  <img src="../../assets/DocIcon256.png" alt="logo">
+
+    </a>
+    Cake IO
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tour
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core API Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Core API Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Objects
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Core Objects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Paths
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Paths
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source-code-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source Code Information
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-cakepath-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building CakePath Objects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copying-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Copying Paths
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-path-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading the Path String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modifying Paths
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combining Paths
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Path Equality
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-leaf-manipulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Path Leaf Manipulation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Path Leaf Manipulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leaf-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leaf Extraction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-the-leaf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modifying the Leaf
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parent-path-manipulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parent Path Manipulation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parent Path Manipulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parent-path-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parent Path Extraction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-the-parent-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modifying the Parent Path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#absolute-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Absolute Paths
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replacing-subpaths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Replacing Subpaths
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-extensions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File Extensions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../directories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Directories
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Error Handling
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../error-handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling Patterns
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../error-maps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Maps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Special Types
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Special Types
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-types/policies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Policies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-types/outcomes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Outcomes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-types/signals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Signals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-types/results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Results
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-types/cake-orders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cake Orders
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-types/settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Settings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-types/cakeextfilter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cake Ext Filter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_2" id="__nav_4_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Utility Libraries
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Utility Libraries
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cake-mix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CakeMix
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../async-io/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CakeAsyncIO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5_3" id="__nav_4_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Cake IO Services
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cake IO Services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cake IO Services Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Basic
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Basic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/basic/discovering_unreal_modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Discovering Unreal Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../future-dev/future-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Future Development
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Paths</h1>
+
+<h2 id="overview">Overview</h2>
+<p>CakePath objects provide an ergonomic and standardized way to work with filesystem paths in Unreal Engine. </p>
+<h3 id="source-code-information">Source Code Information</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">C++</label><label for="__tabbed_1_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The native path object in Cake IO is <strong>FCakePath</strong>, which is defined in <code>CakeIO/CakePath.h</code>.</p>
+<p>All C++ examples in this section assume the following include statement:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos" data-linenos="1 "></span></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;CakeIO/CakePath.h&quot;</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>The Blueprint path object in Cake IO is <strong>UCakePath</strong>, which is defined in <code>CakeIO/Blueprint/CakePath_BP.h</code>.</p>
+</div>
+</div>
+</div>
+<h2 id="basic-usage">Basic Usage</h2>
+<p>In this section we will cover the fundamental CakePath operations. Once you are comfortable using CakePaths, consider looking at the advanced usage section for examples of more complex operations.</p>
+<h3 id="building-cakepath-objects">Building CakePath Objects</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">C++</label><label for="__tabbed_2_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The most straightforward way to build a new FCakePath is via the constructor, which accepts an FStringView. </p>
+<p><div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><a href="#__codelineno-1-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">FirstPath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+</code></pre></div>
+Remember, CakePath objects will ensure path representation is standardized, so we can also submit Windows-style paths to the constructor.</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><a href="#__codelineno-2-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">FirstPath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;X:</span><span class="se">\\</span><span class="s">game</span><span class="se">\\</span><span class="s">data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+</code></pre></div>
+<p>It also doesn't matter whether or not we include trailing path separators for directory paths. The following FCakePath objects hold the exact same path:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><a href="#__codelineno-3-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathA</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><a href="#__codelineno-3-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathB</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data/&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+</code></pre></div>
+<p>To build a combined path out of multiple <abbr title="Some form of FString or FStringView.">string-like</abbr> objects, we can use the static method <code>BuildPathCombined</code>.</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><a href="#__codelineno-4-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FString</span><span class="w"> </span><span class="n">PathComponentOne</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x/game&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><a href="#__codelineno-4-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="hll"><a href="#__codelineno-4-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">CombinedPath</span><span class="p">{</span><span class="w"> </span><span class="n">FCakePath</span><span class="o">::</span><span class="n">BuildPathCombined</span><span class="p">(</span><span class="n">PathComponentOne</span><span class="p">,</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;data&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>When we want to make a new CakePath object, we can use <code>BuildCakePath</code>, supplying a string that represents the path that this CakePath object should hold.</p>
+<p><img alt="Build Cake Path" src="../img/bp/path/build-cake-path.png" /></p>
+<p>Sometimes we might want to make an empty CakePath object and set its path information later, and for that we can use <code>BuildCakePathEmpty</code>, which will give us a CakePath object whose path is empty:</p>
+<p><img alt="Build Cake Path Empty" src="../img/bp/path/build-cake-path-empty.png" /></p>
+<p>We can build a combined path with <code>BuildCakePathCombined</code>, which will create a combined path out of the two strings we supply as inputs: </p>
+<p><img alt="Build Cake Path Combined" src="../img/bp/path/build-cake-path-combined.png" /></p>
+<p>In the example above, the path of the object returned would be <code>X:/game/data/assets</code>.</p>
+</div>
+</div>
+</div>
+<h3 id="copying-paths">Copying Paths</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">C++</label><label for="__tabbed_3_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>To get a copy of an existing FCakePath, we can use either the copy constructor directly or call the function <code>Clone</code> on the source path.</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><a href="#__codelineno-5-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><a href="#__codelineno-5-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="hll"><a href="#__codelineno-5-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">CopyCtor</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="w">         </span><span class="p">};</span>
+</span><a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="hll"><a href="#__codelineno-5-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">ClonedPath</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">Clone</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+<p>To copy just the path string, use <code>ClonePathString</code>:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><a href="#__codelineno-6-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><a href="#__codelineno-6-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="hll"><a href="#__codelineno-6-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FString</span><span class="w"> </span><span class="n">ClonedPathString</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">ClonePathString</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>To duplicate a CakePath object, we use <code>Clone</code>:</p>
+<p><img alt="Clone" src="../img/bp/path/clone.png" /></p>
+<p>To duplicate just the path as a string, we use <code>ClonePathString</code>:</p>
+<p><img alt="Clone Path String" src="../img/bp/path/clone-path-string.png" /></p>
+</div>
+</div>
+</div>
+<h3 id="reading-the-path-string">Reading the Path String</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">C++</label><label for="__tabbed_4_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>To read an FCakePath's path string, we can use <code>operator*</code> or <code>GetPathString</code>:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><a href="#__codelineno-7-1"><span class="linenos" data-linenos="1 "></span></a><span class="k">auto</span><span class="w"> </span><span class="n">PrintPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[](</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">UE_LOG</span><span class="p">(</span><span class="n">LogTemp</span><span class="p">,</span><span class="w"> </span><span class="n">Warning</span><span class="p">,</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;Path: [%s]&quot;</span><span class="p">),</span><span class="w"> </span><span class="o">*</span><span class="n">Path</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><a href="#__codelineno-7-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><a href="#__codelineno-7-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="hll"><a href="#__codelineno-7-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">PrintPath</span><span class="p">(</span><span class="o">*</span><span class="n">SourcePath</span><span class="p">);</span><span class="w"> </span><span class="c1">// =&gt; &quot;x/game/data&quot;</span>
+</span><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="hll"><a href="#__codelineno-7-5"><span class="linenos" data-linenos="5 "></span></a><span class="n">PrintPath</span><span class="p">(</span><span class="n">SourcePath</span><span class="p">.</span><span class="n">GetPathString</span><span class="p">());</span><span class="w"> </span><span class="c1">// =&gt; &quot;x/game/data&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>To read the path as a string, we can use <code>GetPathString</code>:</p>
+<p><img alt="Get Path String" src="../img/bp/path/get-path-string.png" /></p>
+</div>
+</div>
+</div>
+<h3 id="modifying-paths">Modifying Paths</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">C++</label><label for="__tabbed_5_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>We can change the path of an existing FCakePath via <code>SetPath</code>, which takes a <abbr title="Some form of FString or FStringView.">string-like</abbr> object just like the constructor:</p>
+<p><div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><a href="#__codelineno-8-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><a href="#__codelineno-8-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="hll"><a href="#__codelineno-8-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">SourcePath</span><span class="p">.</span><span class="n">SetPath</span><span class="p">(</span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;y:/network/profiling/&quot;</span><span class="p">));</span>
+</span></code></pre></div>
+We can also set the path of an existing FCakePath to the path another FCakePath holds via <code>SetPathViaOther</code>:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><a href="#__codelineno-9-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><a href="#__codelineno-9-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">NewPath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;Z:/misc/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><a href="#__codelineno-9-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="hll"><a href="#__codelineno-9-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">SourcePath</span><span class="p">.</span><span class="n">SetPathViaOther</span><span class="p">(</span><span class="n">NewPath</span><span class="p">);</span>
+</span></code></pre></div>
+<p>If we want to use move semantics instead of copy semantics, we can use <code>StealPath</code>:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><a href="#__codelineno-10-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><a href="#__codelineno-10-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="hll"><a href="#__codelineno-10-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">SourcePath</span><span class="p">.</span><span class="n">StealPath</span><span class="p">(</span><span class="w"> </span><span class="n">FCakePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;Y:/netdb/player&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">);</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Copy / Move constructors also can be used to model the exact same behavior. Use whichever better aligns to your style guidelines.</p>
+</div>
+<p>To check if an FCakePath's path is empty, we can use the <code>IsEmpty</code> member function:</p>
+<p><div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><a href="#__codelineno-11-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><a href="#__codelineno-11-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="hll"><a href="#__codelineno-11-3"><span class="linenos" data-linenos="3 "></span></a><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bPathIsEmpty</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">IsEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// =&gt; false</span>
+</span></code></pre></div>
+To reset an FCakePath's path back to empty, we can use the <code>Reset</code> member function:</p>
+<p><div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><a href="#__codelineno-12-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="hll"><a href="#__codelineno-12-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">SourcePath</span><span class="p">.</span><span class="n">Reset</span><span class="p">();</span>
+</span><a id="__codelineno-12-3" name="__codelineno-12-3"></a><a href="#__codelineno-12-3"><span class="linenos" data-linenos="3 "></span></a><span class="k">const</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bPathIsEmpty</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">IsEmpty</span><span class="p">()</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// =&gt; true</span>
+</code></pre></div>
+<code>Reset</code> takes an optional size parameter that will reserve a buffer size for the internal <code>FString</code> that holds the path string:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a><a href="#__codelineno-13-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a><a href="#__codelineno-13-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">NewPath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;Z:/misc/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a><a href="#__codelineno-13-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="hll"><a href="#__codelineno-13-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">SourcePath</span><span class="p">.</span><span class="n">Reset</span><span class="p">(</span><span class="n">NewPath</span><span class="p">.</span><span class="n">GetPathString</span><span class="p">.</span><span class="n">Len</span><span class="p">());</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>NewReservedSize</code> is just forwarded internally to the associated <code>FString</code>, and so <code>Reset</code> models the exact same behavior as <code>FString::Reset</code>.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p>To change the path that a preexisting CakePath object holds, we use <code>SetPath</code>, submitting a string that represents the new path that the CakePath object should use:</p>
+<p><img alt="Set Path" src="../img/bp/path/set-path.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the example above, the path will be set to <code>y:/network/profiling/</code>.</p>
+</div>
+<p>If we want to set the path using another CakePath object's path, we can use <code>SetPathViaOther</code>:</p>
+<p><img alt="Set Path Via Other" src="../img/bp/path/set-path-via-other.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the example above, the path will be <code>Z:/misc/data</code> after the call to Set Path resolves.</p>
+</div>
+<p>To check if a path is empty, we can use <code>IsEmpty</code>:</p>
+<p><img alt="Is Empty" src="../img/bp/path/is-empty.png" /></p>
+<p>To clear any path a CakePath object holds, we use <code>Reset</code>:</p>
+<p><img alt="Reset" src="../img/bp/path/reset.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The parameter <code>NewReservedSize</code> can be used to reserve a minimum size for the internal path string. It is optional and should be left at 0 whenever you don't need to specify a reserve size.</p>
+</div>
+</div>
+</div>
+</div>
+<h3 id="combining-paths">Combining Paths</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">C++</label><label for="__tabbed_6_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>To make a new FCakePath that combines other FCakePath objects, use <code>operator/</code> or <code>Combine</code>.</p>
+<p><div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><a href="#__codelineno-14-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathGame</span><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/&quot;</span><span class="p">)</span><span class="w">       </span><span class="p">};</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><a href="#__codelineno-14-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathHeroFile</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;hero/hero.fbx&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><a href="#__codelineno-14-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="hll"><a href="#__codelineno-14-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathToHeroFileOperator</span><span class="p">{</span><span class="w"> </span><span class="n">PathGame</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">PathHeroFile</span><span class="w">        </span><span class="p">};</span>
+</span><a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="hll"><a href="#__codelineno-14-5"><span class="linenos" data-linenos="5 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathToHeroFileCombined</span><span class="p">{</span><span class="w"> </span><span class="n">PathGame</span><span class="p">.</span><span class="n">Combine</span><span class="p">(</span><span class="n">PathHeroFile</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+Either function will produce the same result, but <code>operator/</code> can be especially ergonomic if you are combining more than two paths at once: </p>
+<p><div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><a href="#__codelineno-15-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathDrive</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><a href="#__codelineno-15-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathGameOnly</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;game&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><a href="#__codelineno-15-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathDataOnly</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><a href="#__codelineno-15-4"><span class="linenos" data-linenos="4 "></span></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="hll"><a href="#__codelineno-15-5"><span class="linenos" data-linenos="5 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathDataCombined</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PathDrive</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">PathGameOnly</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">PathDataOnly</span><span class="p">;</span>
+</span></code></pre></div>
+Note that the combination interfaces only accept FCakePath objects as inputs in order to avoid implicit type conversions and surprising results. In other words, you can't mix <abbr title="Some form of FString or FStringView.">string-like</abbr> objects and FCakePath objects in combination chains. However, there are two ways to work around this. The simplest way is to explicitly convert any <abbr title="Some form of FString or FStringView.">string-like</abbr> objects into FCakePath objects within the combination expression:</p>
+<p><div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><a href="#__codelineno-16-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathDrive</span><span class="w">     </span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><a href="#__codelineno-16-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FString</span><span class="w">   </span><span class="n">PathGameString</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;game&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><a href="#__codelineno-16-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="hll"><a href="#__codelineno-16-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">CombinedMix</span><span class="p">{</span><span class="w"> </span><span class="n">PathDrive</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">FCakePath</span><span class="p">(</span><span class="n">PathGameString</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+When combining multiple strings, you can use FString's <code>operator/</code>, which also supports path concatenation, and then feed the combined FString into the FCakePath constructor, which will guarantee the final result is well-formed:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><a href="#__codelineno-17-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FString</span><span class="w"> </span><span class="n">PathDriveString</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><a href="#__codelineno-17-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FString</span><span class="w"> </span><span class="n">PathGameString</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;game&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><a href="#__codelineno-17-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="hll"><a href="#__codelineno-17-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">CombinedFromStrings</span><span class="p">{</span><span class="w"> </span><span class="n">PathDriveString</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">PathGameString</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+<p>To append another path onto a pre-existing FCakePath, we can use <code>operator/=</code> or <code>CombineInline</code>.</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><a href="#__codelineno-18-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathMisc</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;y/misc&quot;</span><span class="p">)</span><span class="w">         </span><span class="p">};</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><a href="#__codelineno-18-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathItemsDb</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;items/items.db&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a><a href="#__codelineno-18-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a><a href="#__codelineno-18-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathCombineOperator</span><span class="p">{</span><span class="w"> </span><span class="n">PathMisc</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="hll"><a href="#__codelineno-18-5"><span class="linenos" data-linenos="5 "></span></a><span class="n">PathCombineOperator</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">PathItemsDb</span><span class="p">;</span><span class="w"> </span><span class="c1">// =&gt; &quot;y/misc/items/items.db&quot;</span>
+</span><a id="__codelineno-18-6" name="__codelineno-18-6"></a><a href="#__codelineno-18-6"><span class="linenos" data-linenos="6 "></span></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><a href="#__codelineno-18-7"><span class="linenos" data-linenos="7 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathCombineInline</span><span class="p">{</span><span class="w"> </span><span class="n">PathMisc</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="hll"><a href="#__codelineno-18-8"><span class="linenos" data-linenos="8 "></span></a><span class="n">PathCombineInline</span><span class="p">.</span><span class="n">CombineInline</span><span class="p">(</span><span class="n">PathItemsDb</span><span class="p">);</span><span class="w"> </span><span class="c1">// =&gt; &quot;y/misc/items/items.db&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>To build a CakePath object whose path is the combination of two preexisting CakePath objects, we use <code>Combine</code>. </p>
+<p><img alt="Combine" src="../img/bp/path/combine.png" /></p>
+<p>In the example above, the returned CakePath object's path will be <code>x/game/data/assets/models</code>.</p>
+<p>To append one CakePath object's path directly onto another CakePath object, we can use <code>CombineInline</code>. </p>
+<p><img alt="Combine Inline" src="../img/bp/path/combine-inline.png" /></p>
+<p>In the example above, the target CakePath object's path will be <code>x/game/data/assets/models</code>.</p>
+</div>
+</div>
+</div>
+<h3 id="path-equality">Path Equality</h3>
+<p>Path equality in Cake IO is simple: two CakePath objects are equal if they refer to the same location on the filesystem.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">C++</label><label for="__tabbed_7_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>FCakePath uses <code>operator==</code> and <code>operator!=</code> for equality comparisons.</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><a href="#__codelineno-19-1"><span class="linenos" data-linenos=" 1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathData</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><a href="#__codelineno-19-2"><span class="linenos" data-linenos=" 2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathDataCopy</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><a href="#__codelineno-19-3"><span class="linenos" data-linenos=" 3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathMisc</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;y/game/misc&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a><a href="#__codelineno-19-4"><span class="linenos" data-linenos=" 4 "></span></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a><a href="#__codelineno-19-5"><span class="linenos" data-linenos=" 5 "></span></a><span class="kt">bool</span><span class="w"> </span><span class="n">bPathsAreEqual</span><span class="p">{</span><span class="w"> </span><span class="nb">false</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6"></a><span class="hll"><a href="#__codelineno-19-6"><span class="linenos" data-linenos=" 6 "></span></a><span class="n">bPathsAreEqual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PathData</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PathMisc</span><span class="p">;</span><span class="w">      </span><span class="c1">// =&gt; false</span>
+</span><a id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="hll"><a href="#__codelineno-19-7"><span class="linenos" data-linenos=" 7 "></span></a><span class="n">bPathsAreEqual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PathData</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PathDataCopy</span><span class="p">;</span><span class="w"> </span><span class="c1">// =&gt; true</span>
+</span><a id="__codelineno-19-8" name="__codelineno-19-8"></a><a href="#__codelineno-19-8"><span class="linenos" data-linenos=" 8 "></span></a>
+<a id="__codelineno-19-9" name="__codelineno-19-9"></a><span class="hll"><a href="#__codelineno-19-9"><span class="linenos" data-linenos=" 9 "></span></a><span class="n">bPathsAreEqual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PathData</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">PathMisc</span><span class="p">;</span><span class="w">      </span><span class="c1">// =&gt; true</span>
+</span><a id="__codelineno-19-10" name="__codelineno-19-10"></a><span class="hll"><a href="#__codelineno-19-10"><span class="linenos" data-linenos="10 "></span></a><span class="n">bPathsAreEqual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PathData</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">PathDataCopy</span><span class="p">;</span><span class="w"> </span><span class="c1">// =&gt; false</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>To check if two CakePath objects are equal, we use <code>IsEqualTo</code>:</p>
+<p><img alt="Is Equal To" src="../img/bp/path/is-equal-to.png" /></p>
+<p>To check if two CakePath objects are not equal, we use <code>IsNotEqualTo</code>:</p>
+<p><img alt="Is Not Equal To" src="../img/bp/path/is-not-equal-to.png" /></p>
+</div>
+</div>
+</div>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="path-leaf-manipulation">Path Leaf Manipulation</h3>
+<p>The leaf of the path is its rightmost component. Given the path <code>x/game/data</code>, the leaf is <code>data</code>.</p>
+<h4 id="leaf-extraction">Leaf Extraction</h4>
+<p>To extract the leaf of a CakePath object as another CakePath object, we use <code>CloneLeaf</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">C++</label><label for="__tabbed_8_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-cpp highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><a href="#__codelineno-20-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><a href="#__codelineno-20-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="hll"><a href="#__codelineno-20-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">PathLeaf</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">CloneLeaf</span><span class="p">()</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// =&gt; &quot;data&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone Leaf" src="../img/bp/path/clone-leaf.png" /></p>
+</div>
+</div>
+</div>
+<p>To get the leaf of a CakePath object as a string, we use <code>CloneLeafString</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">C++</label><label for="__tabbed_9_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-cpp highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><a href="#__codelineno-21-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a><a href="#__codelineno-21-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="hll"><a href="#__codelineno-21-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FString</span><span class="w"> </span><span class="n">LeafString</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">CloneLeafString</span><span class="p">()</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// =&gt; &quot;data&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone Leaf String" src="../img/bp/path/clone-leaf-string.png" /></p>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The leaf can always be empty, so don't forget to check in the situations where that matters.</p>
+</div>
+<h4 id="modifying-the-leaf">Modifying the Leaf</h4>
+<p>We can modify the leaf of a CakePath via <code>SetLeaf</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">C++</label><label for="__tabbed_10_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a><a href="#__codelineno-22-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a><a href="#__codelineno-22-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a><span class="hll"><a href="#__codelineno-22-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">SourcePath</span><span class="p">.</span><span class="n">SetLeaf</span><span class="p">(</span><span class="n">FCakePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;items&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">});</span><span class="w"> </span><span class="c1">// path is now &quot;x/game/items&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Set Leaf" src="../img/bp/path/set-leaf.png" /></p>
+</div>
+</div>
+</div>
+<p>We can get a copy of the CakePath with a new leaf via <code>CloneWithNewLeaf</code>, submitting a CakePath argument that is the leaf the cloned CakePath should use:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">C++</label><label for="__tabbed_11_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><a href="#__codelineno-23-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a><a href="#__codelineno-23-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">NewLeaf</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;items&quot;</span><span class="p">)</span><span class="w">     </span><span class="p">};</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3"></a><a href="#__codelineno-23-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="hll"><a href="#__codelineno-23-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">WithNewLeaf</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">CloneWithNewLeaf</span><span class="p">(</span><span class="n">NewLeaf</span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="c1">// path is &quot;x/game/items&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone With New Leaf" src="../img/bp/path/clone-with-new-leaf.png" /></p>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Even though the examples show changing the leaf with single-component paths, leaf manipulation methods can also change the leaf with a multi-component path as well. </p>
+</div>
+<h3 id="parent-path-manipulation">Parent Path Manipulation</h3>
+<p>The parent path of a given path is all path components to the left of the path leaf; the parent path of <code>x/game/data</code> is <code>x/game/</code>.</p>
+<h4 id="parent-path-extraction">Parent Path Extraction</h4>
+<p>To clone a CakePath's parent path as a new CakePath object, we use <code>CloneParentPath</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><div class="tabbed-labels"><label for="__tabbed_12_1">C++</label><label for="__tabbed_12_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-cpp highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><a href="#__codelineno-24-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a><a href="#__codelineno-24-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3"></a><span class="hll"><a href="#__codelineno-24-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">ParentPath</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">CloneParentPath</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone Parent Path" src="../img/bp/path/clone-parent-path.png" /></p>
+</div>
+</div>
+</div>
+<p>When we want the parent path as a string, we can use <code>CloneParentPathString</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><div class="tabbed-labels"><label for="__tabbed_13_1">C++</label><label for="__tabbed_13_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-cpp highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><a href="#__codelineno-25-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a><a href="#__codelineno-25-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="hll"><a href="#__codelineno-25-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FString</span><span class="w"> </span><span class="n">ParentPathString</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">CloneParentPathString</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone Parent Path String" src="../img/bp/path/clone-parent-path-string.png" /></p>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The parent path can always be empty, so don't forget to check in the situations where that matters.</p>
+</div>
+<h4 id="modifying-the-parent-path">Modifying the Parent Path</h4>
+<p>We can modify the parent path of an existing CakePath object via <code>SetParentPath</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="14:2"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><input id="__tabbed_14_2" name="__tabbed_14" type="radio" /><div class="tabbed-labels"><label for="__tabbed_14_1">C++</label><label for="__tabbed_14_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><a href="#__codelineno-26-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">ParentSourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w">      </span><span class="p">};</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a><a href="#__codelineno-26-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">NewParent</span><span class="w">       </span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;z/network/remote&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a><a href="#__codelineno-26-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="hll"><a href="#__codelineno-26-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">ParentSourcePath</span><span class="p">.</span><span class="n">SetParentPath</span><span class="p">(</span><span class="n">NewParent</span><span class="p">);</span><span class="w"> </span><span class="c1">// Path is now &quot;z/network/remote/data&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Set Parent Path" src="../img/bp/path/set-parent-path.png" /></p>
+</div>
+</div>
+</div>
+<p>To get a copy of a CakePath with a new parent path, we use <code>CloneWithNewParent</code>, submitting a CakePath argument that has the new parent path the cloned CakePath should use: </p>
+<div class="tabbed-set tabbed-alternate" data-tabs="15:2"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><input id="__tabbed_15_2" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="__tabbed_15_1">C++</label><label for="__tabbed_15_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a><a href="#__codelineno-27-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w">          </span><span class="p">};</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2"></a><a href="#__codelineno-27-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">NewParent</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;z/network/remote&quot;</span><span class="p">)</span><span class="w">     </span><span class="p">};</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3"></a><a href="#__codelineno-27-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-27-4" name="__codelineno-27-4"></a><span class="hll"><a href="#__codelineno-27-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">WithNewParent</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">CloneWithNewParent</span><span class="p">(</span><span class="n">NewParent</span><span class="p">)</span><span class="w"> </span><span class="p">};</span><span class="c1">// path is &quot;z/network/remote/data&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone With New Parent" src="../img/bp/path/clone-with-new-parent.png" /></p>
+</div>
+</div>
+</div>
+<p>In both examples, the final path will be: <code>z/network/remote/data</code>.</p>
+<h3 id="absolute-paths">Absolute Paths</h3>
+<p>CakePath objects can convert from relative paths into absolute paths. When converting relative paths into absolute paths, the location of the executable will be used as the anchor point for expansion. Thus, if we have a relative path <code>game/data</code> and our executable resides on <code>/x/other/game.exe</code>, converting <code>game/data</code> into absolute form will result in the path <code>/x/other/game/data/</code>.
+However, if a path is already in absolute form then any absolute conversion will have no effect -- this means that <strong>absolute paths not relative to the executable's location will not be changed if an absolute conversion is attempted on them</strong>.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The executable location used for absolute path conversion will be different when you are running the Unreal Editor versus running a packaged project. Make sure you know the context in which your absolute conversions will be executed to avoid any surprises.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="16:2"><input checked="checked" id="__tabbed_16_1" name="__tabbed_16" type="radio" /><input id="__tabbed_16_2" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="__tabbed_16_1">C++</label><label for="__tabbed_16_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>We can build an absolute path explicitly from a relative path source with <code>BuildPathAbsolute</code>:</p>
+<p><div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a><a href="#__codelineno-28-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">AbsolutePath</span><span class="p">{</span><span class="w"> </span><span class="n">FCakePath</span><span class="o">::</span><span class="n">BuildPathAbsolute</span><span class="p">(</span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;game/data&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">};</span>
+</code></pre></div>
+To build an absolute path from multiple <abbr title="Some form of FString or FStringView.">string-like</abbr> objects, we use <code>BuildPathCombinedAbsolute</code>:</p>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1"></a><a href="#__codelineno-29-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">CombinedAbsPath</span><span class="p">{</span><span class="w"> </span><span class="n">FCakePath</span><span class="o">::</span><span class="n">BuildPathCombinedAbsolute</span><span class="p">(</span><span class="w"> </span>
+<a id="__codelineno-29-2" name="__codelineno-29-2"></a><a href="#__codelineno-29-2"><span class="linenos" data-linenos="2 "></span></a><span class="w">        </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;misc/data&quot;</span><span class="p">),</span><span class="w"> </span>
+<a id="__codelineno-29-3" name="__codelineno-29-3"></a><a href="#__codelineno-29-3"><span class="linenos" data-linenos="3 "></span></a><span class="w">        </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;animations/hero&quot;</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-29-4" name="__codelineno-29-4"></a><a href="#__codelineno-29-4"><span class="linenos" data-linenos="4 "></span></a><span class="w">    </span><span class="p">)</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5"></a><a href="#__codelineno-29-5"><span class="linenos" data-linenos="5 "></span></a><span class="p">};</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is a variadic template and can accept an indefinite number of <abbr title="Some form of FString or FStringView.">string-like</abbr> arguments.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p>To build a CakePath and ensure it is in absolute form, we use <code>BuildCakePathAbsolute</code>.
+<img alt="Build Cake Path Absolute" src="../img/bp/path/build-cake-path-absolute.png" /></p>
+<p>To build an absolute CakePath combined from two source path strings, use <code>BuildCakePathCombinedAbsolute</code>:
+<img alt="Build Cake Path Combined Absolute" src="../img/bp/path/build-cake-path-combined-absolute.png" /></p>
+</div>
+</div>
+</div>
+<p>Using a pre-existing CakePath as the base path, we can create combined absolute paths via <code>CombineAbsolute</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="17:2"><input checked="checked" id="__tabbed_17_1" name="__tabbed_17" type="radio" /><input id="__tabbed_17_2" name="__tabbed_17" type="radio" /><div class="tabbed-labels"><label for="__tabbed_17_1">C++</label><label for="__tabbed_17_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1"></a><a href="#__codelineno-30-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourceRelative</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;src/systems&quot;</span><span class="p">)</span><span class="w">  </span><span class="p">};</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2"></a><a href="#__codelineno-30-2"><span class="linenos" data-linenos="2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">NetworkDir</span><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;network/main&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3"></a><a href="#__codelineno-30-3"><span class="linenos" data-linenos="3 "></span></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4"></a><span class="hll"><a href="#__codelineno-30-4"><span class="linenos" data-linenos="4 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">NetworkingPath</span><span class="p">{</span><span class="w"> </span>
+</span><a id="__codelineno-30-5" name="__codelineno-30-5"></a><a href="#__codelineno-30-5"><span class="linenos" data-linenos="5 "></span></a><span class="w">    </span><span class="n">SourceRelative</span><span class="p">.</span><span class="n">CombineAbsolute</span><span class="p">(</span><span class="w"> </span><span class="n">NetworkDir</span><span class="w"> </span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-30-6" name="__codelineno-30-6"></a><a href="#__codelineno-30-6"><span class="linenos" data-linenos="6 "></span></a><span class="p">};</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Combine Absolute" src="../img/bp/path/combine-absolute.png" /></p>
+</div>
+</div>
+</div>
+<p>To clone a CakePath object and ensure the cloned path is in absolute form use <code>CloneAbsolute</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="18:2"><input checked="checked" id="__tabbed_18_1" name="__tabbed_18" type="radio" /><input id="__tabbed_18_2" name="__tabbed_18" type="radio" /><div class="tabbed-labels"><label for="__tabbed_18_1">C++</label><label for="__tabbed_18_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1"></a><a href="#__codelineno-31-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;other/misc&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2"></a><a href="#__codelineno-31-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-31-3" name="__codelineno-31-3"></a><span class="hll"><a href="#__codelineno-31-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">ClonedAbsolutePath</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">CloneAbsolute</span><span class="p">()</span><span class="w"> </span><span class="p">};</span><span class="w"> </span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone Absolute" src="../img/bp/path/clone-absolute.png" /></p>
+</div>
+</div>
+</div>
+<p>If we just need the absolute path as a string, we can use <code>ClonePathStringAbsolute</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="19:2"><input checked="checked" id="__tabbed_19_1" name="__tabbed_19" type="radio" /><input id="__tabbed_19_2" name="__tabbed_19" type="radio" /><div class="tabbed-labels"><label for="__tabbed_19_1">C++</label><label for="__tabbed_19_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1"></a><a href="#__codelineno-32-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;other/misc&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2"></a><a href="#__codelineno-32-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-32-3" name="__codelineno-32-3"></a><span class="hll"><a href="#__codelineno-32-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">FString</span><span class="w"> </span><span class="n">ClonedAbsPathString</span><span class="p">{</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">ClonePathStringAbsolute</span><span class="p">()</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone Path String Absolute" src="../img/bp/path/clone-path-string-absolute.png" /></p>
+</div>
+</div>
+</div>
+<p>To convert an existing CakePath object to absolute form, we use <code>ToAbsoluteInline</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="20:2"><input checked="checked" id="__tabbed_20_1" name="__tabbed_20" type="radio" /><input id="__tabbed_20_2" name="__tabbed_20" type="radio" /><div class="tabbed-labels"><label for="__tabbed_20_1">C++</label><label for="__tabbed_20_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1"></a><a href="#__codelineno-33-1"><span class="linenos" data-linenos="1 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;other/misc&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2"></a><a href="#__codelineno-33-2"><span class="linenos" data-linenos="2 "></span></a>
+<a id="__codelineno-33-3" name="__codelineno-33-3"></a><span class="hll"><a href="#__codelineno-33-3"><span class="linenos" data-linenos="3 "></span></a><span class="n">SourcePath</span><span class="p">.</span><span class="n">ToAbsoluteInline</span><span class="p">();</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="To Absolute Inline" src="../img/bp/path/to-absolute-inline.png" /></p>
+</div>
+</div>
+</div>
+<h3 id="replacing-subpaths">Replacing Subpaths</h3>
+<p>CakePath objects have an interface to support changing a subpath within their path. A subpath here is defined as a subsection of path components contained in a larger path: e.g., <code>game/data</code> is a subpath of <code>/x/misc/game/data/other</code>.</p>
+<p>As an example, let's say that we are attempting to move a directory tree into another directory, maintaining the relative tree.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="21:2"><input checked="checked" id="__tabbed_21_1" name="__tabbed_21" type="radio" /><input id="__tabbed_21_2" name="__tabbed_21" type="radio" /><div class="tabbed-labels"><label for="__tabbed_21_1">C++</label><label for="__tabbed_21_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The following example(s) utilize function calls using struct parameter packs and designated initializer syntax. If you are unfamiliar with this, see <strong>section</strong>.</p>
+</div>
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1"></a><a href="#__codelineno-34-1"><span class="linenos" data-linenos=" 1 "></span></a><span class="n">FCakePath</span><span class="w">    </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data/misc/saves&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2"></a><a href="#__codelineno-34-2"><span class="linenos" data-linenos=" 2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">HostDirectory</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w">            </span><span class="p">};</span>
+<a id="__codelineno-34-3" name="__codelineno-34-3"></a><a href="#__codelineno-34-3"><span class="linenos" data-linenos=" 3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">DestDirectory</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;y/archive/data&quot;</span><span class="p">)</span><span class="w">         </span><span class="p">};</span>
+<a id="__codelineno-34-4" name="__codelineno-34-4"></a><a href="#__codelineno-34-4"><span class="linenos" data-linenos=" 4 "></span></a>
+<a id="__codelineno-34-5" name="__codelineno-34-5"></a><a href="#__codelineno-34-5"><span class="linenos" data-linenos=" 5 "></span></a><span class="c1">// FinalPath:  &quot;y/archive/data/misc/saves&quot;</span>
+<a id="__codelineno-34-6" name="__codelineno-34-6"></a><span class="hll"><a href="#__codelineno-34-6"><span class="linenos" data-linenos=" 6 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">FinalPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SourcePath</span><span class="p">.</span><span class="n">CloneWithSubpathReplaced</span><span class="p">({</span><span class="w"> </span>
+</span><a id="__codelineno-34-7" name="__codelineno-34-7"></a><span class="hll"><a href="#__codelineno-34-7"><span class="linenos" data-linenos=" 7 "></span></a><span class="w">    </span><span class="p">.</span><span class="n">OriginalSubpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HostDirectory</span><span class="p">,</span><span class="w"> </span>
+</span><a id="__codelineno-34-8" name="__codelineno-34-8"></a><span class="hll"><a href="#__codelineno-34-8"><span class="linenos" data-linenos=" 8 "></span></a><span class="w">    </span><span class="p">.</span><span class="n">NewSubpath</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">DestDirectory</span><span class="w"> </span>
+</span><a id="__codelineno-34-9" name="__codelineno-34-9"></a><span class="hll"><a href="#__codelineno-34-9"><span class="linenos" data-linenos=" 9 "></span></a><span class="p">});</span>
+</span><a id="__codelineno-34-10" name="__codelineno-34-10"></a><a href="#__codelineno-34-10"><span class="linenos" data-linenos="10 "></span></a>
+<a id="__codelineno-34-11" name="__codelineno-34-11"></a><a href="#__codelineno-34-11"><span class="linenos" data-linenos="11 "></span></a><span class="n">UE_LOG</span><span class="p">(</span><span class="n">LogTemp</span><span class="p">,</span><span class="w"> </span><span class="n">Warning</span><span class="p">,</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;ReplaceSubpath path: [%s]&quot;</span><span class="p">),</span><span class="w"> </span><span class="o">**</span><span class="n">FinalPath</span><span class="p">);</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Clone With Subpath Replaced" src="../img/bp/path/clone-with-subpath-replaced.png" /></p>
+</div>
+</div>
+</div>
+<p>In the example above, by using <code>CloneWithSubpathReplaced</code> we were able to replace the subpath <code>x/game/data</code> with <code>y/archive/data</code> while maintaining the rest of the relative tree <code>misc/saves</code>. The resultant path is <code>y/archive/data/misc/saves</code>.</p>
+<p>If we want to change a subpath of an existing CakePath object instead of generating a copy, we can use <code>SubpathReplaceInline</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="22:2"><input checked="checked" id="__tabbed_22_1" name="__tabbed_22" type="radio" /><input id="__tabbed_22_2" name="__tabbed_22" type="radio" /><div class="tabbed-labels"><label for="__tabbed_22_1">C++</label><label for="__tabbed_22_2">Blueprint</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-c++ highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1"></a><a href="#__codelineno-35-1"><span class="linenos" data-linenos=" 1 "></span></a><span class="n">FCakePath</span><span class="w">    </span><span class="n">SourcePath</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data/misc/saves&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2"></a><a href="#__codelineno-35-2"><span class="linenos" data-linenos=" 2 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">HostDirectory</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;x/game/data&quot;</span><span class="p">)</span><span class="w">            </span><span class="p">};</span>
+<a id="__codelineno-35-3" name="__codelineno-35-3"></a><a href="#__codelineno-35-3"><span class="linenos" data-linenos=" 3 "></span></a><span class="n">FCakePath</span><span class="w"> </span><span class="n">DestDirectory</span><span class="p">{</span><span class="w"> </span><span class="n">TEXTVIEW</span><span class="p">(</span><span class="s">&quot;y/archive/data&quot;</span><span class="p">)</span><span class="w">         </span><span class="p">};</span>
+<a id="__codelineno-35-4" name="__codelineno-35-4"></a><a href="#__codelineno-35-4"><span class="linenos" data-linenos=" 4 "></span></a>
+<a id="__codelineno-35-5" name="__codelineno-35-5"></a><a href="#__codelineno-35-5"><span class="linenos" data-linenos=" 5 "></span></a><span class="c1">// SourcePath is now:  &quot;y/archive/data/misc/saves&quot;</span>
+<a id="__codelineno-35-6" name="__codelineno-35-6"></a><span class="hll"><a href="#__codelineno-35-6"><span class="linenos" data-linenos=" 6 "></span></a><span class="n">SourcePath</span><span class="p">.</span><span class="n">SubpathReplaceInline</span><span class="p">({</span><span class="w"> </span>
+</span><a id="__codelineno-35-7" name="__codelineno-35-7"></a><span class="hll"><a href="#__codelineno-35-7"><span class="linenos" data-linenos=" 7 "></span></a><span class="w">    </span><span class="p">.</span><span class="n">OriginalSubpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HostDirectory</span><span class="p">,</span>
+</span><a id="__codelineno-35-8" name="__codelineno-35-8"></a><span class="hll"><a href="#__codelineno-35-8"><span class="linenos" data-linenos=" 8 "></span></a><span class="w">    </span><span class="p">.</span><span class="n">NewSubpath</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">DestDirectory</span><span class="w"> </span>
+</span><a id="__codelineno-35-9" name="__codelineno-35-9"></a><a href="#__codelineno-35-9"><span class="linenos" data-linenos=" 9 "></span></a><span class="p">});</span>
+<a id="__codelineno-35-10" name="__codelineno-35-10"></a><a href="#__codelineno-35-10"><span class="linenos" data-linenos="10 "></span></a>
+<a id="__codelineno-35-11" name="__codelineno-35-11"></a><a href="#__codelineno-35-11"><span class="linenos" data-linenos="11 "></span></a><span class="n">UE_LOG</span><span class="p">(</span><span class="n">LogTemp</span><span class="p">,</span><span class="w"> </span><span class="n">Warning</span><span class="p">,</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;SubpathReplaceInline path: [%s]&quot;</span><span class="p">),</span><span class="w"> </span><span class="o">**</span><span class="n">SourcePath</span><span class="p">);</span><span class="w"> </span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><img alt="Subpath Replace Inline" src="../img/bp/path/subpath-replace-inline.png" /></p>
+</div>
+</div>
+</div>
+<p>As with the previous example, the resultant path is <code>y/archive/data/misc/saves</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.sections", "toc.integrate", "content.code.copy", "content.tabs.link", "content.tooltips"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
