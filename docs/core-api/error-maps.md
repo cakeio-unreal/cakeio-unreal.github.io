@@ -53,60 +53,52 @@
 |FailedWrite|The data could not be written to the file.|
 
 
-### PrepareDestFileForCopy
-|Outcome|Context|
-| :-- | :-- |
-|NoOp|The destination path and the source path reference the same location.|
-|AlreadyExists|The file already exists and overwriting is not allowed.|
-|FailedDeletingPreexisting|The destination file path exists and overwriting is allowed, but the preexisting file could not be deleted.|
-
-
 ### CopyFile
 |Outcome|Context|
 | :-- | :-- |
-|DoesNotExist|The file does not exist on the filesystem.|
 |DestDirDoesNotExist|The destination directory does not exist and was unable to be created or was not allowed to be created.|
+|DoesNotExist|The source file to be copied does not exist on the filesystem.|
 |NoOp|The destination path and the source path reference the same location.|
-|AlreadyExists|The file already exists and overwriting is not allowed.|
-|FailedDeletingPreexisting|The destination file path exists and overwriting is allowed, but the preexisting file could not be deleted.|
-|FailedCopy|The file copy operation failed.|
+|AlreadyExists|The destination file already exists and overwriting is not allowed.|
+|FailedOpenWrite|Failed opening a write handle to the destination file.|
+|FailedWrite|Failed writing source file's data to the destination file.|
 
 
 ### CopyFileWithNewName
 |Outcome|Context|
 | :-- | :-- |
 |BadFileName|The file name is empty or consists only of whitespace and/or path separators.|
-|DoesNotExist|The file does not exist on the filesystem.|
 |DestDirDoesNotExist|The destination directory does not exist and was unable to be created or was not allowed to be created.|
+|DoesNotExist|The source file to be copied does not exist on the filesystem.|
 |NoOp|The destination path and the source path reference the same location.|
-|AlreadyExists|The file already exists and overwriting is not allowed.|
-|FailedDeletingPreexisting|The destination file path exists and overwriting is allowed, but the preexisting file could not be deleted.|
-|FailedCopy|The file copy operation failed.|
+|AlreadyExists|The destination file already exists and overwriting is not allowed.|
+|FailedOpenWrite|Failed opening a write handle to the destination file.|
+|FailedWrite|Failed writing source file's data to the destination file.|
 
 
 ### MoveFile
 |Outcome|Context|
 | :-- | :-- |
-|DoesNotExist|The file does not exist on the filesystem.|
 |DestDirDoesNotExist|The destination directory does not exist and was unable to be created or was not allowed to be created.|
+|DoesNotExist|The source file to be copied does not exist on the filesystem.|
 |NoOp|The destination path and the source path reference the same location.|
-|AlreadyExists|The file already exists and overwriting is not allowed.|
-|FailedDeletingPreexisting|The destination file path exists and overwriting is allowed, but the preexisting file could not be deleted.|
-|FailedCopy|The file copy operation failed.|
-|FailedDelete|The delete operation on the original file failed.|
+|AlreadyExists|The destination file already exists and overwriting is not allowed.|
+|FailedOpenWrite|Failed opening a write handle to the destination file.|
+|FailedWrite|Failed writing source file's data to the destination file.|
+|FailedDelete|Failed deleting the original file after it was successfully copied to the destination.|
 
 
 ### MoveFileWithNewName
 |Outcome|Context|
 | :-- | :-- |
 |BadFileName|The file name is empty or consists only of whitespace and/or path separators.|
-|DoesNotExist|The file does not exist on the filesystem.|
 |DestDirDoesNotExist|The destination directory does not exist and was unable to be created or was not allowed to be created.|
+|DoesNotExist|The source file to be copied does not exist on the filesystem.|
 |NoOp|The destination path and the source path reference the same location.|
-|AlreadyExists|The file already exists and overwriting is not allowed.|
-|FailedDeletingPreexisting|The destination file path exists and overwriting is allowed, but the preexisting file could not be deleted.|
-|FailedCopy|The file copy operation failed.|
-|FailedDelete|The delete operation on the original file failed.|
+|AlreadyExists|The destination file already exists and overwriting is not allowed.|
+|FailedOpenWrite|Failed opening a write handle to the destination file.|
+|FailedWrite|Failed writing source file's data to the destination file.|
+|FailedDelete|Failed deleting the original file after it was successfully copied to the destination.|
 
 
 ### Query Functions
@@ -132,12 +124,14 @@
 ### ChangeFileName / ChangeFileExt / ChangeFileExtSingle
 |Outcome|Context|
 | :-- | :-- |
-|DoesNotExist|The file does not exist on the filesystem.|
+|BadFileName|The file name is empty or consists only of whitespace and/or path separators.|
+|DestDirDoesNotExist|The destination directory does not exist and was unable to be created or was not allowed to be created.|
+|DoesNotExist|The source file to be copied does not exist on the filesystem.|
 |NoOp|The destination path and the source path reference the same location.|
-|AlreadyExists|The file already exists and overwriting is not allowed.|
-|FailedDeletingPreexisting|The destination file path exists and overwriting is allowed, but the preexisting file could not be deleted.|
-|FailedCopy|The file copy operation failed.|
-|FailedDelete|The delete operation on the original file failed.|
+|AlreadyExists|The destination file already exists and overwriting is not allowed.|
+|FailedOpenWrite|Failed opening a write handle to the destination file.|
+|FailedWrite|Failed writing source file's data to the destination file.|
+|FailedDelete|Failed deleting the original file after it was successfully copied to the destination.|
 
 
 ## CakeDir

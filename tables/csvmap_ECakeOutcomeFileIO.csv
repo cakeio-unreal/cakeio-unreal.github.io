@@ -5,7 +5,6 @@ BadFileName,Bad File Name,The file name is invalid.
 DoesNotExist,Does Not Exist,The file does not exist.
 DestDirDoesNotExist,Dest Dir Does Not Exist,The destination directory for the file does not exist.
 AlreadyExists,Already Exists,The file already exists.
-FailedDeletingPreexisting,Failed Deleting Preexisting,Failed deleting the preexisting file meant to be overwritten.
 FailedStatQuery,Failed Stat Query,Failed to retrieve OS stat data for the file.
 FailedOpenRead,Failed Open Read,The file could not be opened in read-only mode.
 FailedOpenWrite,Failed Open Write,The file could not be opened in write-only mode.
@@ -15,4 +14,3 @@ CouldNotChangePerms,Could Not Change Perms,Could not change permissions for the 
 FailedRead,Failed Read,Failed to read the file's data.
 FailedWrite,Failed Write,Failed to write data to the file.
 FailedDelete,Failed Delete,Failed to delete the file.
-FailedCopy,Failed Copy,Failed to copy the file.

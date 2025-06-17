@@ -92,6 +92,9 @@ nav:
         - Cake IO Services Overview: core-api/services.md
   - Examples: 
     - Overview: examples/examples.md
+    - Basic:
+      - Discovering Unreal Modules: examples/basic/discovering_unreal_modules.md
+
   - Future Development: future-dev/future-development.md
 watch:
   - tables
